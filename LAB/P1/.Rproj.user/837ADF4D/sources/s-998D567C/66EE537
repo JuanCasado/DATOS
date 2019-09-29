@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1569773241245.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "66EE537",
+    "lastKnownWriteTime" : 1569775496,
+    "last_content_update" : 1569775496,
+    "path" : "D:/Cuarto/Datos/Laboratorio/DATOS/LAB/P1/identify.R",
+    "project_path" : "identify.R",
+    "properties" : {
+        "cursorPosition" : "16,37",
+        "scrollLine" : "0"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
