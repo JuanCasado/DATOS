@@ -1,3 +1,20 @@
 identify <- function(path) {
-  
+  ext <- file_ext(path)[1]
+  switch(ext, "txt" = file_types()$TXT,
+              "TXT" = file_types()$TXT,
+              "Txt" = file_types()$TXT,
+              "csv" = file_types()$CSV,
+              "Csv" = file_types()$CSV,
+              "CSV" = file_types()$CSV,
+              "xls" = file_types()$EXCEL,
+              "Xls" = file_types()$EXCEL,
+              "XLS" = file_types()$EXCEL,
+              "xlsx" = file_types()$EXCEL,
+              "XLSX" = file_types()$EXCEL,
+              "Xlsx" = file_types()$EXCEL,
+              "sav" = file_types()$SAV,
+              "SAV" = file_types()$SAV,
+              "Sav" = file_types()$SAV,
+              "" = file_types()$DIR,
+              file_types()$NOT_LISTED)
 }
