@@ -15,6 +15,7 @@ identify <- function(path) {
               "sav" = fileTypes()$SAV,
               "SAV" = fileTypes()$SAV,
               "Sav" = fileTypes()$SAV,
+              "json" = "JSON",
               fileTypes()$NOT_LISTED)
 }
 
