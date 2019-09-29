@@ -15,6 +15,6 @@ identify <- function(path) {
               "sav" = fileTypes()$SAV,
               "SAV" = fileTypes()$SAV,
               "Sav" = fileTypes()$SAV,
-         fileTypes()$NOT_LISTED)
+              fileTypes()$NOT_LISTED)
 }
 

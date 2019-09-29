@@ -1,6 +1,6 @@
 
-#source("./load_dependencies.R")
-#load_dependencies()
+source("load_dependencies.R")
+load_dependencies()
 
 list_actions <- function(path){
   message("-----------------------------------------")
@@ -35,8 +35,8 @@ while (keep_looping){
     "d" = {
       files = dir()[file.info(dir())$isdir]
       if (length(files) > 1){
-        for (i in 1:length(files)) {
-          message(paste(c("[", i, "] ", files[i])))
+        for (file in files) {
+          message(file)
         }
       }else{
         message("There are no directories")
@@ -45,18 +45,39 @@ while (keep_looping){
     "l" = {
       files = dir()[!file.info(dir())$isdir]
       if (length(files) > 1){
-        for (i in 1:length(files)) {
-          message(paste(c("[", i, "]", files[i])))
+        for (file in files) {
+          message(file)
         }
       }else{
         message("["+i+"]"+"There are no files")
       }
     },
     {
-      if(file.exists(user_input)){
-        id <- identify(user_input)
-      }else{
-        message("Not a valid file name")
+      input_names <- strsplit(user_input, " ")[[1]]
+      if (length(input_names)==1){
+        if (input_names[1] == ".."){
+          setwd("..")
+          message(paste("Change directorie to: ", getwd()))
+        }else if (file.exists(input_names[1]) && file.info(input_names[1])$isdir){
+          setwd(input_names[1])
+          dir_chaged <- F
+          message(paste("Change directorie to: ", getwd()))
+        }
+      }
+      for (name in input_names) {
+        if(file.exists(name)){
+          if(!file.info(name)$isdir){
+            message(paste("Reading: ", name))
+            id <- identify(name)
+            if (id == fileTypes()$NOT_LISTED){
+              message("File type not recognized")
+            }else{
+              message("Llamar a read!!!")
+            }
+          }
+        }else{
+          message(paste(name, " is not a valid file name"))
+        }
       }
     }
   )
