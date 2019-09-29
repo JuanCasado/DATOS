@@ -1,0 +1,13 @@
+ planeta	radio
+1	Cordelia	13
+2	Ofelia	16
+3	Dianca	22
+4	Cresida	33
+5	Desdemona	29
+6	Julieta	42
+7	Rosalinda	27
+8	Belinda	34
+9	Luna-1986U10	20
+10	Calíbano	30
+11	Luna-199U1	20
+12	Luna_199U2	15
