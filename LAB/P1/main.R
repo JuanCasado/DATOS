@@ -1,8 +1,7 @@
 
 source("load_dependencies.R")
-load_dependencies()
 
-list_actions <- function(path){
+listActions <- function(path){
   message("-----------------------------------------")
   message("q : Quits the aplication")
   message("i : List actions")
@@ -20,8 +19,9 @@ welcome <- function(path){
 }
 
 welcome()
-list_actions()
+listActions()
 keep_looping <- T
+init_wd <- getwd()
 while (keep_looping){
   user_input <- readline(prompt="> ")
   switch(user_input,
@@ -49,7 +49,7 @@ while (keep_looping){
           message(file)
         }
       }else{
-        message("["+i+"]"+"There are no files")
+        message("There are no files")
       }
     },
     {
@@ -73,7 +73,7 @@ while (keep_looping){
               message("File type not recognized")
             }else{
               file <- read(name, id)
-              print(file)
+              #process (file)
             }
           }
         }else{
@@ -83,3 +83,4 @@ while (keep_looping){
     }
   )
 }
+set(init_wd)
