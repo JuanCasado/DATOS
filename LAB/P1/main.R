@@ -51,6 +51,13 @@ while (keep_looping){
       }else{
         message("["+i+"]"+"There are no files")
       }
+    },
+    {
+      if(file.exists(user_input)){
+        id <- identify(user_input)
+      }else{
+        message("Not a valid file name")
+      }
     }
   )
 }
