@@ -72,7 +72,8 @@ while (keep_looping){
             if (id == fileTypes()$NOT_LISTED){
               message("File type not recognized")
             }else{
-              message("Llamar a read!!!")
+              file <- read(name, id)
+              print(file)
             }
           }
         }else{
