@@ -1,13 +1,13 @@
 \documentclass [a4paper] {article}
 
-\title{Sweave Example 1}
+\title{Hola Miguel}
 \author{Friedrich Leisch}
 
 \begin{document}
 
 \maketitle
 
-In this example we embed parts of the examples from the 
+Holaaaaaa!!!!!
 \texttt{Kruskal.test} help page into a \LaTex{} document:
 
 <<>>=

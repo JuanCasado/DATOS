@@ -1,12 +1,15 @@
 
-source("media.R")
+#Calcula la desviación típica de un vector de datos
+#=================================================
+# sd(data)
+#=================================================
 
-#Calcula la media desviación típica de un vector de datos
+source("varianza.R")
 desviacionTipica <- function (data) {
-  v_media <- media(datos)
-  acc = 0
-  for (value in datos){
-    acc <- acc + (v_media - value)^2
-  }
-  acc^(1/2)
+  varianza(data)^(1/2)
+}
+
+checkDesviacionTipica <- function(data){
+  e <- sd(data) - desviacionTipica(data)
+  message(paste("Error en la desviación típica:", e))
 }
