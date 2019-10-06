@@ -6,6 +6,10 @@ data <- read.csv("AB_NYC_2019.csv") #https://www.kaggle.com/dgomonov/new-york-ci
 source("getInfo.R")
 
 #Frecuencias
+source("frecuencia.R")
+source("frecuenciaAcumulada.R")
+source("frecuenciaAcumuladaRelativa.R")
+source("frecuenciaRelativa.R")
 
 #Media y desviaciones
 source("mediaAritmetica.R")
