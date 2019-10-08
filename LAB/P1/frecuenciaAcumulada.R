@@ -26,11 +26,11 @@ frecuenciaAcumulada <-function(data,name){
         newdata<-c(newdata, accumulated)
     }
     # hacemos una matriz de tamaño 1xlongitud datos, añadimos los elementos la frecuencia
-  matrix<-matrix(nrow=1,ncol=length(uniquedata), newdata, byrow=T)
-  # en las filas ponemos el nombre que representa
-  rownames(matrix)<-c("frecuencia acumulada")
-  #en las columnas ponemos los datos
-  colnames(matrix)<-c(uniquedata)
-  #convertimos la matriz en una tabla
-  matrix<-as.table(matrix)
+    matrix<-matrix(nrow=1,ncol=length(uniquedata), newdata, byrow=T)
+    # en las filas ponemos el nombre que representa
+    rownames(matrix)<-c("frecuencia acumulada")
+    #en las columnas ponemos los datos
+    colnames(matrix)<-c(uniquedata)
+    #convertimos la matriz en una tabla
+    matrix<-as.table(matrix)
 }
