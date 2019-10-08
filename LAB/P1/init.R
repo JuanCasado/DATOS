@@ -21,3 +21,6 @@ source("desviacionMedia.R")
 source("tchebychev.R")
 
 #Factores de ordenación
+source("mediana.R")
+source("cuartiles.R")
+source("cuantil54.R")
