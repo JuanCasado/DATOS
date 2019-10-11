@@ -1,25 +1,25 @@
 \contentsline {section}{\numberline {1}Primer an\IeC {\'a}lisis satelites menores de urano.txt}{3}% 
 \contentsline {section}{\numberline {2}Segundo an\IeC {\'a}lisis cardata .sav}{6}% 
-\contentsline {section}{\numberline {3}Tercer an\IeC {\'a}lisis del alquiler en Nueva York con AirBNB durante 2019 .csv}{6}% 
-\contentsline {section}{\numberline {4}Guia en R para el an\IeC {\'a}lisis estad\IeC {\'\i }stico}{16}% 
-\contentsline {subsection}{\numberline {4.1}Frecuencias}{16}% 
-\contentsline {subsection}{\numberline {4.2}Medidas representativas}{16}% 
-\contentsline {subsection}{\numberline {4.3}Medidas de ordenaci\IeC {\'o}n}{16}% 
-\contentsline {section}{\numberline {5}Funciones creadas}{16}% 
-\contentsline {subsection}{\numberline {5.1}Frecuencias}{16}% 
-\contentsline {subsubsection}{\numberline {5.1.1}Frecuencia Absoluta}{16}% 
-\contentsline {subsubsection}{\numberline {5.1.2}Frecuencia Absoluta Acumulada}{17}% 
-\contentsline {subsubsection}{\numberline {5.1.3}Frecuencia Relativa}{17}% 
-\contentsline {subsubsection}{\numberline {5.1.4}Frecuencia Relativa Acumulada}{18}% 
-\contentsline {subsection}{\numberline {5.2}Medidas representativas}{19}% 
-\contentsline {subsubsection}{\numberline {5.2.1}Media Aritmetica}{19}% 
-\contentsline {subsubsection}{\numberline {5.2.2}Media Geom\IeC {\'e}trica}{19}% 
-\contentsline {subsubsection}{\numberline {5.2.3}Media Arm\IeC {\'o}nica}{19}% 
-\contentsline {subsubsection}{\numberline {5.2.4}Desviacion T\IeC {\'\i }pica}{19}% 
-\contentsline {subsubsection}{\numberline {5.2.5}Desviacion Media}{19}% 
-\contentsline {subsubsection}{\numberline {5.2.6}Varianza}{20}% 
-\contentsline {subsubsection}{\numberline {5.2.7}Tchebychev}{20}% 
-\contentsline {subsection}{\numberline {5.3}Medidas de ordenaci\IeC {\'o}n}{20}% 
-\contentsline {subsubsection}{\numberline {5.3.1}Mediana}{20}% 
-\contentsline {subsubsection}{\numberline {5.3.2}Cuartiles}{21}% 
-\contentsline {subsubsection}{\numberline {5.3.3}Cuantil54}{21}% 
+\contentsline {section}{\numberline {3}Tercer an\IeC {\'a}lisis del alquiler en Nueva York con AirBNB durante 2019 .csv}{8}% 
+\contentsline {section}{\numberline {4}Guia en R para el an\IeC {\'a}lisis estad\IeC {\'\i }stico}{18}% 
+\contentsline {subsection}{\numberline {4.1}Frecuencias}{18}% 
+\contentsline {subsection}{\numberline {4.2}Medidas representativas}{18}% 
+\contentsline {subsection}{\numberline {4.3}Medidas de ordenaci\IeC {\'o}n}{18}% 
+\contentsline {section}{\numberline {5}Funciones creadas}{18}% 
+\contentsline {subsection}{\numberline {5.1}Frecuencias}{18}% 
+\contentsline {subsubsection}{\numberline {5.1.1}Frecuencia Absoluta}{18}% 
+\contentsline {subsubsection}{\numberline {5.1.2}Frecuencia Absoluta Acumulada}{19}% 
+\contentsline {subsubsection}{\numberline {5.1.3}Frecuencia Relativa}{19}% 
+\contentsline {subsubsection}{\numberline {5.1.4}Frecuencia Relativa Acumulada}{20}% 
+\contentsline {subsection}{\numberline {5.2}Medidas representativas}{21}% 
+\contentsline {subsubsection}{\numberline {5.2.1}Media Aritmetica}{21}% 
+\contentsline {subsubsection}{\numberline {5.2.2}Media Geom\IeC {\'e}trica}{21}% 
+\contentsline {subsubsection}{\numberline {5.2.3}Media Arm\IeC {\'o}nica}{21}% 
+\contentsline {subsubsection}{\numberline {5.2.4}Desviacion T\IeC {\'\i }pica}{21}% 
+\contentsline {subsubsection}{\numberline {5.2.5}Desviacion Media}{21}% 
+\contentsline {subsubsection}{\numberline {5.2.6}Varianza}{22}% 
+\contentsline {subsubsection}{\numberline {5.2.7}Tchebychev}{22}% 
+\contentsline {subsection}{\numberline {5.3}Medidas de ordenaci\IeC {\'o}n}{22}% 
+\contentsline {subsubsection}{\numberline {5.3.1}Mediana}{22}% 
+\contentsline {subsubsection}{\numberline {5.3.2}Cuartiles}{23}% 
+\contentsline {subsubsection}{\numberline {5.3.3}Cuantil54}{23}% 

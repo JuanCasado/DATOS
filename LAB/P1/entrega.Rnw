@@ -112,6 +112,32 @@ v_cuantil54
 \section{Segundo análisis cardata .sav}
 %-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+<<>>=
+source("init.R")
+cardata <- read.spss("./cardata.sav")$mpg
+cardata <- cardata[!is.na(cardata)]
+@
+
+<<>>=
+mean(cardata)
+median(cardata)
+moda(cardata)
+sd(cardata)
+var(cardata)
+@
+\begin{center}
+<<fig=TRUE, echo=FALSE>>=
+  plotFrecuencyData(cardata)
+@
+<<>>=
+v_cuartiles <- quantile(cardata, prob=c(0, .25, .5, .75, 1))
+v_cuartiles
+@
+<<fig=TRUE, echo=FALSE>>=
+boxplot(v_cuartiles,horizontal=T)
+@
+
+
 %-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 \section{Tercer análisis del alquiler en Nueva York con AirBNB durante 2019 .csv}
 %-----------------------------------------------------------------------------------------------------------------------------------------------------------------------

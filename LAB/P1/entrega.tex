@@ -137,6 +137,61 @@ Cuantiles y cuartiles ...
 \section{Segundo análisis cardata .sav}
 %-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+\begin{Schunk}
+\begin{Sinput}
+> source("init.R")
+> cardata <- read.spss("./cardata.sav")$mpg
+> cardata <- cardata[!is.na(cardata)]
+\end{Sinput}
+\end{Schunk}
+
+\begin{Schunk}
+\begin{Sinput}
+> mean(cardata)
+\end{Sinput}
+\begin{Soutput}
+[1] 28.79351
+\end{Soutput}
+\begin{Sinput}
+> median(cardata)
+\end{Sinput}
+\begin{Soutput}
+[1] 28.9
+\end{Soutput}
+\begin{Sinput}
+> moda(cardata)
+\end{Sinput}
+\begin{Soutput}
+[1] 36
+\end{Soutput}
+\begin{Sinput}
+> sd(cardata)
+\end{Sinput}
+\begin{Soutput}
+[1] 7.37721
+\end{Soutput}
+\begin{Sinput}
+> var(cardata)
+\end{Sinput}
+\begin{Soutput}
+[1] 54.42323
+\end{Soutput}
+\end{Schunk}
+\begin{center}
+\includegraphics{entrega-018}
+\begin{Schunk}
+\begin{Sinput}
+> v_cuartiles <- quantile(cardata, prob=c(0, .25, .5, .75, 1))
+> v_cuartiles
+\end{Sinput}
+\begin{Soutput}
+    0%    25%    50%    75%   100% 
+15.500 22.550 28.900 34.275 46.600 
+\end{Soutput}
+\end{Schunk}
+\includegraphics{entrega-020}
+
+
 %-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 \section{Tercer análisis del alquiler en Nueva York con AirBNB durante 2019 .csv}
 %-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -233,10 +288,10 @@ Datos para Manhattan
 > plotFrecuencyData(manhattan_data)
 \end{Sinput}
 \end{Schunk}
-\includegraphics{entrega-024}
+\includegraphics{entrega-029}
 \end{center}
 \begin{center}
-\includegraphics{entrega-025}
+\includegraphics{entrega-030}
 \end{center}
 
 Datos para Bronx
@@ -247,10 +302,10 @@ Datos para Bronx
 > plotFrecuencyData(bronx_data)
 \end{Sinput}
 \end{Schunk}
-\includegraphics{entrega-026}
+\includegraphics{entrega-031}
 \end{center}
 \begin{center}
-\includegraphics{entrega-027}
+\includegraphics{entrega-032}
 \end{center}
 
 Datos para Brooklyn
@@ -261,10 +316,10 @@ Datos para Brooklyn
 > plotFrecuencyData(brooklyn_data)
 \end{Sinput}
 \end{Schunk}
-\includegraphics{entrega-028}
+\includegraphics{entrega-033}
 \end{center}
 \begin{center}
-\includegraphics{entrega-029}
+\includegraphics{entrega-034}
 \end{center}
 
 Datos para Queens
@@ -275,10 +330,10 @@ Datos para Queens
 > plotFrecuencyData(queens_data)
 \end{Sinput}
 \end{Schunk}
-\includegraphics{entrega-030}
+\includegraphics{entrega-035}
 \end{center}
 \begin{center}
-\includegraphics{entrega-031}
+\includegraphics{entrega-036}
 \end{center}
 
 Datos para Staten Island
@@ -289,10 +344,10 @@ Datos para Staten Island
 > plotFrecuencyData(state_data)
 \end{Sinput}
 \end{Schunk}
-\includegraphics{entrega-032}
+\includegraphics{entrega-037}
 \end{center}
 \begin{center}
-\includegraphics{entrega-033}
+\includegraphics{entrega-038}
 \end{center}
 %-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 \section{Guia en R para el análisis estadístico}
@@ -356,7 +411,7 @@ function(data){
   #convertimos la matriz en una tabla
   matrix<-as.table(matrix)
 }
-<bytecode: 0x7fba756e1730>
+<bytecode: 0x7fba7757ba50>
 \end{Soutput}
 \end{Schunk}
 \subsubsection{Frecuencia Absoluta Acumulada}
@@ -433,7 +488,7 @@ function(data){
   #convertimos la matriz en una tabla
   matrix<-as.table(matrix)
 }
-<bytecode: 0x7fba735ca3d8>
+<bytecode: 0x7fba76f98f08>
 \end{Soutput}
 \end{Schunk}
 \subsubsection{Frecuencia Relativa Acumulada}
@@ -485,7 +540,7 @@ function(data){
   }
   acc / length(data)
 }
-<bytecode: 0x7fba757159f8>
+<bytecode: 0x7fba72420098>
 \end{Soutput}
 \end{Schunk}
 \subsubsection{Media Geométrica}
@@ -519,7 +574,7 @@ function(data){
 function (data) {
   varianza(data)^(1/2)
 }
-<bytecode: 0x7fba725b0278>
+<bytecode: 0x7fba75728b18>
 \end{Soutput}
 \end{Schunk}
 \subsubsection{Desviacion Media}
@@ -552,7 +607,7 @@ function(data){
   }
   acc/length(data)
 }
-<bytecode: 0x7fba73f038f0>
+<bytecode: 0x7fba7531db48>
 \end{Soutput}
 \end{Schunk}
 \subsubsection{Tchebychev}
@@ -588,7 +643,7 @@ function(data){
      x[size / 2]
   }
 }
-<bytecode: 0x7fba75623028>
+<bytecode: 0x7fba74e29ae0>
 \end{Soutput}
 \end{Schunk}
 \subsubsection{Cuartiles}
@@ -621,7 +676,7 @@ function(data){
   }
 
 }
-<bytecode: 0x7fba74df0440>
+<bytecode: 0x7fba73bcbe90>
 \end{Soutput}
 \end{Schunk}
 \subsubsection{Cuantil54}
