@@ -1,9 +1,15 @@
+#Calcula la frecuencia relativa de un vector de datos
+#=================================================
+# tablefrecuencia=table(tablename$variablename)
+# prop.table(tablefrecuencia)
+#=================================================
+
 
 source("frecuencia.R")
 
-frecuenciaRelativa <- function(data,name){
+frecuenciaRelativa <- function(data){
     #conseguimos frecuencia
-    frecuencia <-frecuencia(data,name)
+    frecuencia <-frecuencia(data)
     # recuperamos el nombre de las columnas
     uniquedata<-colnames(frecuencia)
     #cogemos solo el vector de frecuencia
