@@ -12,7 +12,9 @@ cuartiles <- function(data){
 
     }
     else {
-        x[size / 2]
+        c(x[size / 4],
+        x[size / 2],
+        (x[size *0.75] + x[size * 0.75 + 1]) / 2.0)
   }
 
 }
