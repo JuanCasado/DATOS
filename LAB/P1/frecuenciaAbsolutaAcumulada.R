@@ -1,10 +1,10 @@
-source("frecuencia.R")
+source("frecuenciaAbsoluta.R")
 
 
-frecuenciaAcumulada <-function(data){
+frecuenciaAbsolutaAcumulada <-function(data){
 
     # calculamos la frecuencia
-    frecuencia <-frecuencia(data)
+    frecuencia <-frecuenciaAbsoluta(data)
     # recuperamos el nombre de las columnas
     uniquedata<-colnames(frecuencia)
     # cogemos el vector de frecuencia

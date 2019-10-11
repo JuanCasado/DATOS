@@ -1,7 +1,7 @@
-source("frecuenciaAcumulada.R")
+source("frecuenciaAbsoluta.R")
 
 
-frecuenciaAcumuladaRelativa <-function(data){
+frecuenciaRelativaAcumulada <-function(data){
     # calcumos la frecuencia acumulada
     frecuencia <-frecuenciaAcumulada(data)
     # recuperamos el nombre de las columnas

@@ -1,0 +1,331 @@
+
+\documentclass [a4paper] {article}
+\usepackage[utf8]{inputenc}
+\title{Ciencia de datos, práctica 1}
+\author{Juan Casado Ballesteros}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+En esta práctica vamos a realizar tres análisis estadísticos, 
+en los dos primeros utilizaremos las funciones propias de R sobre los datos proporcionados por el profesor en los formatos .txt para el primero y .sav para el segundo.
+En el tercer análisis hemos programado nosotros mismos nuestras propias funciones. 
+Como datos hemos elegido un .csv que contiene información sobre el alquiler en la Ciudad de Nueva York.
+Intentaremos para este tercer análisis realizar un estudio crítico que nos permita llegar a conocer los datos con los que estamos trabajando.
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+%-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+\section{Primer análisis satelites menores de urano.txt}
+%-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Comenzamos leyendo los datos del archivo .txt ya que dicho archivo lo hemos escrito con la sintaxis que textbf{read.table} espera 
+por lo que no tendremos que utilizar ningún parámetro adicional para configurar la lectura de los datos.
+<<cargarDatosIniciales>>=
+source("init.R")
+satelites <- read.table("./satelites.txt")
+@
+
+Primero calcularemos la frecuencia absoluta de los datos, que es el número de apariciones de cada uno de ellos.
+
+<<frecuencia_absoluta_satelites>>=
+frecuencia_absoluta<-table(satelites$radio)
+@
+\begin{center}
+<<frecuencia_absoluta_satelites_plot, echo=FALSE, plot=TRUE>>=
+barplot(frecuencia_absoluta)
+@
+\end{center}
+
+Ahora calcularemos la frecuencia absoluta acumulada.
+
+<<frecuencia_absoluta_acumulada_satelites>>=
+frecuencia_absoluta_acumulada<-cumsum(frecuencia_absoluta)
+@
+\begin{center}
+<<frecuencia_absoluta_acumulada_satelites_plot, fig=TRUE, echo=FALSE>>=
+barplot(frecuencia_absoluta_acumulada)
+@
+\end{center}
+
+Ahora calcularemos la frecuencia relativa.
+
+<<frecuencia_relativa_satelites>>=
+frecuencia_relativa <- (function(data) table(data)/length(data))(satelites$radio)
+sum(frecuencia_relativa)
+@
+\begin{center}
+<<frecuencia_relativa_satelites_plot,fig=TRUE, echo=FALSE>>=
+barplot(frecuencia_relativa)
+@
+\end{center}
+
+Ahora calcularemos la frecuencia relativa acumulada.
+
+<<frecuencia_relativa_acumulada_satelites>>=
+frecuencia_relativa_acumulada <- cumsum(frecuencia_relativa)
+@
+\begin{center}
+<<frecuencia_relativa_acumulada_satelites_plot, fig=TRUE, echo=FALSE>>=
+barplot(frecuencia_relativa_acumulada)
+@
+\end{center}
+
+Calcularemos a continuación estadísticos cuya función es resumir los datos de los que disponemos.
+Estos estadísticos son la media, la moda y la mediana.
+
+<<estadisticos_satelites>>=
+media <- mean(satelites$radio)
+v_mediana <- median(satelites$radio)
+v_moda <- moda(satelites$radio)
+desviacion_tipica <- sd(satelites$radio)
+v_varianza <- var(satelites$radio)
+@
+\begin{center}
+<<estadisticos_satelites_plot, fig=TRUE, echo=FALSE>>=
+  plot(frecuencia_relativa, lwd=20, col="gray")
+  abline(v=c(media, v_mediana, v_moda), col=c("blue","red","green"), lty=c(1,1,1), lwd=c(5,5,5))
+  legend("topright", legend=c("media", "mediana","moda"), fill=c("blue","red","green"))
+@
+<<estadisticos_satelites_print>>=
+desviacion_tipica
+v_varianza
+@
+\end{center}
+
+Cuantiles y cuartiles ...
+<<cuartiles_satelites>>=
+v_cuartiles <- quantile(satelites$radio, prob=c(0, .25, .5, .75, 1))
+v_cuantil54 <- quantile(satelites$radio, prob=(.54))
+@
+<<cuartiles_satelites_plot, fig=TRUE, echo=FALSE>>=
+boxplot(v_cuartiles,horizontal=T)
+@
+<<>>=
+v_cuartiles
+v_cuantil54
+@
+
+%-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+\section{Segundo análisis cardata .sav}
+%-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+%-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+\section{Tercer análisis del alquiler en Nueva York con AirBNB durante 2019 .csv}
+%-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Haremos ahora un análisis de los datos del alquiler en la ciudad de Nueva York durante el año 2019 con la compañía AirBNB.
+Los datos contienen las siguientes categorías:
+<<get_info_BNB>>=
+getInfo(data)
+@
+Comenzaremos por analizar el precio de los alquileres.
+Para ello calcularemos la frecuencia relativa de los precios.
+<<frecuencia_relativa_BNB>>=
+frecuencia_relativa<-frecuenciaRelativa(data$price)
+@
+\begin{center}
+<<frecuencia_relativa_BNB_plot, fig=TRUE, echo=FALSE>>=
+barplot(frecuencia_relativa)
+@
+\end{center}
+
+Podemos observar que los precios están muy agrupados en la parte izquierda de la gráfica (precios bajos) con altos porcentajes de aparición,
+no obstante aunque con una densidad mucho menor estos se alejan en gran medida llegando a alcanzar precios muy elevados pero con pocos porcentajes de aparición.
+
+\begin{center}
+<<estadisticos_BNB_plot, fig=TRUE, echo=FALSE>>=
+plotFrecuencyData(data$price)
+@
+\end{center}
+
+<<cuartiles_BNB>>=
+v_cuartiles <- cuartiles(data$price)
+@
+\begin{center}
+<<cuartiles_BNB_plot, fig=TRUE, echo=FALSE>>=
+boxplot(v_cuartiles, horizontal=T)
+@
+\end{center}
+
+
+Vemos que la media no es un valor representativo, su desviación típica es muy alta.
+Podemos observar como la moda y la mediana en este caso parecen representar mejor a la mayoría de los datos.
+Debido a esto decidimos que hacer el análisis de los precios para toda la ciudad no iba a aportarnos una visión representativa de los datos.
+Decidimos ahora calcular el precio medio por cada barrio en vez de hacerlo sobre toda la ciudad a la vez.
+
+<<estadisticos_barrios_BNB, echo=FALSE>>=
+aggregate(data$price, list(data$neighbourhood_group), 
+FUN=(function(barrio) c(media=mediaAritmetica(barrio),
+                        desviacion_tipica=desviacionTipica(barrio),
+                        mediana=mediana(barrio),
+                        moda=moda(barrio))))
+@
+Valores sobre el total de los datos sin haber separado por barrios
+<<estadisticos_BNB, echo=FALSE>>=
+c(media=mediaAritmetica(data$price),
+  desviacion_tipica=desviacionTipica(data$price),
+  v_mediana=mediana(data$price),
+  v_moda=moda(data$price))
+@
+
+Podemos ver que la varianza se ha reducido para más barrios de en los que ha aumentado.
+En Bronx es en el barrio en el que tanto la varianza como la media es menor y 
+Manhattan es en el que ambas son mayores.
+
+Datos para Manhattan
+\begin{center}
+<<fig=TRUE>>=
+manhattan_data = data$price[data$neighbourhood_group == "Manhattan"]
+plotFrecuencyData(manhattan_data)
+@
+\end{center}
+\begin{center}
+<<fig=TRUE, echo=FALSE>>=
+boxplot(cuartiles(manhattan_data), horizontal=T)
+@
+\end{center}
+
+Datos para Bronx
+\begin{center}
+<<fig=TRUE>>=
+bronx_data <- data$price[data$neighbourhood_group == "Bronx"]
+plotFrecuencyData(bronx_data)
+@
+\end{center}
+\begin{center}
+<<fig=TRUE, echo=FALSE>>=
+boxplot(cuartiles(bronx_data), horizontal=T)
+@
+\end{center}
+
+Datos para Brooklyn
+\begin{center}
+<<fig=TRUE>>=
+brooklyn_data <- data$price[data$neighbourhood_group == "Brooklyn"]
+plotFrecuencyData(brooklyn_data)
+@
+\end{center}
+\begin{center}
+<<fig=TRUE, echo=FALSE>>=
+boxplot(cuartiles(brooklyn_data), horizontal=T)
+@
+\end{center}
+
+Datos para Queens
+\begin{center}
+<<fig=TRUE>>=
+queens_data <- data$price[data$neighbourhood_group == "Queens"]
+plotFrecuencyData(queens_data)
+@
+\end{center}
+\begin{center}
+<<fig=TRUE, echo=FALSE>>=
+boxplot(cuartiles(queens_data), horizontal=T)
+@
+\end{center}
+
+Datos para Staten Island
+\begin{center}
+<<fig=TRUE>>=
+state_data <- data$price[data$neighbourhood_group == "Staten Island"]
+plotFrecuencyData(state_data)
+@
+\end{center}
+\begin{center}
+<<fig=TRUE, echo=FALSE>>=
+boxplot(cuartiles(state_data), horizontal=T)
+@
+\end{center}
+%-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+\section{Guia en R para el análisis estadístico}
+%-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<<echo=FALSE>>=
+data <- read.table("./satelites.txt")$radio
+@
+\subsection{Frecuencias}
+<<>>=
+Frecuencia_absoluta <- table(data)
+Frecuencia_absoluta_acumulada <- cumsum(frecuencia_absoluta)
+Frecuencia_relativa <- (function(data) table(data)/length(data))(data)
+Frecuencia_relativa_acumulada <- cumsum(frecuencia_relativa)
+@
+\subsection{Medidas representativas}
+<<>>=
+Media <- mean(data)
+Desviacion_tipica <- sd(data)
+Varianza <- var(data)
+@
+\subsection{Medidas de ordenación}
+<<>>=
+Mediana <- median(data)
+Cuartiles <- quantile(data, prob=c(0, .25, .5, .75, 1))
+Cuantil54 <- quantile(data, prob=(.54))
+@
+
+%-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+\section{Funciones creadas}
+%-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+\subsection{Frecuencias}
+\subsubsection{Frecuencia Absoluta}
+<<>>=
+frecuenciaAbsoluta
+@
+\subsubsection{Frecuencia Absoluta Acumulada}
+<<>>=
+frecuenciaAbsolutaAcumulada
+@
+\subsubsection{Frecuencia Relativa}
+<<>>=
+frecuenciaRelativa
+@
+\subsubsection{Frecuencia Relativa Acumulada}
+<<>>=
+frecuenciaRelativaAcumulada
+@
+\subsection{Medidas representativas}
+\subsubsection{Media Aritmetica}
+<<>>=
+mediaAritmetica
+@
+\subsubsection{Media Geométrica}
+<<>>=
+mediaGeometrica
+@
+\subsubsection{Media Armónica}
+<<>>=
+mediaArmonica
+@
+\subsubsection{Desviacion Típica}
+<<>>=
+desviacionTipica
+@
+\subsubsection{Desviacion Media}
+<<>>=
+desviacionMedia
+@
+\subsubsection{Varianza}
+<<>>=
+varianza
+@
+\subsubsection{Tchebychev}
+<<>>=
+tchebychev
+@
+\subsection{Medidas de ordenación}
+\subsubsection{Mediana}
+<<>>=
+mediana
+@
+\subsubsection{Cuartiles}
+<<>>=
+cuartiles
+@
+\subsubsection{Cuantil54}
+<<>>=
+cuantil54
+@
+
+\end{document}

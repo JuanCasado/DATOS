@@ -4,7 +4,7 @@
 # table(tablename$variablename)
 #=================================================
 
-frecuencia <- function(data){
+frecuenciaAbsoluta <- function(data){
   # creamos un vector donde solo estas los elementos sin repetir
   uniquedata<-unique(data)
   # ordenamos el vector para aparezco correcto 
@@ -30,7 +30,7 @@ frecuencia <- function(data){
 
 # comprueba si  son iguales la frecuencia realizada o la dada por R
 checkFrecuencia <- function(data){
-  if(identical(as.numeric(frecuencia(data)[1,]),as.numeric(table(data)))){
+  if(identical(as.numeric(frecuenciaAbsoluta(data)[1,]),as.numeric(table(data)))){
     message(paste("Las dos frecuencias son las mismas"))
   }else{
     message(paste("Las dos frecuencias son diferentes"))
@@ -38,7 +38,7 @@ checkFrecuencia <- function(data){
 }
 
 frecuenciadraw <-function(data,namevariable){
-  frecuencia <-frecuencia(data)
+  frecuencia <-frecuenciaAbsoluta(data)
   # recuperamos el nombre de las columnas
   uniquedata<-as.numeric(colnames(frecuencia))
   matrixA<-matrix(nrow=2,ncol=length(uniquedata), c(uniquedata,frecuencia), byrow=T)
@@ -47,6 +47,6 @@ frecuenciadraw <-function(data,namevariable){
 }
 
 frecuenciaHistograma <-function(data,namevariable){
-  fr <-frecuencia(data)
+  fr <-frecuenciaAbsoluta(data)
   hist(fr,xlab="Cantidad",ylab="Frecuencia",main=paste("Histograma de ",namevariable), col="red",border="red4")
 }

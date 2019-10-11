@@ -5,11 +5,11 @@
 #=================================================
 
 
-source("frecuencia.R")
+source("frecuenciaAbsoluta.R")
 
 frecuenciaRelativa <- function(data){
     #conseguimos frecuencia
-    frecuencia <-frecuencia(data)
+    frecuencia <-frecuenciaAbsoluta(data)
     # recuperamos el nombre de las columnas
     uniquedata<-colnames(frecuencia)
     #cogemos solo el vector de frecuencia

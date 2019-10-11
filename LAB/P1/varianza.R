@@ -6,7 +6,7 @@
 
 source("mediaAritmetica.R")
 varianza <- function(data){
-  v_media <- media(data)
+  v_media <- mediaAritmetica(data)
   acc = 0
   for (value in data){
     acc <- acc + (value - v_media)^2
