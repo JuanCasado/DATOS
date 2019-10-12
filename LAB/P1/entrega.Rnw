@@ -345,13 +345,21 @@ tchebychev
 <<>>=
 mediana
 @
+La mediana la hemos calculado ordenando los datos en orden ascendente
+y obteniendo el punto que se encuentra en la mitad de ese vector 
+o la media entre los 2 puntos que se encuentran en este lugar
 \subsubsection{Cuartiles}
 <<>>=
 cuartiles
 @
+Los cuartiles los hemos calculado ordenando los datos en orden ascendente
+y obteniendo los 3 puntos que dividen el vector en 4 partes iguales, es decir,
+el cuartil 25, el 50 y el 75.
 \subsubsection{Cuantil54}
 <<>>=
 cuantil54
 @
+El cuantil 54 los hemos calculado ordenando los datos en orden ascendente
+y obteniendo el punto en el que detrás de él se encuentran el 54% de los datos
 
 \end{document}
