@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.10.8)  11 OCT 2019 20:59
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.10.8)  13 OCT 2019 14:24
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -354,176 +354,175 @@ LaTeX Font Info:    Try loading font information for T1+aett on input line 28.
  (/usr/local/texlive/2019/texmf-dist/tex/latex/ae/t1aett.fd
 File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
 )
-<entrega-frecuencia_absoluta_acumulada_satelites_plot.pdf, id=16, 433.62pt x 43
+<entrega-frecuencia_absoluta_satelites_plot.pdf, id=16, 433.62pt x 433.62pt>
+File: entrega-frecuencia_absoluta_satelites_plot.pdf Graphic file (type pdf)
+<use entrega-frecuencia_absoluta_satelites_plot.pdf>
+Package pdftex.def Info: entrega-frecuencia_absoluta_satelites_plot.pdf  used o
+n input line 42.
+(pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
+<entrega-frecuencia_absoluta_acumulada_satelites_plot.pdf, id=17, 433.62pt x 43
 3.62pt>
 File: entrega-frecuencia_absoluta_acumulada_satelites_plot.pdf Graphic file (ty
 pe pdf)
 <use entrega-frecuencia_absoluta_acumulada_satelites_plot.pdf>
 Package pdftex.def Info: entrega-frecuencia_absoluta_acumulada_satelites_plot.p
-df  used on input line 52.
+df  used on input line 53.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
-<entrega-frecuencia_relativa_satelites_plot.pdf, id=17, 433.62pt x 433.62pt>
+
+[3 <./entrega-frecuencia_absoluta_satelites_plot.pdf>]
+<entrega-frecuencia_relativa_satelites_plot.pdf, id=27, 433.62pt x 433.62pt>
 File: entrega-frecuencia_relativa_satelites_plot.pdf Graphic file (type pdf)
 <use entrega-frecuencia_relativa_satelites_plot.pdf>
 Package pdftex.def Info: entrega-frecuencia_relativa_satelites_plot.pdf  used o
-n input line 67.
+n input line 68.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
-
-[3 <./entrega-frecuencia_absoluta_acumulada_satelites_plot.pdf>]
-<entrega-frecuencia_relativa_acumulada_satelites_plot.pdf, id=28, 433.62pt x 43
+ [4 <./entrega-frecuencia_absoluta_acumulada_satelites_plot.pdf>]
+<entrega-frecuencia_relativa_acumulada_satelites_plot.pdf, id=37, 433.62pt x 43
 3.62pt>
 File: entrega-frecuencia_relativa_acumulada_satelites_plot.pdf Graphic file (ty
 pe pdf)
 <use entrega-frecuencia_relativa_acumulada_satelites_plot.pdf>
 Package pdftex.def Info: entrega-frecuencia_relativa_acumulada_satelites_plot.p
-df  used on input line 78.
+df  used on input line 79.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
- [4 <./entrega-frecuencia_relativa_satelites_plot.pdf> <./entrega-frecuencia_re
+ [5 <./entrega-frecuencia_relativa_satelites_plot.pdf> <./entrega-frecuencia_re
 lativa_acumulada_satelites_plot.pdf>]
-<entrega-estadisticos_satelites_plot.pdf, id=42, 433.62pt x 433.62pt>
+<entrega-estadisticos_satelites_plot.pdf, id=51, 433.62pt x 433.62pt>
 File: entrega-estadisticos_satelites_plot.pdf Graphic file (type pdf)
 <use entrega-estadisticos_satelites_plot.pdf>
 Package pdftex.def Info: entrega-estadisticos_satelites_plot.pdf  used on input
- line 94.
+ line 95.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
-<entrega-cuartiles_satelites_plot.pdf, id=43, 433.62pt x 433.62pt>
+<entrega-cuartiles_satelites_plot.pdf, id=52, 433.62pt x 433.62pt>
 File: entrega-cuartiles_satelites_plot.pdf Graphic file (type pdf)
 <use entrega-cuartiles_satelites_plot.pdf>
 Package pdftex.def Info: entrega-cuartiles_satelites_plot.pdf  used on input li
-ne 118.
+ne 119.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
- [5 <./entrega-estadisticos_satelites_plot.pdf>] [6 <./entrega-cuartiles_sateli
-tes_plot.pdf>]
-<entrega-018.pdf, id=60, 433.62pt x 433.62pt>
+
+[6 <./entrega-estadisticos_satelites_plot.pdf>] [7 <./entrega-cuartiles_satelit
+es_plot.pdf>]
+<entrega-018.pdf, id=70, 433.62pt x 433.62pt>
 File: entrega-018.pdf Graphic file (type pdf)
 <use entrega-018.pdf>
-Package pdftex.def Info: entrega-018.pdf  used on input line 181.
+Package pdftex.def Info: entrega-018.pdf  used on input line 182.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
-<entrega-020.pdf, id=61, 433.62pt x 433.62pt>
+<entrega-020.pdf, id=71, 433.62pt x 433.62pt>
 File: entrega-020.pdf Graphic file (type pdf)
 <use entrega-020.pdf>
-Package pdftex.def Info: entrega-020.pdf  used on input line 192.
+Package pdftex.def Info: entrega-020.pdf  used on input line 194.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
- [7 <./entrega-018.pdf>] [8 <./entrega-020.pdf>]
-<entrega-frecuencia_relativa_BNB_plot.pdf, id=79, 433.62pt x 433.62pt>
+ [8 <./entrega-018.pdf>] [9 <./entrega-020.pdf>]
+<entrega-frecuencia_relativa_BNB_plot.pdf, id=88, 433.62pt x 433.62pt>
 File: entrega-frecuencia_relativa_BNB_plot.pdf Graphic file (type pdf)
 <use entrega-frecuencia_relativa_BNB_plot.pdf>
 Package pdftex.def Info: entrega-frecuencia_relativa_BNB_plot.pdf  used on inpu
-t line 236.
+t line 238.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
-<entrega-estadisticos_BNB_plot.pdf, id=80, 433.62pt x 433.62pt>
+<entrega-estadisticos_BNB_plot.pdf, id=89, 433.62pt x 433.62pt>
 File: entrega-estadisticos_BNB_plot.pdf Graphic file (type pdf)
 <use entrega-estadisticos_BNB_plot.pdf>
 Package pdftex.def Info: entrega-estadisticos_BNB_plot.pdf  used on input line 
-243.
+245.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
- [9 <./entrega-frecuencia_relativa_BNB_plot.pdf>]
-<entrega-cuartiles_BNB_plot.pdf, id=89, 433.62pt x 433.62pt>
+ [10 <./entrega-frecuencia_relativa_BNB_plot.pdf>]
+<entrega-cuartiles_BNB_plot.pdf, id=98, 433.62pt x 433.62pt>
 File: entrega-cuartiles_BNB_plot.pdf Graphic file (type pdf)
 <use entrega-cuartiles_BNB_plot.pdf>
-Package pdftex.def Info: entrega-cuartiles_BNB_plot.pdf  used on input line 252
+Package pdftex.def Info: entrega-cuartiles_BNB_plot.pdf  used on input line 254
 .
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
- [10 <./entrega-estadisticos_BNB_plot.pdf> <./entrega-cuartiles_BNB_plot.pdf>]
-<entrega-029.pdf, id=104, 433.62pt x 433.62pt>
+ [11 <./entrega-estadisticos_BNB_plot.pdf> <./entrega-cuartiles_BNB_plot.pdf>]
+<entrega-029.pdf, id=113, 433.62pt x 433.62pt>
 File: entrega-029.pdf Graphic file (type pdf)
 <use entrega-029.pdf>
-Package pdftex.def Info: entrega-029.pdf  used on input line 291.
+Package pdftex.def Info: entrega-029.pdf  used on input line 292.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
-<entrega-030.pdf, id=105, 433.62pt x 433.62pt>
+<entrega-030.pdf, id=114, 433.62pt x 433.62pt>
 File: entrega-030.pdf Graphic file (type pdf)
 <use entrega-030.pdf>
-Package pdftex.def Info: entrega-030.pdf  used on input line 294.
+Package pdftex.def Info: entrega-030.pdf  used on input line 295.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
- [11 <./entrega-029.pdf>]
-<entrega-031.pdf, id=114, 433.62pt x 433.62pt>
+ [12 <./entrega-029.pdf>]
+<entrega-031.pdf, id=123, 433.62pt x 433.62pt>
 File: entrega-031.pdf Graphic file (type pdf)
 <use entrega-031.pdf>
-Package pdftex.def Info: entrega-031.pdf  used on input line 305.
+Package pdftex.def Info: entrega-031.pdf  used on input line 300.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
-
-[12 <./entrega-030.pdf>]
 <entrega-032.pdf, id=124, 433.62pt x 433.62pt>
 File: entrega-032.pdf Graphic file (type pdf)
 <use entrega-032.pdf>
-Package pdftex.def Info: entrega-032.pdf  used on input line 308.
+Package pdftex.def Info: entrega-032.pdf  used on input line 303.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
- [13 <./entrega-031.pdf> <./entrega-032.pdf>]
+ [13 <./entrega-030.pdf> <./entrega-031.pdf>]
 <entrega-033.pdf, id=140, 433.62pt x 433.62pt>
 File: entrega-033.pdf Graphic file (type pdf)
 <use entrega-033.pdf>
-Package pdftex.def Info: entrega-033.pdf  used on input line 319.
+Package pdftex.def Info: entrega-033.pdf  used on input line 308.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
 <entrega-034.pdf, id=141, 433.62pt x 433.62pt>
 File: entrega-034.pdf Graphic file (type pdf)
 <use entrega-034.pdf>
-Package pdftex.def Info: entrega-034.pdf  used on input line 322.
+Package pdftex.def Info: entrega-034.pdf  used on input line 311.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
- [14 <./entrega-033.pdf> <./entrega-034.pdf>]
+ [14 <./entrega-032.pdf> <./entrega-033.pdf>]
 <entrega-035.pdf, id=156, 433.62pt x 433.62pt>
 File: entrega-035.pdf Graphic file (type pdf)
 <use entrega-035.pdf>
-Package pdftex.def Info: entrega-035.pdf  used on input line 333.
+Package pdftex.def Info: entrega-035.pdf  used on input line 316.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
 <entrega-036.pdf, id=157, 433.62pt x 433.62pt>
 File: entrega-036.pdf Graphic file (type pdf)
 <use entrega-036.pdf>
-Package pdftex.def Info: entrega-036.pdf  used on input line 336.
+Package pdftex.def Info: entrega-036.pdf  used on input line 319.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
- [15 <./entrega-035.pdf>]
-<entrega-037.pdf, id=167, 433.62pt x 433.62pt>
+ [15 <./entrega-034.pdf> <./entrega-035.pdf>]
+<entrega-037.pdf, id=173, 433.62pt x 433.62pt>
 File: entrega-037.pdf Graphic file (type pdf)
 <use entrega-037.pdf>
-Package pdftex.def Info: entrega-037.pdf  used on input line 347.
+Package pdftex.def Info: entrega-037.pdf  used on input line 324.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
- [16 <./entrega-036.pdf>]
-<entrega-038.pdf, id=177, 433.62pt x 433.62pt>
+<entrega-038.pdf, id=174, 433.62pt x 433.62pt>
 File: entrega-038.pdf Graphic file (type pdf)
 <use entrega-038.pdf>
-Package pdftex.def Info: entrega-038.pdf  used on input line 350.
+Package pdftex.def Info: entrega-038.pdf  used on input line 327.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
- [17 <./entrega-037.pdf> <./entrega-038.pdf>] [18] [19] [20] [21]
-[22]
+ [16 <./entrega-036.pdf> <./entrega-037.pdf>]
+[17 <./entrega-038.pdf>] [18] [19] [20]
+Overfull \hbox (1.54596pt too wide) in paragraph at lines 553--556
+\T1/aer/m/n/10 Nos in-dica como de buena es la me-dia ar-it-mética. Cuanto meno
+r sea la desviación
+ []
 
-! LaTeX Error: \begin{center} on input line 180 ended by \end{document}.
 
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.695 \end{document}
-                    
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
+Overfull \hbox (1.54596pt too wide) in paragraph at lines 567--572
+\T1/aer/m/n/10 Nos in-dica como de buena es la me-dia ar-it-mética. Cuanto meno
+r sea la desviación
+ []
 
-[23] (./entrega.aux) )
-(\end occurred inside a group at level 1)
-
-### semi simple group (level 1) entered at line 180 (\begingroup)
-### bottom level 
+[21] [22] [23] [24] (./entrega.aux) ) 
 Here is how much of TeX's memory you used:
- 2853 strings out of 492609
- 42524 string characters out of 6129048
+ 2858 strings out of 492609
+ 42797 string characters out of 6129048
  99495 words of memory out of 5000000
- 6674 multiletter control sequences out of 15000+600000
+ 6678 multiletter control sequences out of 15000+600000
  32927 words of font info for 72 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,6n,25p,296b,391s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmbx10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmbx12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmbx9.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmr10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cm
-r12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr1
-7.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.p
-fb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsltt10.
-pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.p
-fb>
-Output written on entrega.pdf (23 pages, 239726 bytes).
+ 41i,6n,25p,296b,288s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local/texlive/2019/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2019/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2019/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmbx9.pfb></usr/local/texlive/2019/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmr17.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmr9.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmsltt10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public
+/amsfonts/cm/cmtt10.pfb>
+Output written on entrega.pdf (24 pages, 260061 bytes).
 PDF statistics:
- 241 PDF objects out of 1000 (max. 8388607)
- 165 compressed objects within 2 object streams
+ 250 PDF objects out of 1000 (max. 8388607)
+ 171 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
- 101 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 106 words of extra memory for PDF output out of 10000 (max. 10000000)
 

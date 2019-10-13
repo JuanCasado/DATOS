@@ -39,6 +39,7 @@ Primero calcularemos la frecuencia absoluta de los datos, que es el número de a
 \end{Sinput}
 \end{Schunk}
 \begin{center}
+\includegraphics{entrega-frecuencia_absoluta_satelites_plot}
 \end{center}
 
 Ahora calcularemos la frecuencia absoluta acumulada.
@@ -179,6 +180,7 @@ Cuantiles y cuartiles ...
 \end{Schunk}
 \begin{center}
 \includegraphics{entrega-018}
+\end{center}
 \begin{Schunk}
 \begin{Sinput}
 > v_cuartiles <- quantile(cardata, prob=c(0, .25, .5, .75, 1))
@@ -252,7 +254,6 @@ no obstante aunque con una densidad mucho menor estos se alejan en gran medida l
 \includegraphics{entrega-cuartiles_BNB_plot}
 \end{center}
 
-
 Vemos que la media no es un valor representativo, su desviación típica es muy alta.
 Podemos observar como la moda y la mediana en este caso parecen representar mejor a la mayoría de los datos.
 Debido a esto decidimos que hacer el análisis de los precios para toda la ciudad no iba a aportarnos una visión representativa de los datos.
@@ -296,12 +297,6 @@ Datos para Manhattan
 
 Datos para Bronx
 \begin{center}
-\begin{Schunk}
-\begin{Sinput}
-> bronx_data <- data$price[data$neighbourhood_group == "Bronx"]
-> plotFrecuencyData(bronx_data)
-\end{Sinput}
-\end{Schunk}
 \includegraphics{entrega-031}
 \end{center}
 \begin{center}
@@ -310,12 +305,6 @@ Datos para Bronx
 
 Datos para Brooklyn
 \begin{center}
-\begin{Schunk}
-\begin{Sinput}
-> brooklyn_data <- data$price[data$neighbourhood_group == "Brooklyn"]
-> plotFrecuencyData(brooklyn_data)
-\end{Sinput}
-\end{Schunk}
 \includegraphics{entrega-033}
 \end{center}
 \begin{center}
@@ -324,12 +313,6 @@ Datos para Brooklyn
 
 Datos para Queens
 \begin{center}
-\begin{Schunk}
-\begin{Sinput}
-> queens_data <- data$price[data$neighbourhood_group == "Queens"]
-> plotFrecuencyData(queens_data)
-\end{Sinput}
-\end{Schunk}
 \includegraphics{entrega-035}
 \end{center}
 \begin{center}
@@ -338,12 +321,6 @@ Datos para Queens
 
 Datos para Staten Island
 \begin{center}
-\begin{Schunk}
-\begin{Sinput}
-> state_data <- data$price[data$neighbourhood_group == "Staten Island"]
-> plotFrecuencyData(state_data)
-\end{Sinput}
-\end{Schunk}
 \includegraphics{entrega-037}
 \end{center}
 \begin{center}
@@ -411,7 +388,7 @@ function(data){
   #convertimos la matriz en una tabla
   matrix<-as.table(matrix)
 }
-<bytecode: 0x7fba7757ba50>
+<bytecode: 0x7fdf56451dc8>
 \end{Soutput}
 \end{Schunk}
 \subsubsection{Frecuencia Absoluta Acumulada}
@@ -488,7 +465,7 @@ function(data){
   #convertimos la matriz en una tabla
   matrix<-as.table(matrix)
 }
-<bytecode: 0x7fba76f98f08>
+<bytecode: 0x7fdf55ac3998>
 \end{Soutput}
 \end{Schunk}
 \subsubsection{Frecuencia Relativa Acumulada}
@@ -527,7 +504,11 @@ function(data){
 \end{Soutput}
 \end{Schunk}
 \subsection{Medidas representativas}
+Los siguentes valores pretenden ser representates de todos los datos que se estén analizando.
+No tenemos garantís de que realmente lo sean así que para ellos necesitamos de erramientas que nos lo confiermen o desmientan.
 \subsubsection{Media Aritmetica}
+Suma ponderada por la cantidad de valores sumados.
+Se podría haber utilizado la función sum que suma todos los valores de un vector en vez de haber iterado sobre ellos.
 \begin{Schunk}
 \begin{Sinput}
 > mediaAritmetica
@@ -540,10 +521,12 @@ function(data){
   }
   acc / length(data)
 }
-<bytecode: 0x7fba72420098>
+<bytecode: 0x7fdf59920b98>
 \end{Soutput}
 \end{Schunk}
 \subsubsection{Media Geométrica}
+Raiz de orden igual a la cantidad de valores de la multiplicación de todos ellos.
+El logaritmo de la media geométrica también puede expresarse como la media aritmética de los logaritmos de cada dato.
 \begin{Schunk}
 \begin{Sinput}
 > mediaGeometrica
@@ -555,17 +538,20 @@ function(data){
 \end{Soutput}
 \end{Schunk}
 \subsubsection{Media Armónica}
+Inverso de la media de los inversos.
 \begin{Schunk}
 \begin{Sinput}
 > mediaArmonica
 \end{Sinput}
 \begin{Soutput}
 function(data){
-  1/mean(1/data)
+  1/mediaAritmetica(1/data)
 }
 \end{Soutput}
 \end{Schunk}
 \subsubsection{Desviacion Típica}
+Nos indica como de buena es la media aritmética. Cuanto menor sea la desviación mejor será la media.
+Raiz cuadrada de la varianza.
 \begin{Schunk}
 \begin{Sinput}
 > desviacionTipica
@@ -574,10 +560,14 @@ function(data){
 function (data) {
   varianza(data)^(1/2)
 }
-<bytecode: 0x7fba75728b18>
+<bytecode: 0x7fdf56781c10>
 \end{Soutput}
 \end{Schunk}
 \subsubsection{Desviacion Media}
+Nos indica como de buena es la media aritmética. Cuanto menor sea la desviación mejor será la media.
+Se suele utilizar la desviacion típica en vez de la desviacion media.
+Suma ponderada por la cantidad de valores del valor absoluto de los errores.
+Se define error como la resta entre un valor y la media aritmética de todos ellos.
 \begin{Schunk}
 \begin{Sinput}
 > desviacionMedia
@@ -594,6 +584,9 @@ function (data){
 \end{Soutput}
 \end{Schunk}
 \subsubsection{Varianza}
+Nos indica como de buena es la media aritmética. Cuanto menor sea la varianza mejor será la media.
+Suma ponderada por la cantidad de valores del cuadrado de los errores.
+Se define error como la resta entre un valor y la media aritmética de todos ellos.
 \begin{Schunk}
 \begin{Sinput}
 > varianza
@@ -607,10 +600,15 @@ function(data){
   }
   acc/length(data)
 }
-<bytecode: 0x7fba7531db48>
+<bytecode: 0x7fdf54650560>
 \end{Soutput}
 \end{Schunk}
 \subsubsection{Tchebychev}
+Decir que la desviación típica es mejor cuanto menor sea no es demasiado precios.
+El teorema de tchebychev nos proporciona una representación muy visual del significado de la media.
+Se puede entender la media como un valor entorno al que se ubican los datos y la desviacion típica como una circunferencia con centro en la media y radio el valor de la desviación multiplicado por un factor K.
+Tchebychev nos proporciona el porcentaje mínimo de valores que estarán dentro de cada valor de radio.
+Esto nos ayuda a comparar la desviación obtenida con los datos que tratamos de una forma más significativa.
 \begin{Schunk}
 \begin{Sinput}
 > tchebychev
@@ -628,6 +626,9 @@ function(data, limit=10){
 \end{Schunk}
 \subsection{Medidas de ordenación}
 \subsubsection{Mediana}
+La mediana la hemos calculado ordenando los datos en orden ascendente 
+y obteniendo el punto que se encuentra en la mitad de ese vector 
+o la media entre los 2 puntos que se encuentran en este lugar.
 \begin{Schunk}
 \begin{Sinput}
 > mediana
@@ -643,10 +644,13 @@ function(data){
      x[size / 2]
   }
 }
-<bytecode: 0x7fba74e29ae0>
+<bytecode: 0x7fdf55c62168>
 \end{Soutput}
 \end{Schunk}
 \subsubsection{Cuartiles}
+Los cuartiles los hemos calculado ordenando los datos en orden ascendente 
+y obteniendo los 3 puntos que dividen el vector en 4 partes iguales, es decir, 
+el cuartil 25, el 50 y el 75.
 \begin{Schunk}
 \begin{Sinput}
 > cuartiles
@@ -676,10 +680,12 @@ function(data){
   }
 
 }
-<bytecode: 0x7fba73bcbe90>
+<bytecode: 0x7fdf54c2bbc0>
 \end{Soutput}
 \end{Schunk}
 \subsubsection{Cuantil54}
+El cuantil 54 los hemos calculado ordenando los datos en orden ascendente 
+y obteniendo el punto en el que detrás de él se encuentran el 54% de los datos. 
 \begin{Schunk}
 \begin{Sinput}
 > cuantil54

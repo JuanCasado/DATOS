@@ -34,7 +34,7 @@ Primero calcularemos la frecuencia absoluta de los datos, que es el número de a
 frecuencia_absoluta<-table(satelites$radio)
 @
 \begin{center}
-<<frecuencia_absoluta_satelites_plot, echo=FALSE, plot=TRUE>>=
+<<frecuencia_absoluta_satelites_plot, echo=FALSE, fig=TRUE>>=
 barplot(frecuencia_absoluta)
 @
 \end{center}
@@ -85,9 +85,7 @@ v_varianza <- var(satelites$radio)
 @
 \begin{center}
 <<estadisticos_satelites_plot, fig=TRUE, echo=FALSE>>=
-  plot(frecuencia_relativa, lwd=20, col="gray")
-  abline(v=c(media, v_mediana, v_moda), col=c("blue","red","green"), lty=c(1,1,1), lwd=c(5,5,5))
-  legend("topright", legend=c("media", "mediana","moda"), fill=c("blue","red","green"))
+  plotFrecuencyData(satelites$radio)
 @
 <<estadisticos_satelites_print>>=
 desviacion_tipica
@@ -129,6 +127,7 @@ var(cardata)
 <<fig=TRUE, echo=FALSE>>=
   plotFrecuencyData(cardata)
 @
+\end{center}
 <<>>=
 v_cuartiles <- quantile(cardata, prob=c(0, .25, .5, .75, 1))
 v_cuartiles
@@ -176,7 +175,6 @@ boxplot(v_cuartiles, horizontal=T)
 @
 \end{center}
 
-
 Vemos que la media no es un valor representativo, su desviación típica es muy alta.
 Podemos observar como la moda y la mediana en este caso parecen representar mejor a la mayoría de los datos.
 Debido a esto decidimos que hacer el análisis de los precios para toda la ciudad no iba a aportarnos una visión representativa de los datos.
@@ -216,7 +214,7 @@ boxplot(cuartiles(manhattan_data), horizontal=T)
 
 Datos para Bronx
 \begin{center}
-<<fig=TRUE>>=
+<<fig=TRUE, echo=FALSE>>=
 bronx_data <- data$price[data$neighbourhood_group == "Bronx"]
 plotFrecuencyData(bronx_data)
 @
@@ -229,7 +227,7 @@ boxplot(cuartiles(bronx_data), horizontal=T)
 
 Datos para Brooklyn
 \begin{center}
-<<fig=TRUE>>=
+<<fig=TRUE, echo=FALSE>>=
 brooklyn_data <- data$price[data$neighbourhood_group == "Brooklyn"]
 plotFrecuencyData(brooklyn_data)
 @
@@ -242,7 +240,7 @@ boxplot(cuartiles(brooklyn_data), horizontal=T)
 
 Datos para Queens
 \begin{center}
-<<fig=TRUE>>=
+<<fig=TRUE, echo=FALSE>>=
 queens_data <- data$price[data$neighbourhood_group == "Queens"]
 plotFrecuencyData(queens_data)
 @
@@ -255,7 +253,7 @@ boxplot(cuartiles(queens_data), horizontal=T)
 
 Datos para Staten Island
 \begin{center}
-<<fig=TRUE>>=
+<<fig=TRUE, echo=FALSE>>=
 state_data <- data$price[data$neighbourhood_group == "Staten Island"]
 plotFrecuencyData(state_data)
 @
@@ -312,54 +310,75 @@ frecuenciaRelativa
 frecuenciaRelativaAcumulada
 @
 \subsection{Medidas representativas}
+Los siguentes valores pretenden ser representates de todos los datos que se estén analizando.
+No tenemos garantís de que realmente lo sean así que para ellos necesitamos de erramientas que nos lo confiermen o desmientan.
 \subsubsection{Media Aritmetica}
+Suma ponderada por la cantidad de valores sumados.
+Se podría haber utilizado la función sum que suma todos los valores de un vector en vez de haber iterado sobre ellos.
 <<>>=
 mediaAritmetica
 @
 \subsubsection{Media Geométrica}
+Raiz de orden igual a la cantidad de valores de la multiplicación de todos ellos.
+El logaritmo de la media geométrica también puede expresarse como la media aritmética de los logaritmos de cada dato.
 <<>>=
 mediaGeometrica
 @
 \subsubsection{Media Armónica}
+Inverso de la media de los inversos.
 <<>>=
 mediaArmonica
 @
 \subsubsection{Desviacion Típica}
+Nos indica como de buena es la media aritmética. Cuanto menor sea la desviación mejor será la media.
+Raiz cuadrada de la varianza.
 <<>>=
 desviacionTipica
 @
 \subsubsection{Desviacion Media}
+Nos indica como de buena es la media aritmética. Cuanto menor sea la desviación mejor será la media.
+Se suele utilizar la desviacion típica en vez de la desviacion media.
+Suma ponderada por la cantidad de valores del valor absoluto de los errores.
+Se define error como la resta entre un valor y la media aritmética de todos ellos.
 <<>>=
 desviacionMedia
 @
 \subsubsection{Varianza}
+Nos indica como de buena es la media aritmética. Cuanto menor sea la varianza mejor será la media.
+Suma ponderada por la cantidad de valores del cuadrado de los errores.
+Se define error como la resta entre un valor y la media aritmética de todos ellos.
 <<>>=
 varianza
 @
 \subsubsection{Tchebychev}
+Decir que la desviación típica es mejor cuanto menor sea no es demasiado precios.
+El teorema de tchebychev nos proporciona una representación muy visual del significado de la media.
+Se puede entender la media como un valor entorno al que se ubican los datos y la desviacion típica como una circunferencia con centro en la media y radio el valor de la desviación multiplicado por un factor K.
+Tchebychev nos proporciona el porcentaje mínimo de valores que estarán dentro de cada valor de radio.
+Esto nos ayuda a comparar la desviación obtenida con los datos que tratamos de una forma más significativa.
 <<>>=
 tchebychev
 @
 \subsection{Medidas de ordenación}
 \subsubsection{Mediana}
-<<>>=
-mediana
-@
 La mediana la hemos calculado ordenando los datos en orden ascendente 
 y obteniendo el punto que se encuentra en la mitad de ese vector 
 o la media entre los 2 puntos que se encuentran en este lugar.
-\subsubsection{Cuartiles}
 <<>>=
-cuartiles
+mediana
 @
+\subsubsection{Cuartiles}
 Los cuartiles los hemos calculado ordenando los datos en orden ascendente 
 y obteniendo los 3 puntos que dividen el vector en 4 partes iguales, es decir, 
 el cuartil 25, el 50 y el 75.
+<<>>=
+cuartiles
+@
 \subsubsection{Cuantil54}
+El cuantil 54 los hemos calculado ordenando los datos en orden ascendente 
+y obteniendo el punto en el que detrás de él se encuentran el 54% de los datos. 
 <<>>=
 cuantil54
 @
-El cuantil 54 los hemos calculado ordenando los datos en orden ascendente 
-y obteniendo el punto en el que detrás de él se encuentran el 54% de los datos. 
 
 \end{document}

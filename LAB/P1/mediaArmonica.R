@@ -1,7 +1,8 @@
 
 
-#Calcula la media armónica de un vector de datos
+source('mediaAritmetica.R')
 
+#Calcula la media armónica de un vector de datos
 mediaArmonica <- function(data){
-  1/mean(1/data)
+  1/mediaAritmetica(1/data)
 }
