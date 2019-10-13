@@ -12,45 +12,72 @@ en los dos primeros utilizaremos las funciones propias de R sobre los datos prop
 En el tercer análisis hemos programado nosotros mismos nuestras propias funciones. 
 Como datos hemos elegido un .csv que contiene información sobre el alquiler en la Ciudad de Nueva York.
 Intentaremos para este tercer análisis realizar un estudio crítico que nos permita llegar a conocer los datos con los que estamos trabajando.
+
+Las dos últimas secciones del documento hacen referencia a dos listados de funciones, 
+el primero de las funciones de R que deberíamos conocer y el segundo de las creadas por nosotros junto a su implementación.
 \end{abstract}
 
+\newpage
 \tableofcontents
 \newpage
+
+<<cargar_funciones_credas, echo=FALSE>>=
+source("init.R")
+@
 
 %-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 \section{Primer análisis satelites menores de urano.txt}
 %-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Comenzamos leyendo los datos del archivo .txt ya que dicho archivo lo hemos escrito con la sintaxis que textbf{read.table} espera 
-por lo que no tendremos que utilizar ningún parámetro adicional para configurar la lectura de los datos.
+Comenzamos leyendo los datos del archivo .txt ya que dicho archivo lo hemos escrito con la sintaxis que read.table espera 
+no tendremos que utilizar ningún parámetro adicional para configurar la lectura de los datos.
 <<cargarDatosIniciales>>=
-source("init.R")
 satelites <- read.table("./satelites.txt")
 @
 
+\subsection{Frecuencias}
+\subsubsection{Frecuencia Absoluta}
 Primero calcularemos la frecuencia absoluta de los datos, que es el número de apariciones de cada uno de ellos.
+Vemos que todos los valores aparecen solo una vez excepto 20 que está dos veces.
 
 <<frecuencia_absoluta_satelites>>=
 frecuencia_absoluta<-table(satelites$radio)
 @
 \begin{center}
 <<frecuencia_absoluta_satelites_plot, echo=FALSE, fig=TRUE>>=
-barplot(frecuencia_absoluta)
+plot(frecuencia_absoluta, type="h", xlab="Radios de los satélites menores de Urano")
 @
 \end{center}
 
-Ahora calcularemos la frecuencia absoluta acumulada.
+La moda es el dato cuya frecuencia absolutaes mayor.
+<<moda_satelites>>=
+datos_ordenados=sort(frecuencia_absoluta,TRUE)
+moda_ <- as.numeric(rownames(as.matrix(datos_ordenados))[1])
+moda_
+@
+
+\subsubsection{Frecuencia Absoluta Acumulada}
+Ahora calcularemos la frecuencia absoluta acumulada que es la crecuencia absoluta de cada dato sumada con la de todos los menores a él.
+La frecuencia absoluta se va incrementadndo de forma uniforme, de uno en uno, hasta llegar a 20 que aumenta en dos tal y comno se esperaba.
+
+Cuando utilizamos la función textbf{cumsum}, cuya función es acumular las frecuencias, es recomendable aplicar as.table para que los datos sigan en el formato de tabla.
+Esto nos permitirá luego mostrarlos en la gráfica sin problemas.
 
 <<frecuencia_absoluta_acumulada_satelites>>=
-frecuencia_absoluta_acumulada<-cumsum(frecuencia_absoluta)
+frecuencia_absoluta_acumulada<-as.table(cumsum(frecuencia_absoluta))
 @
 \begin{center}
 <<frecuencia_absoluta_acumulada_satelites_plot, fig=TRUE, echo=FALSE>>=
-barplot(frecuencia_absoluta_acumulada)
+plot(frecuencia_absoluta_acumulada, type="h", xlab="Radios de los satélites menores de Urano")
 @
 \end{center}
 
-Ahora calcularemos la frecuencia relativa.
+\newpage
+\subsubsection{Frecuencia Relativa}
+La frecuencia relativa que es la frecuencia absoluta dividida por la cantidad de datos que hay.
+La suma de las frecuencias relativas debe dar 1 como resultado lo cual comprobamos.
+La frecuncia relativa por si sola aporta más información que la frecuencia absoluta pues está normalizada entre dos valores conocidos 0 y 1.
+Para que la frecuencia absoluta nos aporte la misma información necesitamos conocer la cantidad de valores que tenemos para poder enmarcar el dato en su contexto.
 
 <<frecuencia_relativa_satelites>>=
 frecuencia_relativa <- (function(data) table(data)/length(data))(satelites$radio)
@@ -58,88 +85,162 @@ sum(frecuencia_relativa)
 @
 \begin{center}
 <<frecuencia_relativa_satelites_plot,fig=TRUE, echo=FALSE>>=
-barplot(frecuencia_relativa)
+plot(frecuencia_relativa, type="h", xlab="Radios de los satélites menores de Urano")
 @
 \end{center}
 
-Ahora calcularemos la frecuencia relativa acumulada.
+\newpage
+\subsubsection{Frecuencia Relativa Acumulada}
+La frecuencia relativa acumulada que es la suma de la frecuencia relativa de cada valor con la de los menores a él.
 
 <<frecuencia_relativa_acumulada_satelites>>=
-frecuencia_relativa_acumulada <- cumsum(frecuencia_relativa)
+frecuencia_relativa_acumulada <- as.table(cumsum(frecuencia_relativa))
 @
 \begin{center}
 <<frecuencia_relativa_acumulada_satelites_plot, fig=TRUE, echo=FALSE>>=
-barplot(frecuencia_relativa_acumulada)
+plot(frecuencia_relativa_acumulada, type="h", xlab="Radios de los satélites menores de Urano")
 @
 \end{center}
 
+\newpage
+\subsection{Valores representativos}
 Calcularemos a continuación estadísticos cuya función es resumir los datos de los que disponemos.
-Estos estadísticos son la media, la moda y la mediana.
 
-<<estadisticos_satelites>>=
-media <- mean(satelites$radio)
-v_mediana <- median(satelites$radio)
-v_moda <- moda(satelites$radio)
-desviacion_tipica <- sd(satelites$radio)
-v_varianza <- var(satelites$radio)
+\subsubsection{Media aritmética}
+La media aritméticaconsite en una suma de los datos ponderada por la cantidad de estos.
+Como podemos ver la media está ligeramente desplazada del centro del rango (29) siendo más próxima a radios de menor tamaño.
+
+<<media_satelites>>=
+media_ <- mean(satelites$radio)
+media_
 @
+
+\subsubsection{Desviación típica}
+La desviacion típica es pequeña lo que hace que la media sea una buen valor para representar a los datos.
+Sabemos que la media es buena a partir de la desviacion típica obtenida utilizando el teorema de tchebychev vemos 
+que los valores de todos los radios se los satélites quedan dentro del intervalo $[media-2 * desviación típica, media+2 * desviación típica]$ 
+cuando como mínimo solo tendrían que estar el 75\%.
+
+<<desviacion_tipica_satelites>>=
+desviacion_tipica_ <- sd(satelites$radio)
+desviacion_tipica_
+@
+
+Tchebychev para k=2, al menos el 75\% de los datos estarán dentro del rango $[media -2 * desviación típica, media +2 * desviación típica]$, 
+para nuestro caso todos lo están.
+<<>>=
+c(media_-2*desviacion_tipica_, media_+2*desviacion_tipica_)
+c(min(satelites$radio), max(satelites$radio))
+@
+
+\subsubsection{Varianza}
+La varianza es el cuadrado de la desviación típica.
+
+<<varianza_satelites>>=
+varianza_ <- var(satelites$radio)
+varianza_
+@
+
+\newpage
+\subsection{Medidas de ordenanción}
+\subsubsection{Cuartiles}
+
+Los cuartiles son aquellos valores de modo que si los ordenáramos sobre un vector estarían en los índices situados en el 25, 50 y 75\%.
+Hemos podico comprobar que R para calcular los cuartiles no lo hace exáctamente así si no que utiliza una distribución de probabilidad.
+Cuando calculamos los cuartiles a mano con las fómulas de clase obtendremos valores distintos.
+
+La mediana es el valor que está justo en el centro de los valores ordenados, segundo cuartil.
+<<cuartiles_satelites>>=
+cuartiles_ <- quantile(satelites$radio, prob=c(0, .25, .5, .75, 1))
+cuartiles_
+mediana_ <- median(satelites$radio) #cuartiles_[2]
+mediana_
+@
+
+\begin{center}
+<<cuartiles_satelites_plot, fig=TRUE, echo=FALSE>>=
+boxplot(cuartiles_,horizontal=T,xlab="Radios de los satélites menores de Urano")
+@
+\end{center}
+
+\subsubsection{Cuartil 54}
+<<cuantil54_satelites>>=
+cuantil54_ <- quantile(satelites$radio, prob=(.54))
+cuantil54_
+@
+
+\subsection{Visualización}
+Hemos encontrado de gran utilidad representar sobre una misma gráfica la frecuencia relativa, la media, la moda y la mediana.
+Esta representación proporciona la mayoría de la información estadística que estamos calculando de un solo vistazo y ayuda a entender como se
+distrubuyen los datos que manejamos y cómo se relacionan con los valores que pretenden representarlos.
 \begin{center}
 <<estadisticos_satelites_plot, fig=TRUE, echo=FALSE>>=
-  plotFrecuencyData(satelites$radio)
-@
-<<estadisticos_satelites_print>>=
-desviacion_tipica
-v_varianza
+  plotFrecuencyData(satelites$radio, xlabel="Radios de los satélites menores de Urano")
 @
 \end{center}
 
-Cuantiles y cuartiles ...
-<<cuartiles_satelites>>=
-v_cuartiles <- quantile(satelites$radio, prob=c(0, .25, .5, .75, 1))
-v_cuantil54 <- quantile(satelites$radio, prob=(.54))
-@
-<<cuartiles_satelites_plot, fig=TRUE, echo=FALSE>>=
-boxplot(v_cuartiles,horizontal=T)
-@
-<<>>=
-v_cuartiles
-v_cuantil54
-@
-
+\newpage
 %-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 \section{Segundo análisis cardata .sav}
 %-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-<<>>=
-source("init.R")
-cardata <- read.spss("./cardata.sav")$mpg
+Para el segundo análisis estudiaremos los datos de la variable mpg que representa el consumo en millas por galón de un conjunto de automóbiles.
+Comenzamos cargado los datos que deben ser preparados. 
+Primero eliminamos el warning de Duplicated levels in factor y posteriormente eliminamos los valores nulos para poder realizar las operaciones correctamente.
+<<cargar_datos_cardata>>=
+cardata <- read.spss("./cardata.sav", use.value.labels = FALSE)$mpg
 cardata <- cardata[!is.na(cardata)]
 @
 
-<<>>=
-mean(cardata)
-median(cardata)
-moda(cardata)
-sd(cardata)
-var(cardata)
+\subsection{Valores representativos}
+\subsubsection{Media aritmética}
+La media está muy próxima a la mediana (28.9) que a su ver está muy próxima al punto medio del rango de valores (31).
+Podemos ver que está ligeramente desplazada hacia los valores menores sobre todo teniendo en cuenta que la moda es bastante elevada 
+aunque esta muy poco representativa pues en general los valores se distribuyen de forma uniforme sobre el rango.
+<<media_cardata>>=
+media_ <- mean(cardata)
+media_
 @
+
+\subsubsection{Desviación típica y varianza}
+La desviación típica es baja, el radio de 2\*desviación típica del teorema de tchebychev cubre a gran parte de los valores, desde luego a más del 75\%.
+Podemos decir que la media representa bien a los valores a pesar de que los que están en el extremo superior del rango queden un poco alejados de ella.
+<<desviacion_tipica_cardata>>=
+desviacion_tipica_ <- sd(cardata)
+desviacion_tipica_
+varianza_ <- var(cardata)
+varianza_
+@
+
 \begin{center}
-<<fig=TRUE, echo=FALSE>>=
-  plotFrecuencyData(cardata)
+<<estadisticos_cardata_plot, fig=TRUE, echo=FALSE>>=
+  plotFrecuencyData(cardata,xlabel="Consumo en (mpg)")
 @
 \end{center}
-<<>>=
-v_cuartiles <- quantile(cardata, prob=c(0, .25, .5, .75, 1))
-v_cuartiles
-@
-<<fig=TRUE, echo=FALSE>>=
-boxplot(v_cuartiles,horizontal=T)
-@
 
+\newpage
+\subsection{Medidas de ordenanción}
+Podemos ver como los datos están repartidos de una forma bastante homogénea a lo largo de su rango de valores.
+<<cuartiles_cardata>>=
+cuartiles_ <- quantile(cardata, prob=c(0, .25, .5, .75, 1))
+cuartiles_
+mediana_ <- median(cardata) #cuartiles_[2]
+mediana_
+@
+\begin{center}
+<<ordenacion_cardata_plot, fig=TRUE, echo=FALSE>>=
+boxplot(cuartiles_,horizontal=T,xlab="Consumo en (mpg)")
+@
+\end{center}
 
+\newpage
 %-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 \section{Tercer análisis del alquiler en Nueva York con AirBNB durante 2019 .csv}
 %-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+<<>>=
+data <- read.csv("AB_NYC_2019.csv") #https://www.kaggle.com/dgomonov/new-york-city-airbnb-open-data#AB_NYC_2019.csv
+@
 
 Haremos ahora un análisis de los datos del alquiler en la ciudad de Nueva York durante el año 2019 con la compañía AirBNB.
 Los datos contienen las siguientes categorías:
@@ -149,11 +250,11 @@ getInfo(data)
 Comenzaremos por analizar el precio de los alquileres.
 Para ello calcularemos la frecuencia relativa de los precios.
 <<frecuencia_relativa_BNB>>=
-frecuencia_relativa<-frecuenciaRelativa(data$price)
+frecuencia_relativa<-frecuenciaAbsoluta(data$price)
 @
 \begin{center}
 <<frecuencia_relativa_BNB_plot, fig=TRUE, echo=FALSE>>=
-barplot(frecuencia_relativa)
+plot(frecuencia_relativa, type="h")
 @
 \end{center}
 
@@ -266,7 +367,7 @@ boxplot(cuartiles(state_data), horizontal=T)
 %-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 \section{Guia en R para el análisis estadístico}
 %-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-<<echo=FALSE>>=
+<<cargar_funciones, echo=FALSE>>=
 data <- read.table("./satelites.txt")$radio
 @
 \subsection{Frecuencias}
@@ -294,45 +395,60 @@ Cuantil54 <- quantile(data, prob=(.54))
 %-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 \subsection{Frecuencias}
 \subsubsection{Frecuencia Absoluta}
-<<>>=
+Obtenemos una lista ordenada de los valores únicos que componen nuestros datos.
+La ferecuencia absoluta de cada valor único es la cantidad de veces que aparece.
+<<frecuenciaAbsoluta>>=
 frecuenciaAbsoluta
 @
 \subsubsection{Frecuencia Absoluta Acumulada}
-<<>>=
+Obtenemos una lista ordenada de los valores únicos que componen nuestros datos.
+La ferecuencia absoluta acumulada de cada valor único es la cantidad de veces que aparece él sumada a la cantidad de veces que aparecen los valores menores a él.
+<<frecuenciaAbsolutaAcumulada>>=
 frecuenciaAbsolutaAcumulada
 @
 \subsubsection{Frecuencia Relativa}
-<<>>=
+Obtenemos una lista ordenada de los valores únicos que componen nuestros datos.
+La ferecuencia relativa de cada valor es la cantidad de veces que aparece dividida por la cantidad de valores que hay.
+Si sumamos todas las frecuencias relativas debemos obtener 1 como resultado.
+<<frecuenciaRelativa>>=
 frecuenciaRelativa
 @
 \subsubsection{Frecuencia Relativa Acumulada}
-<<>>=
+Obtenemos una lista ordenada de los valores únicos que componen nuestros datos.
+La ferecuencia relativa acumulada de cada valor es la frecuencia absoluta de ese valor dividida entre la cantidad de valores que hay.
+<<frecuenciaRelativaAcumulada>>=
 frecuenciaRelativaAcumulada
 @
+\subsubsection{Moda}
+Nos indica que dato tiene la mayor frecuencia absoluta.
+<<moda>>=
+moda
+@
+
 \subsection{Medidas representativas}
 Los siguentes valores pretenden ser representates de todos los datos que se estén analizando.
 No tenemos garantís de que realmente lo sean así que para ellos necesitamos de erramientas que nos lo confiermen o desmientan.
 \subsubsection{Media Aritmetica}
 Suma ponderada por la cantidad de valores sumados.
 Se podría haber utilizado la función sum que suma todos los valores de un vector en vez de haber iterado sobre ellos.
-<<>>=
+<<mediaAritmetica>>=
 mediaAritmetica
 @
 \subsubsection{Media Geométrica}
 Raiz de orden igual a la cantidad de valores de la multiplicación de todos ellos.
 El logaritmo de la media geométrica también puede expresarse como la media aritmética de los logaritmos de cada dato.
-<<>>=
+<<mediaGeometrica>>=
 mediaGeometrica
 @
 \subsubsection{Media Armónica}
 Inverso de la media de los inversos.
-<<>>=
+<<mediaArmonica>>=
 mediaArmonica
 @
 \subsubsection{Desviacion Típica}
 Nos indica como de buena es la media aritmética. Cuanto menor sea la desviación mejor será la media.
 Raiz cuadrada de la varianza.
-<<>>=
+<<desviacionTipica>>=
 desviacionTipica
 @
 \subsubsection{Desviacion Media}
@@ -340,14 +456,14 @@ Nos indica como de buena es la media aritmética. Cuanto menor sea la desviació
 Se suele utilizar la desviacion típica en vez de la desviacion media.
 Suma ponderada por la cantidad de valores del valor absoluto de los errores.
 Se define error como la resta entre un valor y la media aritmética de todos ellos.
-<<>>=
+<<desviacionMedia>>=
 desviacionMedia
 @
 \subsubsection{Varianza}
 Nos indica como de buena es la media aritmética. Cuanto menor sea la varianza mejor será la media.
 Suma ponderada por la cantidad de valores del cuadrado de los errores.
 Se define error como la resta entre un valor y la media aritmética de todos ellos.
-<<>>=
+<<varianza>>=
 varianza
 @
 \subsubsection{Tchebychev}
@@ -356,29 +472,56 @@ El teorema de tchebychev nos proporciona una representación muy visual del sign
 Se puede entender la media como un valor entorno al que se ubican los datos y la desviacion típica como una circunferencia con centro en la media y radio el valor de la desviación multiplicado por un factor K.
 Tchebychev nos proporciona el porcentaje mínimo de valores que estarán dentro de cada valor de radio.
 Esto nos ayuda a comparar la desviación obtenida con los datos que tratamos de una forma más significativa.
-<<>>=
+<<tchebychev>>=
 tchebychev
 @
+
 \subsection{Medidas de ordenación}
 \subsubsection{Mediana}
 La mediana la hemos calculado ordenando los datos en orden ascendente 
 y obteniendo el punto que se encuentra en la mitad de ese vector 
 o la media entre los 2 puntos que se encuentran en este lugar.
-<<>>=
+<<mediana>>=
 mediana
 @
 \subsubsection{Cuartiles}
 Los cuartiles los hemos calculado ordenando los datos en orden ascendente 
 y obteniendo los 3 puntos que dividen el vector en 4 partes iguales, es decir, 
 el cuartil 25, el 50 y el 75.
-<<>>=
+<<cuartiles>>=
 cuartiles
 @
 \subsubsection{Cuantil54}
 El cuantil 54 los hemos calculado ordenando los datos en orden ascendente 
 y obteniendo el punto en el que detrás de él se encuentran el 54% de los datos. 
-<<>>=
+<<cuantil54>>=
 cuantil54
+@
+\subsubsection{Rango}
+Nos dice cual es el valor máximo y mínimo de un conjunto de datos.
+<<rango>>=
+rango
+@
+
+\subsection{Otras funciones}
+\subsubsection{Primer contacto con los datos}
+Nos proporciona información básica para poder comanzar a trabjar con un conjunto de datos.
+Muestra el nombre de las variables y su tipo.
+No se pueden analizar los datos si no se puede acceder a las variables que están disponibles para ser analizadas por no conocer ni su nombre.
+<<getInfo>>=
+getInfo
+@
+\subsubsection{Visualización}
+Hemos creado una función que dibuja una gráfica de la recuencia relativa sobre la que añade líneas verticales 
+representando las principales variables estadísticas que manejamos.
+Media aritmética, moda, mediana y varianza.
+<<plotFrecuencyData>>=
+plotFrecuencyData
+@
+\subsubsection{Crear domuntos .pdf y .tex}
+Hemos automatizado este proceso con esta función para hacerlo más sencillo.
+<<saveToPdf>>=
+saveToPdf
 @
 
 \end{document}

@@ -13,25 +13,32 @@ en los dos primeros utilizaremos las funciones propias de R sobre los datos prop
 En el tercer análisis hemos programado nosotros mismos nuestras propias funciones. 
 Como datos hemos elegido un .csv que contiene información sobre el alquiler en la Ciudad de Nueva York.
 Intentaremos para este tercer análisis realizar un estudio crítico que nos permita llegar a conocer los datos con los que estamos trabajando.
+
+Las dos últimas secciones del documento hacen referencia a dos listados de funciones, 
+el primero de las funciones de R que deberíamos conocer y el segundo de las creadas por nosotros junto a su implementación.
 \end{abstract}
 
+\newpage
 \tableofcontents
 \newpage
+
 
 %-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 \section{Primer análisis satelites menores de urano.txt}
 %-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Comenzamos leyendo los datos del archivo .txt ya que dicho archivo lo hemos escrito con la sintaxis que textbf{read.table} espera 
-por lo que no tendremos que utilizar ningún parámetro adicional para configurar la lectura de los datos.
+Comenzamos leyendo los datos del archivo .txt ya que dicho archivo lo hemos escrito con la sintaxis que read.table espera 
+no tendremos que utilizar ningún parámetro adicional para configurar la lectura de los datos.
 \begin{Schunk}
 \begin{Sinput}
-> source("init.R")
 > satelites <- read.table("./satelites.txt")
 \end{Sinput}
 \end{Schunk}
 
+\subsection{Frecuencias}
+\subsubsection{Frecuencia Absoluta}
 Primero calcularemos la frecuencia absoluta de los datos, que es el número de apariciones de cada uno de ellos.
+Vemos que todos los valores aparecen solo una vez excepto 20 que está dos veces.
 
 \begin{Schunk}
 \begin{Sinput}
@@ -42,18 +49,40 @@ Primero calcularemos la frecuencia absoluta de los datos, que es el número de a
 \includegraphics{entrega-frecuencia_absoluta_satelites_plot}
 \end{center}
 
-Ahora calcularemos la frecuencia absoluta acumulada.
+La moda es el dato cuya frecuencia absolutaes mayor.
+\begin{Schunk}
+\begin{Sinput}
+> datos_ordenados=sort(frecuencia_absoluta,TRUE)
+> moda_ <- as.numeric(rownames(as.matrix(datos_ordenados))[1])
+> moda_
+\end{Sinput}
+\begin{Soutput}
+[1] 20
+\end{Soutput}
+\end{Schunk}
+
+\subsubsection{Frecuencia Absoluta Acumulada}
+Ahora calcularemos la frecuencia absoluta acumulada que es la crecuencia absoluta de cada dato sumada con la de todos los menores a él.
+La frecuencia absoluta se va incrementadndo de forma uniforme, de uno en uno, hasta llegar a 20 que aumenta en dos tal y comno se esperaba.
+
+Cuando utilizamos la función textbf{cumsum}, cuya función es acumular las frecuencias, es recomendable aplicar as.table para que los datos sigan en el formato de tabla.
+Esto nos permitirá luego mostrarlos en la gráfica sin problemas.
 
 \begin{Schunk}
 \begin{Sinput}
-> frecuencia_absoluta_acumulada<-cumsum(frecuencia_absoluta)
+> frecuencia_absoluta_acumulada<-as.table(cumsum(frecuencia_absoluta))
 \end{Sinput}
 \end{Schunk}
 \begin{center}
 \includegraphics{entrega-frecuencia_absoluta_acumulada_satelites_plot}
 \end{center}
 
-Ahora calcularemos la frecuencia relativa.
+\newpage
+\subsubsection{Frecuencia Relativa}
+La frecuencia relativa que es la frecuencia absoluta dividida por la cantidad de datos que hay.
+La suma de las frecuencias relativas debe dar 1 como resultado lo cual comprobamos.
+La frecuncia relativa por si sola aporta más información que la frecuencia absoluta pues está normalizada entre dos valores conocidos 0 y 1.
+Para que la frecuencia absoluta nos aporte la misma información necesitamos conocer la cantidad de valores que tenemos para poder enmarcar el dato en su contexto.
 
 \begin{Schunk}
 \begin{Sinput}
@@ -68,65 +97,119 @@ Ahora calcularemos la frecuencia relativa.
 \includegraphics{entrega-frecuencia_relativa_satelites_plot}
 \end{center}
 
-Ahora calcularemos la frecuencia relativa acumulada.
+\newpage
+\subsubsection{Frecuencia Relativa Acumulada}
+La frecuencia relativa acumulada que es la suma de la frecuencia relativa de cada valor con la de los menores a él.
 
 \begin{Schunk}
 \begin{Sinput}
-> frecuencia_relativa_acumulada <- cumsum(frecuencia_relativa)
+> frecuencia_relativa_acumulada <- as.table(cumsum(frecuencia_relativa))
 \end{Sinput}
 \end{Schunk}
 \begin{center}
 \includegraphics{entrega-frecuencia_relativa_acumulada_satelites_plot}
 \end{center}
 
+\newpage
+\subsection{Valores representativos}
 Calcularemos a continuación estadísticos cuya función es resumir los datos de los que disponemos.
-Estos estadísticos son la media, la moda y la mediana.
+
+\subsubsection{Media aritmética}
+La media aritméticaconsite en una suma de los datos ponderada por la cantidad de estos.
+Como podemos ver la media está ligeramente desplazada del centro del rango (29) siendo más próxima a radios de menor tamaño.
 
 \begin{Schunk}
 \begin{Sinput}
-> media <- mean(satelites$radio)
-> v_mediana <- median(satelites$radio)
-> v_moda <- moda(satelites$radio)
-> desviacion_tipica <- sd(satelites$radio)
-> v_varianza <- var(satelites$radio)
+> media_ <- mean(satelites$radio)
+> media_
 \end{Sinput}
+\begin{Soutput}
+[1] 25.08333
+\end{Soutput}
 \end{Schunk}
-\begin{center}
-\includegraphics{entrega-estadisticos_satelites_plot}
+
+\subsubsection{Desviación típica}
+La desviacion típica es pequeña lo que hace que la media sea una buen valor para representar a los datos.
+Sabemos que la media es buena a partir de la desviacion típica obtenida utilizando el teorema de tchebychev vemos 
+que los valores de todos los radios se los satélites quedan dentro del intervalo $[media-2 * desviación típica, media+2 * desviación típica]$ 
+cuando como mínimo solo tendrían que estar el 75\%.
+
 \begin{Schunk}
 \begin{Sinput}
-> desviacion_tipica
+> desviacion_tipica_ <- sd(satelites$radio)
+> desviacion_tipica_
 \end{Sinput}
 \begin{Soutput}
 [1] 8.857029
 \end{Soutput}
+\end{Schunk}
+
+Tchebychev para k=2, al menos el 75\% de los datos estarán dentro del rango $[media -2 * desviación típica, media +2 * desviación típica]$, 
+para nuestro caso todos lo están.
+\begin{Schunk}
 \begin{Sinput}
-> v_varianza
+> c(media_-2*desviacion_tipica_, media_+2*desviacion_tipica_)
+\end{Sinput}
+\begin{Soutput}
+[1]  7.369275 42.797392
+\end{Soutput}
+\begin{Sinput}
+> c(min(satelites$radio), max(satelites$radio))
+\end{Sinput}
+\begin{Soutput}
+[1] 13 42
+\end{Soutput}
+\end{Schunk}
+
+\subsubsection{Varianza}
+La varianza es el cuadrado de la desviación típica.
+
+\begin{Schunk}
+\begin{Sinput}
+> varianza_ <- var(satelites$radio)
+> varianza_
 \end{Sinput}
 \begin{Soutput}
 [1] 78.44697
 \end{Soutput}
 \end{Schunk}
-\end{center}
 
-Cuantiles y cuartiles ...
+\newpage
+\subsection{Medidas de ordenanción}
+\subsubsection{Cuartiles}
+
+Los cuartiles son aquellos valores de modo que si los ordenáramos sobre un vector estarían en los índices situados en el 25, 50 y 75\%.
+Hemos podico comprobar que R para calcular los cuartiles no lo hace exáctamente así si no que utiliza una distribución de probabilidad.
+Cuando calculamos los cuartiles a mano con las fómulas de clase obtendremos valores distintos.
+
+La mediana es el valor que está justo en el centro de los valores ordenados, segundo cuartil.
 \begin{Schunk}
 \begin{Sinput}
-> v_cuartiles <- quantile(satelites$radio, prob=c(0, .25, .5, .75, 1))
-> v_cuantil54 <- quantile(satelites$radio, prob=(.54))
-\end{Sinput}
-\end{Schunk}
-\includegraphics{entrega-cuartiles_satelites_plot}
-\begin{Schunk}
-\begin{Sinput}
-> v_cuartiles
+> cuartiles_ <- quantile(satelites$radio, prob=c(0, .25, .5, .75, 1))
+> cuartiles_
 \end{Sinput}
 \begin{Soutput}
    0%   25%   50%   75%  100% 
 13.00 19.00 24.50 30.75 42.00 
 \end{Soutput}
 \begin{Sinput}
-> v_cuantil54
+> mediana_ <- median(satelites$radio) #cuartiles_[2]
+> mediana_
+\end{Sinput}
+\begin{Soutput}
+[1] 24.5
+\end{Soutput}
+\end{Schunk}
+
+\begin{center}
+\includegraphics{entrega-cuartiles_satelites_plot}
+\end{center}
+
+\subsubsection{Cuartil 54}
+\begin{Schunk}
+\begin{Sinput}
+> cuantil54_ <- quantile(satelites$radio, prob=(.54))
+> cuantil54_
 \end{Sinput}
 \begin{Soutput}
  54% 
@@ -134,18 +217,34 @@ Cuantiles y cuartiles ...
 \end{Soutput}
 \end{Schunk}
 
+\subsection{Visualización}
+Hemos encontrado de gran utilidad representar sobre una misma gráfica la frecuencia relativa, la media, la moda y la mediana.
+Esta representación proporciona la mayoría de la información estadística que estamos calculando de un solo vistazo y ayuda a entender como se
+distrubuyen los datos que manejamos y cómo se relacionan con los valores que pretenden representarlos.
+\begin{center}
+\includegraphics{entrega-estadisticos_satelites_plot}
+\end{center}
+
+\newpage
 %-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 \section{Segundo análisis cardata .sav}
 %-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+Para el segundo análisis estudiaremos los datos de la variable mpg que representa el consumo en millas por galón de un conjunto de automóbiles.
+Comenzamos cargado los datos que deben ser preparados. 
+Primero eliminamos el warning de Duplicated levels in factor y posteriormente eliminamos los valores nulos para poder realizar las operaciones correctamente.
 \begin{Schunk}
 \begin{Sinput}
-> source("init.R")
-> cardata <- read.spss("./cardata.sav")$mpg
+> cardata <- read.spss("./cardata.sav", use.value.labels = FALSE)$mpg
 > cardata <- cardata[!is.na(cardata)]
 \end{Sinput}
 \end{Schunk}
 
+\subsection{Valores representativos}
+\subsubsection{Media aritmética}
+La media está muy próxima a la mediana (28.9) que a su ver está muy próxima al punto medio del rango de valores (31).
+Podemos ver que está ligeramente desplazada hacia los valores menores sobre todo teniendo en cuenta que la moda es bastante elevada 
+aunque esta muy poco representativa pues en general los valores se distribuyen de forma uniforme sobre el rango.
 \begin{Schunk}
 \begin{Sinput}
 > mean(cardata)
@@ -153,18 +252,12 @@ Cuantiles y cuartiles ...
 \begin{Soutput}
 [1] 28.79351
 \end{Soutput}
-\begin{Sinput}
-> median(cardata)
-\end{Sinput}
-\begin{Soutput}
-[1] 28.9
-\end{Soutput}
-\begin{Sinput}
-> moda(cardata)
-\end{Sinput}
-\begin{Soutput}
-[1] 36
-\end{Soutput}
+\end{Schunk}
+
+\subsubsection{Desviación típica y varianza}
+La desviación típica es baja, el radio de 2\*desviación típica del teorema de tchebychev cubre a gran parte de los valores, desde luego a más del 75\%.
+Podemos decir que la media representa bien a los valores a pesar de que los que están en el extremo superior del rango queden un poco alejados de ella.
+\begin{Schunk}
 \begin{Sinput}
 > sd(cardata)
 \end{Sinput}
@@ -178,25 +271,44 @@ Cuantiles y cuartiles ...
 [1] 54.42323
 \end{Soutput}
 \end{Schunk}
+
 \begin{center}
-\includegraphics{entrega-018}
+\includegraphics{entrega-estadisticos_cardata_plot}
 \end{center}
+
+\newpage
+\subsection{Medidas de ordenanción}
+Podemos ver como los datos están repartidos de una forma bastante homogénea a lo largo de su rango de valores.
 \begin{Schunk}
 \begin{Sinput}
-> v_cuartiles <- quantile(cardata, prob=c(0, .25, .5, .75, 1))
-> v_cuartiles
+> cuartiles_ <- quantile(cardata, prob=c(0, .25, .5, .75, 1))
+> cuartiles_
 \end{Sinput}
 \begin{Soutput}
     0%    25%    50%    75%   100% 
 15.500 22.550 28.900 34.275 46.600 
 \end{Soutput}
+\begin{Sinput}
+> median(cardata) #cuartiles_[2]
+\end{Sinput}
+\begin{Soutput}
+[1] 28.9
+\end{Soutput}
 \end{Schunk}
-\includegraphics{entrega-020}
+\begin{center}
+\includegraphics{entrega-ordenacion_cardata_plot}
+\end{center}
 
-
+\newpage
 %-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 \section{Tercer análisis del alquiler en Nueva York con AirBNB durante 2019 .csv}
 %-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+\begin{Schunk}
+\begin{Sinput}
+> data <- read.csv("AB_NYC_2019.csv") #https://www.kaggle.com/dgomonov/new-york-city-airbnb-open-data#AB_NYC_2019.csv
+\end{Sinput}
+\end{Schunk}
 
 Haremos ahora un análisis de los datos del alquiler en la ciudad de Nueva York durante el año 2019 con la compañía AirBNB.
 Los datos contienen las siguientes categorías:
@@ -231,7 +343,7 @@ Comenzaremos por analizar el precio de los alquileres.
 Para ello calcularemos la frecuencia relativa de los precios.
 \begin{Schunk}
 \begin{Sinput}
-> frecuencia_relativa<-frecuenciaRelativa(data$price)
+> frecuencia_relativa<-frecuenciaAbsoluta(data$price)
 \end{Sinput}
 \end{Schunk}
 \begin{center}
@@ -289,42 +401,42 @@ Datos para Manhattan
 > plotFrecuencyData(manhattan_data)
 \end{Sinput}
 \end{Schunk}
-\includegraphics{entrega-029}
-\end{center}
-\begin{center}
-\includegraphics{entrega-030}
-\end{center}
-
-Datos para Bronx
-\begin{center}
-\includegraphics{entrega-031}
-\end{center}
-\begin{center}
-\includegraphics{entrega-032}
-\end{center}
-
-Datos para Brooklyn
-\begin{center}
-\includegraphics{entrega-033}
-\end{center}
-\begin{center}
-\includegraphics{entrega-034}
-\end{center}
-
-Datos para Queens
-\begin{center}
 \includegraphics{entrega-035}
 \end{center}
 \begin{center}
 \includegraphics{entrega-036}
 \end{center}
 
-Datos para Staten Island
+Datos para Bronx
 \begin{center}
 \includegraphics{entrega-037}
 \end{center}
 \begin{center}
 \includegraphics{entrega-038}
+\end{center}
+
+Datos para Brooklyn
+\begin{center}
+\includegraphics{entrega-039}
+\end{center}
+\begin{center}
+\includegraphics{entrega-040}
+\end{center}
+
+Datos para Queens
+\begin{center}
+\includegraphics{entrega-041}
+\end{center}
+\begin{center}
+\includegraphics{entrega-042}
+\end{center}
+
+Datos para Staten Island
+\begin{center}
+\includegraphics{entrega-043}
+\end{center}
+\begin{center}
+\includegraphics{entrega-044}
 \end{center}
 %-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 \section{Guia en R para el análisis estadístico}
@@ -360,149 +472,106 @@ Datos para Staten Island
 %-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 \subsection{Frecuencias}
 \subsubsection{Frecuencia Absoluta}
+Obtenemos una lista ordenada de los valores únicos que componen nuestros datos.
+La ferecuencia absoluta de cada valor único es la cantidad de veces que aparece.
 \begin{Schunk}
 \begin{Sinput}
 > frecuenciaAbsoluta
 \end{Sinput}
 \begin{Soutput}
 function(data){
-  # creamos un vector donde solo estas los elementos sin repetir
   uniquedata<-unique(data)
-  # ordenamos el vector para aparezco correcto 
   uniquedata<- sort(uniquedata)
-  # creamos un vector vacio numerico
   newdata<- vector(mode="numeric", length=0)
-  # recorremos el vector elementos no repetidos  
   for (value in uniquedata) {
-    # calculamos la cantidad de veces que se repite un numero
-    total<-length(data[data==value])
-    # añadimos el total al vector con veces que se repitio
-    newdata<-c(newdata, total)
+    ammount<-length(data[data==value])
+    newdata<-c(newdata, ammount)
   }
-  # hacemos una matriz de tamaño 1xlongitud datos, añadimos los elementos la frecuencia
-  matrix<-matrix(nrow=1,ncol=length(uniquedata), newdata, byrow=T)
-  # en las filas ponemos el nombre que representa
-  rownames(matrix)<-c("frecuencia")
-  #en las columnas ponemos los datos
-  colnames(matrix)<-c(uniquedata)
-  #convertimos la matriz en una tabla
-  matrix<-as.table(matrix)
+  setNames(newdata, uniquedata)
 }
-<bytecode: 0x7fdf56451dc8>
+<bytecode: 0x7fab47212ca8>
 \end{Soutput}
 \end{Schunk}
 \subsubsection{Frecuencia Absoluta Acumulada}
+Obtenemos una lista ordenada de los valores únicos que componen nuestros datos.
+La ferecuencia absoluta acumulada de cada valor único es la cantidad de veces que aparece él sumada a la cantidad de veces que aparecen los valores menores a él.
 \begin{Schunk}
 \begin{Sinput}
 > frecuenciaAbsolutaAcumulada
 \end{Sinput}
 \begin{Soutput}
 function(data){
-
-    # calculamos la frecuencia
-    frecuencia <-frecuenciaAbsoluta(data)
-    # recuperamos el nombre de las columnas
-    uniquedata<-colnames(frecuencia)
-    # cogemos el vector de frecuencia
-    onlydata<-frecuencia[1,]
-    # creamos un vector vacio numerico
-    newdata<- vector(mode="numeric", length=0)
-    # recorremos desde la posicion 1 hasta lo maximo el vector
-    for (value in 1:length(onlydata)) {
-        # si el valor primero
-        if(value==1){   
-            # el acumulado es el mismo valor
-            accumulated<-onlydata[value]
-        # en otros casos
-        }else{
-            # el valor es anterior mas el valor suyo
-            accumulated<-onlydata[value]+accumulated
-        }
-        # añadimos al vector el nuevo valor
-        newdata<-c(newdata, accumulated)
+    frecuencia <- frecuenciaAbsoluta(data)
+    uniquedata<-unique(data)
+    uniquedata<- sort(uniquedata)
+    newdata <- vector(mode="numeric", length=0)
+    acc <- 0
+    for (value in 1:length(frecuencia)) {
+        acc <- frecuencia[value]+acc
+        newdata <- c(newdata, acc)
     }
-    # hacemos una matriz de tamaño 1xlongitud datos, añadimos los elementos la frecuencia
-    matrix<-matrix(nrow=1,ncol=length(uniquedata), newdata, byrow=T)
-    # en las filas ponemos el nombre que representa
-    rownames(matrix)<-c("frecuencia acumulada")
-    #en las columnas ponemos los datos
-    colnames(matrix)<-c(uniquedata)
-    #convertimos la matriz en una tabla
-    matrix<-as.table(matrix)
+    setNames(newdata, uniquedata)
 }
 \end{Soutput}
 \end{Schunk}
 \subsubsection{Frecuencia Relativa}
+Obtenemos una lista ordenada de los valores únicos que componen nuestros datos.
+La ferecuencia relativa de cada valor es la cantidad de veces que aparece dividida por la cantidad de valores que hay.
+Si sumamos todas las frecuencias relativas debemos obtener 1 como resultado.
 \begin{Schunk}
 \begin{Sinput}
 > frecuenciaRelativa
 \end{Sinput}
 \begin{Soutput}
 function(data){
-    #conseguimos frecuencia
-    frecuencia <-frecuenciaAbsoluta(data)
-    # recuperamos el nombre de las columnas
-    uniquedata<-colnames(frecuencia)
-    #cogemos solo el vector de frecuencia
-    onlydata<-frecuencia[1,]
-    #calculamos la suma total de frecuencia
-    total<-sum(onlydata)
-    #creo vector vacio numerico
-    newdata<- vector(mode="numeric", length=0)
-    #recorro todo el vector de datos
-    for (value in 1:length(onlydata)) {
-        # realizamos la division entre los datos y el total
-        accumulated<-onlydata[value]/total
-        # lo añado al nuevo array
-        newdata<-c(newdata, accumulated)
-    }
-    # hacemos una matriz de tamaño 1xlongitud datos, añadimos los elementos la frecuencia
-  matrix<-matrix(nrow=1,ncol=length(uniquedata), newdata, byrow=T)
-  # en las filas ponemos el nombre que representa
-  rownames(matrix)<-c("frecuencia relativa")
-  #en las columnas ponemos los datos
-  colnames(matrix)<-c(uniquedata)
-  #convertimos la matriz en una tabla
-  matrix<-as.table(matrix)
+  frecuencia <-frecuenciaAbsoluta(data)
+  uniquedata<-unique(data)
+  uniquedata<- sort(uniquedata)
+  newdata <- vector(mode="numeric", length=0)
+  for (value in 1:length(uniquedata)) {
+    newdata <- c(newdata, frecuencia[value]/length(data))
+  }
+  setNames(newdata, uniquedata)
 }
-<bytecode: 0x7fdf55ac3998>
+<bytecode: 0x7fab45318af0>
 \end{Soutput}
 \end{Schunk}
 \subsubsection{Frecuencia Relativa Acumulada}
+Obtenemos una lista ordenada de los valores únicos que componen nuestros datos.
+La ferecuencia relativa acumulada de cada valor es la frecuencia absoluta de ese valor dividida entre la cantidad de valores que hay.
 \begin{Schunk}
 \begin{Sinput}
 > frecuenciaRelativaAcumulada
 \end{Sinput}
 \begin{Soutput}
 function(data){
-    # calcumos la frecuencia acumulada
-    frecuencia <-frecuenciaAcumulada(data)
-    # recuperamos el nombre de las columnas
-    uniquedata<-colnames(frecuencia)
-    # cogemos el vector de frecuencia acumulada
-    onlydata<-frecuencia[1,]
-    # calculamos el total de datos 
-    total<-onlydata[length(onlydata)]
-    # creamos un vector vacio numerico
-    newdata<- vector(mode="numeric", length=0)
-    # recorremos desde la posicion 1 hasta lo maximo el vector
-    for (value in 1:length(onlydata)) {
-        #variable que calcula relativa entre la esa posicion entre total 
-        relative<-onlydata[value]/total
-        # añadimos al vector el nuevo valor
-        newdata<-c(newdata, relative)
-    }
-    # hacemos una matriz de tamaño 1xlongitud datos, añadimos los elementos la frecuencia
-  matrix<-matrix(nrow=1,ncol=length(uniquedata), newdata, byrow=T)
-  # en las filas ponemos el nombre que representa
-  rownames(matrix)<-c("frecuencia acumulada relativa")
-  #en las columnas ponemos los datos
-  colnames(matrix)<-c(uniquedata)
-  #convertimos la matriz en una tabla
-  matrix<-as.table(matrix)
+  frecuencia <- frecuenciaAbsolutaAcumulada(data)
+  uniquedata<-unique(data)
+  uniquedata<- sort(uniquedata)
+  newdata<- vector(mode="numeric", length=0)
+  for (index in 1:length(uniquedata)) {
+    newdata <- c(newdata, frecuencia[index]/length(data))
+  }
+  setNames(newdata, uniquedata)
 }
 \end{Soutput}
 \end{Schunk}
+\subsubsection{Moda}
+Nos indica que dato tiene la mayor frecuencia absoluta.
+\begin{Schunk}
+\begin{Sinput}
+> moda
+\end{Sinput}
+\begin{Soutput}
+function(data) {
+  frecuencia_absoluta=frecuenciaAbsoluta(data)
+  datos_ordenados=sort(frecuencia_absoluta,TRUE)
+  as.numeric(rownames(as.matrix(datos_ordenados))[1])
+}
+<bytecode: 0x7fab45d76098>
+\end{Soutput}
+\end{Schunk}
+
 \subsection{Medidas representativas}
 Los siguentes valores pretenden ser representates de todos los datos que se estén analizando.
 No tenemos garantís de que realmente lo sean así que para ellos necesitamos de erramientas que nos lo confiermen o desmientan.
@@ -521,7 +590,7 @@ function(data){
   }
   acc / length(data)
 }
-<bytecode: 0x7fdf59920b98>
+<bytecode: 0x7fab458d3508>
 \end{Soutput}
 \end{Schunk}
 \subsubsection{Media Geométrica}
@@ -560,7 +629,7 @@ Raiz cuadrada de la varianza.
 function (data) {
   varianza(data)^(1/2)
 }
-<bytecode: 0x7fdf56781c10>
+<bytecode: 0x7fab45ecf320>
 \end{Soutput}
 \end{Schunk}
 \subsubsection{Desviacion Media}
@@ -600,7 +669,7 @@ function(data){
   }
   acc/length(data)
 }
-<bytecode: 0x7fdf54650560>
+<bytecode: 0x7fab46def8f8>
 \end{Soutput}
 \end{Schunk}
 \subsubsection{Tchebychev}
@@ -624,6 +693,7 @@ function(data, limit=10){
 }
 \end{Soutput}
 \end{Schunk}
+
 \subsection{Medidas de ordenación}
 \subsubsection{Mediana}
 La mediana la hemos calculado ordenando los datos en orden ascendente 
@@ -644,7 +714,7 @@ function(data){
      x[size / 2]
   }
 }
-<bytecode: 0x7fdf55c62168>
+<bytecode: 0x7fab471e9cc0>
 \end{Soutput}
 \end{Schunk}
 \subsubsection{Cuartiles}
@@ -680,7 +750,7 @@ function(data){
   }
 
 }
-<bytecode: 0x7fdf54c2bbc0>
+<bytecode: 0x7fab4519fd20>
 \end{Soutput}
 \end{Schunk}
 \subsubsection{Cuantil54}
@@ -694,6 +764,84 @@ y obteniendo el punto en el que detrás de él se encuentran el 54% de los datos
 function(x){
   size = length(x)
   x[ceiling(size*0.54)]
+}
+\end{Soutput}
+\end{Schunk}
+\subsubsection{Rango}
+Nos dice cual es el valor máximo y mínimo de un conjunto de datos.
+\begin{Schunk}
+\begin{Sinput}
+> rango
+\end{Sinput}
+\begin{Soutput}
+function(data){
+  c(max(data), min(data))
+}
+\end{Soutput}
+\end{Schunk}
+
+\subsection{Otras funciones}
+\subsubsection{Primer contacto con los datos}
+Nos proporciona información básica para poder comanzar a trabjar con un conjunto de datos.
+Muestra el nombre de las variables y su tipo.
+No se pueden analizar los datos si no se puede acceder a las variables que están disponibles para ser analizadas por no conocer ni su nombre.
+\begin{Schunk}
+\begin{Sinput}
+> getInfo
+\end{Sinput}
+\begin{Soutput}
+function (data, graphics=F) {
+  res <- lapply(data, class)
+  res_frame <- data.frame(unlist(res))
+  summary <- table(res_frame)
+  if (graphics){
+    barplot(summary, main="Data Types", col="steelblue", ylab="Number of Features")
+  }
+  message("Datos cargados: ")
+  print(res_frame)
+  message("Resumen: ")
+  print(summary)
+}
+\end{Soutput}
+\end{Schunk}
+\subsubsection{Visualización}
+Hemos creado una función que dibuja una gráfica de la recuencia relativa sobre la que añade líneas verticales 
+representando las principales variables estadísticas que manejamos.
+Media aritmética, moda, mediana y varianza.
+\begin{Schunk}
+\begin{Sinput}
+> plotFrecuencyData
+\end{Sinput}
+\begin{Soutput}
+function(data, xlabel="") {
+  uniquedata<-unique(data)
+  frecuencia_relativa <- as.table(frecuenciaRelativa(data))
+  mediaAritmetica_ <- mediaAritmetica(data)
+  mediana_ <- mediana(data)
+  moda_ <- moda(data)
+  desviacion_tipica_ <- desviacionTipica(data)
+  tchebychev_min <- media_-2*desviacion_tipica_
+  tchebychev_max <- media_+2*desviacion_tipica_
+  min_range = min(tchebychev_min, min(uniquedata))
+  max_range = max(tchebychev_min, max(uniquedata))
+  plot(frecuencia_relativa, type="h", xlab=xlabel, xlim=c(min_range,max_range))
+  abline (v=c(mediaAritmetica_, mediana_, moda_, tchebychev_min, tchebychev_max), 
+          col=c("blue","red","green", "gray", "gray"), lty=c(2,2,2,3,3), lwd=c(2,2,2,1,1))
+  legend("topright", legend=c("media", "mediana","moda", "2*desviación típica"), fill=c("blue","red","green","gray"))
+}
+<bytecode: 0x7fab4754f130>
+\end{Soutput}
+\end{Schunk}
+\subsubsection{Crear domuntos .pdf y .tex}
+Hemos automatizado este proceso con esta función para hacerlo más sencillo.
+\begin{Schunk}
+\begin{Sinput}
+> saveToPdf
+\end{Sinput}
+\begin{Soutput}
+function(name){
+  Sweave(paste(name, ".Rnw", sep=""))
+  tools::texi2pdf(paste(name, ".tex", sep=""),clean=T)
 }
 \end{Soutput}
 \end{Schunk}
