@@ -13,7 +13,6 @@ cuartiles <- function(data){
             (x[size *0.75] + x[size * 0.75 + 1]) / 2.0,
             x[size]
         )
-
     }
     else {
         c(
@@ -24,5 +23,4 @@ cuartiles <- function(data){
             x[size]
         )
   }
-
 }

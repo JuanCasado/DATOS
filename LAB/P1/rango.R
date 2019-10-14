@@ -1,4 +1,4 @@
 
 rango <- function(data){
-  c(max(data), min(data))
+  c(min(data),max(data))
 }

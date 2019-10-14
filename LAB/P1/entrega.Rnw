@@ -2,7 +2,7 @@
 \documentclass [a4paper] {article}
 \usepackage[utf8]{inputenc}
 \title{Ciencia de datos, práctica 1}
-\author{Juan Casado Ballesteros}
+\author{Juan Casado Ballesteros, Samuel García Gonzalez, Iván Anaya Martín}
 \begin{document}
 \maketitle
 
@@ -22,7 +22,162 @@ el primero de las funciones de R que deberíamos conocer y el segundo de las cre
 \newpage
 
 <<cargar_funciones_credas, echo=FALSE>>=
-source("init.R")
+getInfo <- function (data, graphics=F) {
+  res <- lapply(data, class)
+  res_frame <- data.frame(unlist(res))
+  summary <- table(res_frame)
+  if (graphics){
+    barplot(summary, main="Data Types", col="steelblue", ylab="Number of Features")
+  }
+  message("Datos cargados: ")
+  print(res_frame)
+  message("Resumen: ")
+  print(summary)
+}
+saveToPdf <- function(name){
+  Sweave(paste(name, ".Rnw", sep=""))
+  tools::texi2pdf(paste(name, ".tex", sep=""),clean=T)
+}
+plotFrecuencyData <- function(data, xlabel="") {
+  uniquedata<-unique(data)
+  frecuencia_relativa <- as.table(frecuenciaRelativa(data))
+  media_ <- mediaAritmetica(data)
+  mediana_ <- mediana(data)
+  moda_ <- moda(data)
+  desviacion_tipica_ <- desviacionTipica(data)
+  tchebychev_min <- media_-2*desviacion_tipica_
+  tchebychev_max <- media_+2*desviacion_tipica_
+  min_range = min(tchebychev_min, min(uniquedata))
+  max_range = max(tchebychev_min, max(uniquedata))
+  plot(frecuencia_relativa, type="h", xlab=xlabel, xlim=c(min_range,max_range))
+  abline (v=c(media_, mediana_, moda_, tchebychev_min, tchebychev_max), 
+          col=c("blue","red","green", "gray", "gray"), lty=c(2,2,2,3,3),
+          lwd=c(2,2,2,1,1))
+  legend ("topright", legend=c("media", "mediana","moda", "2*desviación típica"),
+          fill=c("blue","red","green","gray"))
+}
+frecuenciaAbsoluta <- function(data){
+  uniquedata<-unique(data)
+  uniquedata<- sort(uniquedata)
+  newdata<- vector(mode="numeric", length=0)
+  for (value in uniquedata) {
+    ammount<-length(data[data==value])
+    newdata<-c(newdata, ammount)
+  }
+  setNames(newdata, uniquedata)
+}
+frecuenciaAbsolutaAcumulada <-function(data){
+    frecuencia <- frecuenciaAbsoluta(data)
+    uniquedata<-unique(data)
+    uniquedata<- sort(uniquedata)
+    newdata <- vector(mode="numeric", length=0)
+    acc <- 0
+    for (value in 1:length(frecuencia)) {
+        acc <- frecuencia[value]+acc
+        newdata <- c(newdata, acc)
+    }
+    setNames(newdata, uniquedata)
+}
+frecuenciaRelativa <- function(data){
+  frecuencia <-frecuenciaAbsoluta(data)
+  uniquedata<-unique(data)
+  uniquedata<- sort(uniquedata)
+  newdata <- vector(mode="numeric", length=0)
+  for (value in 1:length(uniquedata)) {
+    newdata <- c(newdata, frecuencia[value]/length(data))
+  }
+  setNames(newdata, uniquedata)
+}
+frecuenciaRelativaAcumulada <-function(data){
+  frecuencia <- frecuenciaAbsolutaAcumulada(data)
+  uniquedata<-unique(data)
+  uniquedata<- sort(uniquedata)
+  newdata<- vector(mode="numeric", length=0)
+  for (index in 1:length(uniquedata)) {
+    newdata <- c(newdata, frecuencia[index]/length(data))
+  }
+  setNames(newdata, uniquedata)
+}
+mediaAritmetica <- function(data){
+  acc <- 0
+  for (value in data) {
+    acc <- acc + value
+  }
+  acc / length(data)
+}
+mediaArmonica <- function(data){
+  1/mediaAritmetica(1/data)
+}
+mediaGeometrica <- function(data){
+  prod(data)^(1/length(data))
+}
+varianza <- function(data){
+  v_media <- mediaAritmetica(data)
+  acc = 0
+  for (value in data){
+    acc <- acc + (value - v_media)^2
+  }
+  acc/length(data)
+}
+desviacionTipica <- function (data) {
+  varianza(data)^(1/2)
+}
+desviacionMedia <- function (data){
+  v_media <- media(data)
+  acc = 0
+  for (value in data){
+    acc <- acc + abs(value - v_media)
+  }
+  acc/length(data)
+}
+tchebychev <- function(data, limit=10){
+  desviacion_tipica = desviacionTipica(data)
+  for (k in 2:limit){
+    data_percentage <- (1-(1/k^2))*100
+    radious = desviacion_tipica*k
+    message(paste("En un radio de",radious,"se encuentran el",
+                  data_percentage,"de los datos, k=",k))
+  }
+}
+mediana <- function(data){
+  x = sort(data)
+  size = length(x)
+  if (size  %% 2 == 0){
+    (x[size / 2] + x[(size / 2) +1]) / 2.0
+  }
+  else {
+     x[size / 2]
+  }
+}
+cuartiles <- function(data){
+    x = sort(data)
+    size = length(x)
+    if (size  %% 2 == 0){
+        c(
+            x[1],
+            (x[size / 4] + x[(size / 4) +1]) / 2.0 ,
+            (x[size / 2] + x[(size / 2) +1]) / 2.0 ,
+            (x[size *0.75] + x[size * 0.75 + 1]) / 2.0,
+            x[size]
+        )
+    }
+    else {
+        c(
+            x[1],
+            x[size / 4],
+            x[size / 2],
+            (x[size *0.75] + x[size * 0.75 + 1]) / 2.0,
+            x[size]
+        )
+  }
+}
+cuantil54 <- function(x){
+  size = length(x)
+  x[ceiling(size*0.54)]
+}
+rango <- function(data){
+  c(min(data),max(data))
+}
 @
 
 %-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -238,51 +393,122 @@ boxplot(cuartiles_,horizontal=T,xlab="Consumo en (mpg)")
 \section{Tercer análisis del alquiler en Nueva York con AirBNB durante 2019 .csv}
 %-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+Haremos ahora un análisis de los datos del alquiler en la ciudad de Nueva York durante el año 2019 con la compañía AirBNB.
+Nuestro interés y por lo que hemos elegido estos datos es porque deseamos conocer cuales son los precios del alquiler en esa ciudad.
+Comenzamos por cargar los datos desde un archivo en formato csv.
 <<>>=
-data <- read.csv("AB_NYC_2019.csv") #https://www.kaggle.com/dgomonov/new-york-city-airbnb-open-data#AB_NYC_2019.csv
+#https://www.kaggle.com/dgomonov/new-york-city-airbnb-open-data#AB_NYC_2019.csv
+data <- read.csv("AB_NYC_2019.csv")
 @
 
-Haremos ahora un análisis de los datos del alquiler en la ciudad de Nueva York durante el año 2019 con la compañía AirBNB.
-Los datos contienen las siguientes categorías:
+Ya que estos son unos dato por ahora desconocidos para nosotros comenzamos por visualizar las varibales que contienen y su tipo.
+Visualizamos también la cantidad de datos sobre los que haremos el análisis.
 <<get_info_BNB>>=
 getInfo(data)
+length(data$price)
 @
-Comenzaremos por analizar el precio de los alquileres.
-Para ello calcularemos la frecuencia relativa de los precios.
+
+\newpage
+\subsection{La ciudad al completo}
+Primero calcularemos el rango de los valores de los precios para saber cual es el másximo y el mínimo valor que tenemos.
+Observamos que el rango de valores sobre el que se distribuyen los precios es considerablemente elevado,
+sobre todo teniendo en cuenta que el precio hace referencia al precio por noche.
+<<rango_BNB>>=
+rango_<-rango(data$price)
+rango_
+@
+
+Primero calcularemos las frecuencias de los precios en la ciudad.
+Podemos observar que las mayores frecuencias se concentran en la parte baja de la gráfica, es decir, la mayoría de precios son bajos.
+No obstante hay unos pocos alquileres que tienen valores muy elevados.
+Vemos como la moda está muy alejada hacia la derecha de el centro del rango.
+<<frecuencia_absoluta_BNB>>=
+frecuencia_absoluta<-frecuenciaAbsoluta(data$price)
+moda_ <- moda(data$price)
+moda_
+@
+\begin{center}
+<<frecuencia_absoluta_BNB_plot, fig=TRUE, echo=FALSE>>=
+plot(frecuencia_absoluta, type="h",xlim=c(rango_[1],rango_[2]), xlab="precio del alquiler NY")
+@
+\end{center}
+<<frecuencia_absoluta_acumulada_BNB>>=
+frecuencia_absoluta_acumulada<-frecuenciaAbsolutaAcumulada(data$price)
+@
+\begin{center}
+<<frecuencia_absoluta_acumulada_BNB_plot, fig=TRUE, echo=FALSE>>=
+plot(frecuencia_absoluta_acumulada, type="h",xlim=c(rango_[1],rango_[2]), xlab="precio del alquiler NY")
+@
+\end{center}
 <<frecuencia_relativa_BNB>>=
-frecuencia_relativa<-frecuenciaAbsoluta(data$price)
+frecuencia_relativa<-frecuenciaRelativa(data$price)
 @
 \begin{center}
 <<frecuencia_relativa_BNB_plot, fig=TRUE, echo=FALSE>>=
-plot(frecuencia_relativa, type="h")
+plot(frecuencia_relativa, type="h",xlim=c(rango_[1],rango_[2]), xlab="precio del alquiler NY")
+@
+\end{center}
+<<frecuencia_relativa_acumulada_BNB>>=
+frecuencia_relativa_acumulada<-frecuenciaRelativaAcumulada(data$price)
+@
+\begin{center}
+<<frecuencia_relativa_acumulada_BNB_plot, fig=TRUE, echo=FALSE>>=
+plot(frecuencia_relativa_acumulada, type="h",xlim=c(rango_[1],rango_[2]), xlab="precio del alquiler NY")
 @
 \end{center}
 
-Podemos observar que los precios están muy agrupados en la parte izquierda de la gráfica (precios bajos) con altos porcentajes de aparición,
-no obstante aunque con una densidad mucho menor estos se alejan en gran medida llegando a alcanzar precios muy elevados pero con pocos porcentajes de aparición.
-
+Calculamos ahora la miadia con la desviación típica y la varianza.
+La media está muy alejada del centro del rango y la desviación típica es muy elevada.
+Podemos ver como el lado izquierdo del intervalo de tchebychev para k=2 está en su mayor parte vacío y que una gran cantidad de valores quedan fuera de él por la derecha.
+Concluímos que la media no representa de forma correcta a los datos.
+<<estadisticos_BNB>>=
+mediaAritmetica_ <- mediaAritmetica(data$price)
+mediaAritmetica_
+desviacion_tipica_ <- desviacionTipica(data$price)
+desviacion_tipica_
+varianza_ <- varianza(data$price)
+varianza_
+@
 \begin{center}
 <<estadisticos_BNB_plot, fig=TRUE, echo=FALSE>>=
-plotFrecuencyData(data$price)
+plotFrecuencyData(data$price, xlabel="precio del alquiler NY")
 @
 \end{center}
 
+Por último calculamos y representamos los cuartiles observando que tal y como habíamos podido ver anteriormente las frecuencias se agolpan en los valores bajos y
+se distribuyen unifórmemente pero con muy baja densisdad hasta alcanzar valores altos.
 <<cuartiles_BNB>>=
-v_cuartiles <- cuartiles(data$price)
+cuartiles_ <- cuartiles(data$price)
+cuartiles_
+mediana_ <- mediana(data$price)
+mediana_
 @
 \begin{center}
 <<cuartiles_BNB_plot, fig=TRUE, echo=FALSE>>=
-boxplot(v_cuartiles, horizontal=T)
+boxplot(cuartiles_, horizontal=T, xlab="precio del alquiler NY")
 @
 \end{center}
 
-Vemos que la media no es un valor representativo, su desviación típica es muy alta.
-Podemos observar como la moda y la mediana en este caso parecen representar mejor a la mayoría de los datos.
-Debido a esto decidimos que hacer el análisis de los precios para toda la ciudad no iba a aportarnos una visión representativa de los datos.
+\newpage
+\subsection{La ciudad por barrios}
+Primero calcularemos la distribución de los apartementos en cada barrio y posteriormente la distribución de los precios en esos barrios.
+Podemos observar que la mayoría de apartementos se encuentran en Manhattan y Brooklyn.
+<<distribucion_barrios>>=
+distribucion_por_barrios = frecuenciaRelativa(data$neighbourhood_group)
+distribucion_por_barrios
+@
+<<distribucion_barrios_plot, fig=TRUE, echo=FALSE>>=
+plot(distribucion_por_barrios, type="h", xlab="alquileres por barrio")
+@
+
+Vemos que ninguno de los valores que podrían resumir a los datos media, moda o mediana lo hacen realmente.
+Los valores bajos de los datos se ven bien representados pero los muy elevados que son cerca del 25\% no.
 Decidimos ahora calcular el precio medio por cada barrio en vez de hacerlo sobre toda la ciudad a la vez.
 
+Calculamos los valores estadísticos de resumen para cada barrio por separado y los representamos luego superpuestos sobre la gráfica de su frecuencia relativa.
+Representamos también los cuatiles en las gráficas de bigores para observar la densidad de la distribución de los datos.
 <<estadisticos_barrios_BNB, echo=FALSE>>=
-aggregate(data$price, list(data$neighbourhood_group), 
+aggregate(data$price, list(data$neighbourhood_group),
 FUN=(function(barrio) c(media=mediaAritmetica(barrio),
                         desviacion_tipica=desviacionTipica(barrio),
                         mediana=mediana(barrio),
@@ -292,104 +518,198 @@ Valores sobre el total de los datos sin haber separado por barrios
 <<estadisticos_BNB, echo=FALSE>>=
 c(media=mediaAritmetica(data$price),
   desviacion_tipica=desviacionTipica(data$price),
-  v_mediana=mediana(data$price),
-  v_moda=moda(data$price))
+  mediana=mediana(data$price),
+  moda=moda(data$price))
 @
 
 Podemos ver que la varianza se ha reducido para más barrios de en los que ha aumentado.
 En Bronx es en el barrio en el que tanto la varianza como la media es menor y 
 Manhattan es en el que ambas son mayores.
 
+En todos los barrios se observan resultados similares a los observados para toda la ciudad, hay muchos valores bajos pero también una cantidad constante y 
+unifórmemente distribuída que cubre cerca del 25\% de los datos de valores mucho más elevados.
+
 Datos para Manhattan
-\begin{center}
-<<fig=TRUE>>=
+<<manhattan_data>>=
 manhattan_data = data$price[data$neighbourhood_group == "Manhattan"]
-plotFrecuencyData(manhattan_data)
 @
-\end{center}
 \begin{center}
-<<fig=TRUE, echo=FALSE>>=
-boxplot(cuartiles(manhattan_data), horizontal=T)
+<<manhattan_data_plot, fig=TRUE, echo=FALSE>>=
+plotFrecuencyData(manhattan_data, xlabel="precio del alquiler Manhattan")
+@
+<<manhattan_data_c>>=
+cuartiles(manhattan_data)
+@
+<<manhattan_data_plot_c, fig=TRUE, echo=FALSE>>=
+boxplot(cuartiles(manhattan_data), horizontal=T, xlab="precio del alquiler Manhattan")
 @
 \end{center}
 
 Datos para Bronx
-\begin{center}
-<<fig=TRUE, echo=FALSE>>=
+<<bronx_data>>=
 bronx_data <- data$price[data$neighbourhood_group == "Bronx"]
-plotFrecuencyData(bronx_data)
 @
-\end{center}
 \begin{center}
-<<fig=TRUE, echo=FALSE>>=
-boxplot(cuartiles(bronx_data), horizontal=T)
+<<bronx_data_plot, fig=TRUE, echo=FALSE>>=
+plotFrecuencyData(bronx_data, xlabel="precio del alquiler Bronx")
+@
+<<bronx_data_c>>=
+cuartiles(bronx_data)
+@
+<<bronx_data_plot_c, fig=TRUE, echo=FALSE>>=
+boxplot(cuartiles(bronx_data), horizontal=T, xlab="precio del alquiler Bronx")
 @
 \end{center}
 
 Datos para Brooklyn
-\begin{center}
-<<fig=TRUE, echo=FALSE>>=
+<<brooklyn_data>>=
 brooklyn_data <- data$price[data$neighbourhood_group == "Brooklyn"]
-plotFrecuencyData(brooklyn_data)
 @
-\end{center}
 \begin{center}
-<<fig=TRUE, echo=FALSE>>=
-boxplot(cuartiles(brooklyn_data), horizontal=T)
+<<brooklyn_data_plot, fig=TRUE, echo=FALSE>>=
+plotFrecuencyData(brooklyn_data, xlabel="precio del alquiler Brooklyn")
+@
+<<brooklyn_data_c>>=
+cuartiles(brooklyn_data)
+@
+<<brooklyn_data_plot_c, fig=TRUE, echo=FALSE>>=
+boxplot(cuartiles(brooklyn_data), horizontal=T, xlab="precio del alquiler Brooklyn")
 @
 \end{center}
 
 Datos para Queens
-\begin{center}
-<<fig=TRUE, echo=FALSE>>=
+<<queens_data>>=
 queens_data <- data$price[data$neighbourhood_group == "Queens"]
-plotFrecuencyData(queens_data)
 @
-\end{center}
 \begin{center}
-<<fig=TRUE, echo=FALSE>>=
-boxplot(cuartiles(queens_data), horizontal=T)
+<<queens_data_plot, fig=TRUE, echo=FALSE>>=
+plotFrecuencyData(queens_data, xlabel="precio del alquiler Queens")
+@
+<<queens_data_c>>=
+cuartiles(queens_data)
+@
+<<queens_data_plot_c, fig=TRUE, echo=FALSE>>=
+boxplot(cuartiles(queens_data), horizontal=T, xlab="precio del alquiler Queens")
 @
 \end{center}
 
 Datos para Staten Island
-\begin{center}
-<<fig=TRUE, echo=FALSE>>=
+<<state_data>>=
 state_data <- data$price[data$neighbourhood_group == "Staten Island"]
-plotFrecuencyData(state_data)
 @
-\end{center}
 \begin{center}
-<<fig=TRUE, echo=FALSE>>=
-boxplot(cuartiles(state_data), horizontal=T)
+<<state_data_plot, fig=TRUE, echo=FALSE>>=
+plotFrecuencyData(state_data, xlabel="precio del alquiler Staten Island")
+@
+<<state_data_c>>=
+cuartiles(state_data)
+@
+<<state_data_plot_c, fig=TRUE, echo=FALSE>>=
+boxplot(cuartiles(state_data), horizontal=T, xlab="precio del alquiler Staten Island")
 @
 \end{center}
+
+\newpage
+\subsection{Apartamentos por anfitrión}
+Ya que la información que hemos obtenido hasta ahora de los datos ha resultado ser bastante pobre decidimos ahora tomar una aproximación diferente.
+Evaluaremos por tanto cuantos apartamentos tiene cada anfitrión en alquiler.
+
+Podemos ver que sin ninguna duda el valor significativo en este caso es 1; el 86/% anfitriones alquila solo un piso.
+<<host_data_ammount>>=
+host_ammount <- frecuenciaAbsoluta(data$host_id)
+@
+<<host_data,echo=FALSE>>=
+c(media=mediaAritmetica(host_ammount),
+  desviacion_tipica=desviacionTipica(host_ammount),
+  mediana=mediana(host_ammount),
+  moda=moda(host_ammount))
+@
+\begin{center}
+<<host_data_plot, fig=TRUE, echo=FALSE>>=
+plotFrecuencyData(host_ammount, xlabel="pisos por anfitrión")
+@
+<<host_data_c>>=
+cuartiles(host_ammount)
+@
+<<host_data_plot_c, fig=TRUE, echo=FALSE>>=
+boxplot(cuartiles(host_ammount), horizontal=T, xlab="pisos por anfitrión")
+@
+\end{center}
+
+\newpage
+\subsection{Disponibilidad}
+Evaluamos ahora la disponiblidad de los apartamentos, es decir, veremos cuantos días los apartementos en alquiler están libres.
+Podemos ver que la disponibilidad en la ciudad es baja y que el 50/% de los apartementos están libres solo menos de mes y medio al año.
+Entorno al 35/% de los alquiles ya están reservados o no tienen ningún día disponible para reservar.
+<<disponibilidad_plot>>=
+media_ <- mediaAritmetica(data$availability_365)
+media_
+desviacion_tipica_ <- desviacionTipica(data$availability_365)
+desviacion_tipica_
+varianza_ <- varianza(data$availability_365)
+varianza_
+moda_ <- moda(data$availability_365)
+moda_
+@
+<<disponibilidad_plot, echo=FALSE, fig=TRUE>>=
+plotFrecuencyData(data$availability_365, xlabel="días disponible al año")
+@
+<<disponibilidad_c>>=
+cuartiles(data$availability_365)
+@
+<<disponibilidad_c_plot, echo=FALSE, fig=TRUE>>=
+boxplot(data$availability_365, horizontal=T, xlab="días disponible al año")
+@
+
+También podemos ver estos mismos datos pero sobre cada barrios, observado que la disponibilidad no afecta a todos los barrios por igual.
+En el Bronx, Queens y Staten Island los alquileres con menos de 46 días disponibles estám muy lejos del 50/% que es lo que nos indica la mediana de los datos para toda la ciudad.
+<<disponibilidad_por_barrios>>=
+distribucion_por_barrios <- frecuenciaAbsoluta(data$neighbourhood_group)
+disponibilidad_por_barrios <- c()
+poca_disponibilidad <- table(data$neighbourhood_group[data$availability_365 <= 45])
+for (barrio in 1:length(distribucion_por_barrios)){
+  disponibilidad_por_barrios <- c(disponibilidad_por_barrios,
+    poca_disponibilidad[barrio]/distribucion_por_barrios[barrio])
+}
+disponibilidad_por_barrios
+@
+
+Adicionalmente parece ser que el precio no es razón para que un apartamento tenga más o menos disponibilidad pues se observan resultado similares en ambos casos.
+<<disponibilidad_baja_por_barrios_precio, fig=TRUE>>=
+plotFrecuencyData(data$price[data$availability_365 <= 45], xlabel="precios para disponibilidad inferior a 46 días")
+@
+<<disponibilidad_alta_por_barrios_precio, fig=TRUE>>=
+plotFrecuencyData(data$price[data$availability_365 > 45], xlabel="precios para disponibilidad superior a 45 días")
+@
+
+\newpage
 %-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 \section{Guia en R para el análisis estadístico}
 %-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 <<cargar_funciones, echo=FALSE>>=
-data <- read.table("./satelites.txt")$radio
+data_ <- read.table("./satelites.txt")$radio
 @
 \subsection{Frecuencias}
-<<>>=
-Frecuencia_absoluta <- table(data)
+<<Frecuencias>>=
+Frecuencia_absoluta <- table(data_)
 Frecuencia_absoluta_acumulada <- cumsum(frecuencia_absoluta)
-Frecuencia_relativa <- (function(data) table(data)/length(data))(data)
+Frecuencia_relativa <- (function(data) table(data)/length(data))(data_)
 Frecuencia_relativa_acumulada <- cumsum(frecuencia_relativa)
 @
 \subsection{Medidas representativas}
-<<>>=
-Media <- mean(data)
-Desviacion_tipica <- sd(data)
-Varianza <- var(data)
+<<Medidas_representativas>>=
+Media <- mean(data_)
+Desviacion_tipica <- sd(data_)
+Varianza <- var(data_)
 @
 \subsection{Medidas de ordenación}
-<<>>=
-Mediana <- median(data)
-Cuartiles <- quantile(data, prob=c(0, .25, .5, .75, 1))
-Cuantil54 <- quantile(data, prob=(.54))
+<<Medidas_ordenacion>>=
+Mediana <- median(data_)
+Cuartiles <- quantile(data_, prob=c(0, .25, .5, .75, 1))
+Cuantil54 <- quantile(data_, prob=(.54))
 @
 
+\newpage
 %-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 \section{Funciones creadas}
 %-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -425,6 +745,7 @@ Nos indica que dato tiene la mayor frecuencia absoluta.
 moda
 @
 
+\newpage
 \subsection{Medidas representativas}
 Los siguentes valores pretenden ser representates de todos los datos que se estén analizando.
 No tenemos garantís de que realmente lo sean así que para ellos necesitamos de erramientas que nos lo confiermen o desmientan.
@@ -476,6 +797,7 @@ Esto nos ayuda a comparar la desviación obtenida con los datos que tratamos de 
 tchebychev
 @
 
+\newpage
 \subsection{Medidas de ordenación}
 \subsubsection{Mediana}
 La mediana la hemos calculado ordenando los datos en orden ascendente 
@@ -503,6 +825,7 @@ Nos dice cual es el valor máximo y mínimo de un conjunto de datos.
 rango
 @
 
+\newpage
 \subsection{Otras funciones}
 \subsubsection{Primer contacto con los datos}
 Nos proporciona información básica para poder comanzar a trabjar con un conjunto de datos.
@@ -518,7 +841,7 @@ Media aritmética, moda, mediana y varianza.
 <<plotFrecuencyData>>=
 plotFrecuencyData
 @
-\subsubsection{Crear domuntos .pdf y .tex}
+\subsubsection{Crear documentos .pdf y .tex}
 Hemos automatizado este proceso con esta función para hacerlo más sencillo.
 <<saveToPdf>>=
 saveToPdf
