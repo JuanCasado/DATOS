@@ -1,7 +1,6 @@
 library("arules")
 
 calapriori<-function(nametable,soporte,confianza){
-    library("arules")
     muestra<-Matrix(as.matrix(read.table(nametable)), sparse=T)
     muestrangCMatrix<-as(muestra,"nsparseMatrix")
     transpmuestrangCMatrix<-t(muestrangCMatrix)

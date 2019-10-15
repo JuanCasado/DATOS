@@ -68,3 +68,9 @@ f_apriori <- function(matrix, support, confidence) {
   }
   chunks
 }
+
+readAprioriFile <- function(file){
+  muestra<-Matrix(as.matrix(read.table(file)), sparse=T)
+  muestrangCMatrix<-as(muestra,"nsparseMatrix")
+  t(muestrangCMatrix)
+}
