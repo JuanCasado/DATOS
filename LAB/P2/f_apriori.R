@@ -1,12 +1,20 @@
 
-setClass("apriori_results", slots=list(cause="character", effect="character", confidence="numeric"))
+setClass("support_results", slots=list(elements="character", support="numeric"))
+setClass("apriori_results", slots=list(cause="support_results", effect="support_results", confidence="numeric", support="numeric"))
 
-newResult <- function(cause, effect, confidence){
+newResult <- function(cause, effect, confidence, support){
   new_result <- new("apriori_results")
   new_result@cause = cause
   new_result@effect = effect
   new_result@confidence = confidence
+  new_result@support = support
   new_result
+}
+newSupport <- function(elements, support){
+  new_support <- new("support_results")
+  new_support@elements = elements
+  new_support@support = support
+  new_support
 }
 
 countApparitions <- function(matrix, name_combination) {
@@ -34,8 +42,9 @@ elementsWithSupport <- function(matrix, support){
     for (name_index in 1:dim(name_combinations)[2]){
       name_combination <- name_combinations[,name_index]
       apparitions <- countApparitions(matrix, name_combination)
-      if ((apparitions/total_cases) >= support)
-        ans = c(ans, list(name_combination))
+      s <- (apparitions/total_cases)
+      if (s >= support)
+        ans = c(ans, newSupport(name_combination, s))
     }
   }
   ans
@@ -48,25 +57,46 @@ f_apriori <- function(matrix, support, confidence) {
     test_chunk <- chunk_combinations[,chunk_combinations_index]
     first <- test_chunk[1][[1]]
     second <- test_chunk[2][[1]]
-    hole <- c(first, second)
+    hole <- c(first@elements, second@elements)
+    #Las combinaciones con elementos repetidos en ambos conjuntos son eliminadas
     add <- T
-    for (e1 in first)
-      for (e2 in second)
+    for (e1 in first@elements)
+      for (e2 in second@elements)
         if (e1==e2)
           add <- F
     if (add){
-      first_apparitions <- countApparitions(matrix, first)
-      second_apparitions <- countApparitions(matrix, second)
+      first_apparitions <- countApparitions(matrix, first@elements)
+      second_apparitions <- countApparitions(matrix, second@elements)
       hole_apparitions <- countApparitions(matrix, hole)
       c1 <- (hole_apparitions/first_apparitions)
       c2 <- (hole_apparitions/second_apparitions)
-      if((hole_apparitions/first_apparitions) >= confidence)
-        chunks <- c(chunks, newResult(first, second, c1))
-      if((hole_apparitions/second_apparitions) >= confidence)
-        chunks <- c(chunks, newResult(second, first, c2))
+      if((c1>=confidence) || (c2>=confidence)){
+        s <- countApparitions(matrix, hole)/length(colnames(matrix))
+      }
+      if(c1 >= confidence)
+        chunks <- c(chunks, newResult(first, second, c1, s))
+      if(c2 >= confidence)
+        chunks <- c(chunks, newResult(second, first, c2, s))
     }
   }
   chunks
+}
+
+toTable <- function(apriori_results){
+  cause <- c()
+  effect <- c()
+  support <- c()
+  confidence <- c()
+  for (element_index in 1:length(apriori_results)){
+    element <- apriori_results[element_index][[1]]
+    cause <- c(cause, paste(element@cause@elements,collapse=" "))
+    effect <- c(effect, paste(element@effect@elements,collapse=" "))
+    support <- c(support, element@support)
+    confidence <- c(confidence, element@confidence)
+  }
+  results<-data.frame(cause,effect,support,confidence)
+  names(results) <- c("cause","effect","support","confidence")
+  results
 }
 
 readAprioriFile <- function(file){

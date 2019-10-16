@@ -1,11 +1,7 @@
 library("arules")
 
-calapriori<-function(nametable,soporte,confianza){
-    muestra<-Matrix(as.matrix(read.table(nametable)), sparse=T)
-    muestrangCMatrix<-as(muestra,"nsparseMatrix")
-    transpmuestrangCMatrix<-t(muestrangCMatrix)
-    transacciones<-as(transpmuestrangCMatrix,"transactions")
-    #summary(transacciones)
+calapriori<-function(matrix,soporte,confianza){
+    transacciones<-as(matrix,"transactions")
     asociaciones <- apriori(transacciones, parameter = list(minlen=2, support = soporte,confidence = confianza), control=list(verbose=F))
     inspect(asociaciones)
 }
