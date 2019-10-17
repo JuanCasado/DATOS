@@ -1,0 +1,105 @@
+\documentclass [a4paper] {article}
+\usepackage[utf8]{inputenc}
+\title{Ciencia de datos, práctica 2}
+\author{Juan Casado Ballesteros, Samuel García Gonzalez, Iván Anaya Martín}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+
+\end{abstract}
+
+\newpage
+\tableofcontents
+\newpage
+
+<<cargar_funciones_credas, echo=FALSE>>=
+source("calapriori.R")
+source("f_apriori.R")
+options(width = 160)
+@
+
+\section{Asociación sobre los datos de las cestas de la compra}
+Hemos introducido los datos de las cestas de la compra en un fichero .txt para evitar tener que escribirlos varias veces.
+Utilizamos funciones que hemos creado para automatizar la lectura del fichero y también para utilizar el algoritmo apriori.
+En estas funciones solo realizamos una lectura y una ejecición del algoritmo con los parámetros que nosotros hemos elegido.
+En el caso del fichero txt guardamos los elementos como listas de la compra en horizonal y los transformamos a como la función que llama a apriori espera recibirlos.
+En la función que llama a apriori configuramos como queremos utilizar el algoritmo de modo que no se nos impriman los detalles de su ejecución
+ni se calculen las asociaciones con conjuntos vacíos.
+
+\subsection{Cargar los datos de un .txt}
+Convierte la matriz a datos booleanos y la transpone, nos es más fácil escribir los datos en horizontal y transponer que no escribirlos ya como se espera que estén.
+<<show_readAprioriFile>>=
+readAprioriFile
+@
+
+\subsection{Llamar a apriori}
+Con minlen=2 indicamos que no queremos calcular asociaciones con el conjunto vacío y con verbose=F que nos queremos obtener el progreso del algoritmo.
+<<show_calapriori>>=
+calapriori
+@
+
+\subsection{Calcular asociación}
+Calculamos la asociación con soporte 0.5 y confianza 0.8 para los datos de las cestas de la compra.
+<<clapriori_of_shop>>=
+calapriori(readAprioriFile("datos1.txt"),0.5,0.8)
+@
+
+\section{Asociación sobre los datos de los vehículos}
+Ya habíamos creado las función para leer datos de un .txt y suministrárselos a apriori.
+Repetimos el proceso ahora con los datos de los automóbiles iobteniendo los siguentes resultados para un soporte de 0.4 y una confianza de 0.9.
+<<clapriori_of_cars>>=
+calapriori(readAprioriFile("datos2.txt"),0.4,0.9)
+@
+
+\section{Creación de un algoritmo apriori}
+Hemos programado una versión simplificada del algoritmo eliminando algunas de las optimizaciones que este realiza.
+Para implementarlo lo hemos hecho utilizando tres funciones.
+
+Repetimos el cálculo de la asociación para los datos de las cestas de la compra y de los automóbiles comprobando que nuestro algoritmo proporciona
+los mismos resultados que apriori nos había dado anteriormente. Comprobamos que el algoritmo se comporta como esperábamos.
+<<f_apriori_execution>>=
+print(toTable(f_apriori(readAprioriFile("datos1.txt"),0.5,0.8)),right=F)
+print(toTable(f_apriori(readAprioriFile("datos2.txt"),0.4,0.9)),right=F)
+@
+
+\section{Apriori sobre un dataset real}
+Buscando informcación sobre el algoritmo apriori y sobre otros algoritmos de asociación hemos encontrado distintas fuentes de las que obtener datos típicos 
+sobre los que aplicar algoritmos de asociación.
+Hemos elegido un conjunto de datos que están ya incluidos en el paquete arules para probar sobre ellos el comportamiento del algoritmo.
+
+Podemos observar que la asociación puede aplicarse también sobre variables con múltiples valores, no solo verdadero o falso.
+Los datos contienen 8993 observaciones en 14 variables. El primer paso para procesarlos es crear clases de equivalencia (2) para cada valor.
+Una vez hecho esto solo nos queda crear las transacciones y proporcionárselas al algoritmo apriori.
+
+<<real_association>>=
+data("IncomeESL")
+IncomeESL[1:3, ]
+IncomeESL <- IncomeESL[complete.cases(IncomeESL), ]
+IncomeESL[["income"]] <- factor((as.numeric(IncomeESL[["income"]]) > 6) +1,
+  levels = 1 : 2 , labels = c("$0-$40,000", "$40,000+"))
+IncomeESL[["age"]] <- factor((as.numeric(IncomeESL[["age"]]) > 3) +1,
+  levels = 1 : 2 , labels = c("14-34", "35+"))
+IncomeESL[["education"]] <- factor((as.numeric(IncomeESL[["education"]]) > 4) +1,
+  levels = 1 : 2 , labels = c("no college graduate", "college graduate"))
+IncomeESL[["years in bay area"]] <- factor(
+  (as.numeric(IncomeESL[["years in bay area"]]) > 4) +1,
+  levels = 1 : 2 , labels = c("1-9", "10+"))
+IncomeESL[["number in household"]] <- factor(
+  (as.numeric(IncomeESL[["number in household"]]) > 3) +1,
+  levels = 1 : 2 , labels = c("1", "2+"))
+IncomeESL[["number of children"]] <- factor(
+  (as.numeric(IncomeESL[["number of children"]]) > 1) +0,
+  levels = 0 : 1 , labels = c("0", "1+"))
+Income <- as(IncomeESL, "transactions")
+asociaciones <- apriori(Income, 
+        parameter=list(minlen=2, support=0.5,confidence=0.9), 
+        control=list(verbose=F))
+inspect(asociaciones)
+@
+
+\section{Manual apriori}
+
+\section{Otros algoritmos de asociación}
+
+\end{document}

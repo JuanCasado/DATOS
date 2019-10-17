@@ -1,13 +1,17 @@
 
+library("Matrix")
 setClass("support_results", slots=list(elements="character", support="numeric"))
-setClass("apriori_results", slots=list(cause="support_results", effect="support_results", confidence="numeric", support="numeric"))
+setClass("apriori_results", slots=list(cause="support_results", effect="support_results",
+              confidence="numeric", support="numeric", lift="numeric", count="numeric"))
 
-newResult <- function(cause, effect, confidence, support){
+newResult <- function(cause, effect, confidence, support, lift, count){
   new_result <- new("apriori_results")
   new_result@cause = cause
   new_result@effect = effect
   new_result@confidence = confidence
   new_result@support = support
+  new_result@lift = lift
+  new_result@count = count
   new_result
 }
 newSupport <- function(elements, support){
@@ -72,11 +76,12 @@ f_apriori <- function(matrix, support, confidence) {
       c2 <- (hole_apparitions/second_apparitions)
       if((c1>=confidence) || (c2>=confidence)){
         s <- countApparitions(matrix, hole)/length(colnames(matrix))
+        lift <- s/(first@support*second@support)
       }
       if(c1 >= confidence)
-        chunks <- c(chunks, newResult(first, second, c1, s))
+        chunks <- c(chunks, newResult(first, second, c1, s, lift, hole_apparitions))
       if(c2 >= confidence)
-        chunks <- c(chunks, newResult(second, first, c2, s))
+        chunks <- c(chunks, newResult(second, first, c2, s, lift, hole_apparitions))
     }
   }
   chunks
@@ -87,15 +92,19 @@ toTable <- function(apriori_results){
   effect <- c()
   support <- c()
   confidence <- c()
+  lift <- c()
+  count <- c()
   for (element_index in 1:length(apriori_results)){
     element <- apriori_results[element_index][[1]]
-    cause <- c(cause, paste(element@cause@elements,collapse=" "))
-    effect <- c(effect, paste(element@effect@elements,collapse=" "))
+    cause <- c(cause, paste("{",paste(element@cause@elements,collapse=","),"}",sep=""))
+    effect <- c(effect, paste("{",paste(element@effect@elements,collapse=","),"}",sep=""))
     support <- c(support, element@support)
     confidence <- c(confidence, element@confidence)
+    lift <- c(lift, element@lift)
+    count <- c(count, element@count)
   }
-  results<-data.frame(cause,effect,support,confidence)
-  names(results) <- c("cause","effect","support","confidence")
+  results<-data.frame(cause,"=>",effect,support,confidence,lift,count)
+  names(results) <- c("lhs","","rhs","support","confidence", "lift", "count")
   results
 }
 
