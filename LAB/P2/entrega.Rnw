@@ -20,6 +20,7 @@ Para estos otros algoritmos haremos también un manual sobre cómo utilizarlos.
 \newpage
 
 <<cargar_funciones_credas, echo=FALSE>>=
+library("arulesViz")
 source("calapriori.R")
 source("f_apriori.R")
 options(width = 100)
@@ -47,13 +48,21 @@ calapriori
 
 \subsection{Calcular asociación}
 Calculamos la asociación con soporte 0.5 y confianza 0.8 para los datos de las cestas de la compra.
+
 <<calapriori_of_shop>>=
-calapriori(readAprioriFile("datos1.txt"),0.5,0.8)
+dat = calapriori(readAprioriFile("datos1.txt"),0.5,0.8)
 @
+\begin{center}
+<<grafica_apriori, fig = TRUE>>=
+plot(dat, method = "two-key plot")
+@
+\end{center}
 
 \section{Asociación sobre los datos de los vehículos}
 Ya habíamos creado las función para leer datos de un .txt y suministrárselos a apriori.
 Repetimos el proceso ahora con los datos de los automóbiles iobteniendo los siguentes resultados para un soporte de 0.4 y una confianza de 0.9.
+
+
 <<calapriori_of_cars>>=
 calapriori(readAprioriFile("datos2.txt"),0.4,0.9)
 @

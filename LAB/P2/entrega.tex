@@ -57,15 +57,17 @@ function(matrix,soporte,confianza){
         parameter=list(minlen=2, support=soporte,confidence=confianza), 
         control=list(verbose=F))
     inspect(asociaciones)
+    asociaciones
 }
 \end{Soutput}
 \end{Schunk}
 
 \subsection{Calcular asociación}
 Calculamos la asociación con soporte 0.5 y confianza 0.8 para los datos de las cestas de la compra.
+
 \begin{Schunk}
 \begin{Sinput}
-> calapriori(readAprioriFile("datos1.txt"),0.5,0.8)
+> dat = calapriori(readAprioriFile("datos1.txt"),0.5,0.8)
 \end{Sinput}
 \begin{Soutput}
     lhs             rhs     support   confidence lift count
@@ -76,10 +78,20 @@ Calculamos la asociación con soporte 0.5 y confianza 0.8 para los datos de las 
 [5] {Agua,Leche} => {Pan}   0.5000000 1.0        1.20 3    
 \end{Soutput}
 \end{Schunk}
+\begin{center}
+\begin{Schunk}
+\begin{Sinput}
+> plot(dat, method = "two-key plot")
+\end{Sinput}
+\end{Schunk}
+\includegraphics{entrega-grafica_apriori}
+\end{center}
 
 \section{Asociación sobre los datos de los vehículos}
 Ya habíamos creado las función para leer datos de un .txt y suministrárselos a apriori.
 Repetimos el proceso ahora con los datos de los automóbiles iobteniendo los siguentes resultados para un soporte de 0.4 y una confianza de 0.9.
+
+
 \begin{Schunk}
 \begin{Sinput}
 > calapriori(readAprioriFile("datos2.txt"),0.4,0.9)
@@ -89,13 +101,14 @@ Repetimos el proceso ahora con los datos de los automóbiles iobteniendo los sig
 [1] {Control_de_Velocidad}           => {Faros_de_Xenon} 0.625   1          1.333333 5    
 [2] {Bluetooth}                      => {Faros_de_Xenon} 0.625   1          1.333333 5    
 [3] {Bluetooth,Control_de_Velocidad} => {Faros_de_Xenon} 0.500   1          1.333333 4    
+set of 3 rules 
 \end{Soutput}
 \end{Schunk}
 
 \section{Qué es apriori y cómo utilizarlo}
 El algoritmo a priori surge como respuesta al problema existente a la hora de analizar las reglas de asociación 
 entre diferentes datos, puesto que con unas decenas de datos diferentes podemos encontrar miles de reglas diferentes y el
- principio en el que se basa es que si un conjunto de datos es frecuente, cualquier subconjunto del mismo también lo será. 
+principio en el que se basa es que si un conjunto de datos es frecuente, cualquier subconjunto del mismo también lo será. 
 Este algoritmo encuentra reglas de asociación entre diferentes datos en base a dos parámetros que establecemos 
 arbitrariamente que tienen que cumplirse en ellas, que son el soporte y la confianza. El soporte de un conjunto de datos se 
 define como la proporción de apariciones que contiene dicho conjunto de datos en el espacio muestral. La confianza define 
@@ -112,6 +125,8 @@ Control: diferentes parámetros de la clase APcontrol. Controla el rendimiento d
 
 \section{Creación de un algoritmo apriori}
 Hemos programado una versión simplificada del algoritmo eliminando algunas de las optimizaciones que este realiza.
+La funcionalidad de nuestro algoritmo también es reducida y solo está pensado para tomar como entrada tablas de datos booleanos 
+a diferencia del apriori original que puede tomar otros tipos de dato como entrada.
 Para implementarlo lo hemos hecho utilizando tres funciones.
 
 Repetimos el cálculo de la asociación para los datos de las cestas de la compra y de los automóbiles comprobando que nuestro algoritmo proporciona
@@ -197,6 +212,7 @@ Una vez hecho esto solo nos queda crear las transacciones y proporcionárselas a
 [7] {number in household=1}       => {language in home=english} 0.6495055  0.9388270 1.028417  4466
 [8] {number in household=1,                                                                        
      number of children=0}        => {language in home=english} 0.5213787  0.9424290 1.032363  3585
+set of 8 rules 
 \end{Soutput}
 \end{Schunk}
 
@@ -216,7 +232,7 @@ Parameter: diferentes parámetros de la clase ECparameter. El comportamiento por
 Control: diferentes parámetros de la clase ECcontrol. Controla el rendimiento del algoritmo (sort, heap, filter…) y aspectos como la ordenación o el reporte del rendimiento (verbose).
 
 \subsubsection{Ejemplos de con eclat}
-
+Ejecución sobre la muestra de los datos de las cestas de la compra.
 \begin{Schunk}
 \begin{Sinput}
 > caleclat(readAprioriFile("datos1.txt"),0.5)
@@ -227,9 +243,11 @@ Control: diferentes parámetros de la clase ECcontrol. Controla el rendimiento d
 [2] {Pan,Agua}       0.6666667 4    
 [3] {Agua,Leche}     0.5000000 3    
 [4] {Pan,Leche}      0.6666667 4    
+set of 4 itemsets 
 \end{Soutput}
 \end{Schunk}
 
+Ejecución sobre la muestra de los datos de los componentes de los coches.
 \begin{Schunk}
 \begin{Sinput}
 > caleclat(readAprioriFile("datos2.txt"),0.4)
@@ -240,9 +258,11 @@ Control: diferentes parámetros de la clase ECcontrol. Controla el rendimiento d
 [2] {Faros_de_Xenon,Control_de_Velocidad}           0.625   5    
 [3] {Bluetooth,Control_de_Velocidad}                0.500   4    
 [4] {Faros_de_Xenon,Bluetooth}                      0.625   5    
+set of 4 itemsets 
 \end{Soutput}
 \end{Schunk}
 
+Ejecución sobre la muestra de los datos demográficos incluídos en el paquete arules.
 \begin{Schunk}
 \begin{Sinput}
 > caleclat(IncomeESL, 0.5)
@@ -278,7 +298,13 @@ Control: diferentes parámetros de la clase ECcontrol. Controla el rendimiento d
       language in home=english}      0.6495055  4466
 [14] {education=no college graduate,                
       language in home=english}      0.6343805  4362
+set of 14 itemsets 
 \end{Soutput}
 \end{Schunk}
+
+Podemos observar que obtenemos el mismo soporte que con apriori y que tal y como hemos dicho la confianza no es calculada.
+Para compara los resultados de apriori con los de eclat debemos buscar en apriori los conjuntos que se correspondan con los de eclar.
+
+Ej: los conjuntos de apriori: {Pan} => {Agua} y {Agua} => {Pan} en eclat serán solo uno: {Pan, Agua}
 
 \end{document}
