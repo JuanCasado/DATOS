@@ -1,8 +1,8 @@
 # Fdb version 3
-["pdflatex"] 1571406285 "/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P2/entrega.tex" "/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P2/entrega.pdf" "entrega" 1571406285
+["pdflatex"] 1571411266 "/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P2/entrega.tex" "/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P2/entrega.pdf" "entrega" 1571411266
   "/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P2/Sweave.sty" 0 -1 0 ""
-  "/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P2/entrega.aux" 1571406285 8 a94a2480d3289e625eea47cd1b285758 ""
-  "/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P2/entrega.tex" 1571406285 13384 fbcec69def171327b7403802f3fa66ac ""
+  "/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P2/entrega.aux" 1571411266 8 a94a2480d3289e625eea47cd1b285758 ""
+  "/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P2/entrega.tex" 1571411266 17755 53fbccc5b22bb3bc743f518f3eeeec05 ""
   "/usr/local/texlive/2019/texmf-dist/tex/latex/base/article.cls" 1544567569 19933 3097d1b31d3c45dc957096f554529032 ""
   "/usr/local/texlive/2019/texmf-dist/tex/latex/base/inputenc.sty" 1544567569 5052 b64c57f4a38aae0d2745f8298fa50814 ""
   "/usr/local/texlive/2019/texmf-dist/tex/latex/base/size10.clo" 1544567569 8294 6d6e23d5169c0d89d173f6c7e08a005a ""
@@ -10,8 +10,8 @@
   "/usr/local/texlive/2019/texmf-var/web2c/pdftex/pdflatex.fmt" 1570544575 4264881 f9c0af29626a8332d94af55dd6f9105f ""
   "/usr/local/texlive/2019/texmf.cnf" 1557341546 577 d150fef99ac436ad1156e86b0892f6ef ""
   "Sweave.sty" 0 -1 0 ""
-  "entrega.tex" 1571406285 15047 dc5a2ad3b1ec4f07955762cbf41ffe96 ""
+  "entrega.tex" 1571411266 17755 53fbccc5b22bb3bc743f518f3eeeec05 ""
   (generated)
-  "/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P2/entrega.pdf"
-  "/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P2/entrega.log"
   "entrega.log"
+  "/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P2/entrega.log"
+  "/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P2/entrega.pdf"

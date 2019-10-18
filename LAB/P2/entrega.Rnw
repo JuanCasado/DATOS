@@ -13,6 +13,8 @@ Posterioremente explicaremos como funciona el algoritmo de apriori y proporciona
 Para la parte final aplicaremos el algoritmo apriori sobre conjuntos de datos reales.
 También estudiaremos otros algoritmos que calculen la asociación y compararemos sus resultados respecto de los de apriori.
 Para estos otros algoritmos haremos también un manual sobre cómo utilizarlos.
+
+A lo largo del documento añadiremos gráficas que nos
 \end{abstract}
 
 \newpage
@@ -21,9 +23,141 @@ Para estos otros algoritmos haremos también un manual sobre cómo utilizarlos.
 
 <<cargar_funciones_credas, echo=FALSE>>=
 library("arulesViz")
-source("calapriori.R")
-source("f_apriori.R")
+library("arules")
+library("Matrix")
 options(width = 100)
+
+setClass("support_results", slots=list(elements="character", support="numeric"))
+setClass("apriori_results", slots=list(cause="support_results", effect="support_results",
+              confidence="numeric", support="numeric", lift="numeric", count="numeric"))
+
+newResult <- function(cause, effect, confidence, support, lift, count){
+  new_result <- new("apriori_results")
+  new_result@cause = cause
+  new_result@effect = effect
+  new_result@confidence = confidence
+  new_result@support = support
+  new_result@lift = lift
+  new_result@count = count
+  new_result
+}
+newSupport <- function(elements, support){
+  new_support <- new("support_results")
+  new_support@elements = elements
+  new_support@support = support
+  new_support
+}
+
+countApparitions <- function(matrix, name_combination) {
+  cols <- colnames(matrix)
+  count <- 0
+  for (col in cols){
+    complete <- T
+    for (name in name_combination){
+      complete <- matrix[name, col]&&complete
+    }
+    if (complete){
+      count <- count + 1
+    }
+  }
+  count
+}
+
+elementsWithSupport <- function(matrix, support){
+  names <- rownames(matrix)
+  cols <- colnames(matrix)
+  total_cases <- length(cols)
+  ans = c()
+  for (size in 1:length(names)){
+    name_combinations <- combn(names, m=size)
+    for (name_index in 1:dim(name_combinations)[2]){
+      name_combination <- name_combinations[,name_index]
+      apparitions <- countApparitions(matrix, name_combination)
+      s <- (apparitions/total_cases)
+      if (s >= support)
+        ans = c(ans, newSupport(name_combination, s))
+    }
+  }
+  ans
+}
+
+f_apriori <- function(matrix, support, confidence) {
+  chunks <- c()
+  chunk_combinations <- combn(elementsWithSupport(matrix, support), m=2)
+  for (chunk_combinations_index in 1:dim(chunk_combinations)[2]){
+    test_chunk <- chunk_combinations[,chunk_combinations_index]
+    first <- test_chunk[1][[1]]
+    second <- test_chunk[2][[1]]
+    hole <- c(first@elements, second@elements)
+    #Las combinaciones con elementos repetidos en ambos conjuntos son eliminadas
+    add <- T
+    for (e1 in first@elements)
+      for (e2 in second@elements)
+        if (e1==e2)
+          add <- F
+    if (add){
+      first_apparitions <- countApparitions(matrix, first@elements)
+      second_apparitions <- countApparitions(matrix, second@elements)
+      hole_apparitions <- countApparitions(matrix, hole)
+      c1 <- (hole_apparitions/first_apparitions)
+      c2 <- (hole_apparitions/second_apparitions)
+      if((c1>=confidence) || (c2>=confidence)){
+        s <- countApparitions(matrix, hole)/length(colnames(matrix))
+        lift <- s/(first@support*second@support)
+      }
+      if(c1 >= confidence)
+        chunks <- c(chunks, newResult(first, second, c1, s, lift, hole_apparitions))
+      if(c2 >= confidence)
+        chunks <- c(chunks, newResult(second, first, c2, s, lift, hole_apparitions))
+    }
+  }
+  chunks
+}
+
+toTable <- function(apriori_results){
+  cause <- c()
+  effect <- c()
+  support <- c()
+  confidence <- c()
+  lift <- c()
+  count <- c()
+  for (element_index in 1:length(apriori_results)){
+    element <- apriori_results[element_index][[1]]
+    cause <- c(cause, paste("{",paste(element@cause@elements,collapse=","),"}",sep=""))
+    effect <- c(effect, paste("{",paste(element@effect@elements,collapse=","),"}",sep=""))
+    support <- c(support, element@support)
+    confidence <- c(confidence, element@confidence)
+    lift <- c(lift, element@lift)
+    count <- c(count, element@count)
+  }
+  results<-data.frame(cause,"=>",effect,support,confidence,lift,count)
+  names(results) <- c("lhs","","rhs","support","confidence", "lift", "count")
+  results
+}
+
+readAprioriFile <- function(file){
+  muestra<-Matrix(as.matrix(read.table(file)), sparse=T)
+  muestrangCMatrix<-as(muestra,"nsparseMatrix")
+  t(muestrangCMatrix)
+}
+
+calapriori<-function(matrix,soporte,confianza){
+    transacciones<-as(matrix,"transactions")
+    asociaciones <- apriori(transacciones, 
+        parameter=list(minlen=2, support=soporte,confidence=confianza), 
+        control=list(verbose=F))
+    inspect(asociaciones)
+    asociaciones
+}
+
+caleclat<-function(matrix,soporte){
+    transacciones<-as(matrix,"transactions")
+    asociaciones <- eclat(transacciones, 
+        parameter=list(minlen=2, support=soporte), 
+        control=list(verbose=F))
+    inspect(asociaciones)
+    asociaciones
+}
 @
 
 \section{Asociación sobre los datos de las cestas de la compra}
@@ -50,11 +184,18 @@ calapriori
 Calculamos la asociación con soporte 0.5 y confianza 0.8 para los datos de las cestas de la compra.
 
 <<calapriori_of_shop>>=
-dat = calapriori(readAprioriFile("datos1.txt"),0.5,0.8)
+shop_data = calapriori(readAprioriFile("datos1.txt"),0.5,0.8)
 @
+
 \begin{center}
-<<grafica_apriori, fig = TRUE>>=
-plot(dat, method = "two-key plot")
+<<grafica_apriori_shop_two_key, fig=TRUE>>=
+plot(shop_data, method = "two-key plot")
+@
+<<grafica_apriori_shop_paracoord, fig=TRUE>>=
+plot(shop_data, method = "paracoord", control = list(reorder = TRUE))
+@
+<<grafica_apriori_shop_graph, fig=TRUE>>=
+plot(shop_data, method = "graph")
 @
 \end{center}
 
@@ -64,8 +205,20 @@ Repetimos el proceso ahora con los datos de los automóbiles iobteniendo los sig
 
 
 <<calapriori_of_cars>>=
-calapriori(readAprioriFile("datos2.txt"),0.4,0.9)
+car_data <<- calapriori(readAprioriFile("datos2.txt"),0.4,0.9)
 @
+
+\begin{center}
+<<grafica_apriori_car_two_key, fig=TRUE>>=
+plot(car_data, method = "two-key plot")
+@
+<<grafica_apriori_car_paracoord, fig=TRUE>>=
+plot(car_data, method = "paracoord", control = list(reorder = TRUE))
+@
+<<grafica_apriori_car_graph, fig=TRUE>>=
+plot(car_data, method = "graph")
+@
+\end{center}
 
 \section{Qué es apriori y cómo utilizarlo}
 El algoritmo a priori surge como respuesta al problema existente a la hora de analizar las reglas de asociación 
@@ -109,7 +262,8 @@ Una vez hecho esto solo nos queda crear las transacciones y proporcionárselas a
 
 <<real_association>>=
 data("IncomeESL")
-IncomeESL[1:3, ]
+@
+<<real_association_echo_false, echo=FALSE>>=
 IncomeESL <- IncomeESL[complete.cases(IncomeESL), ]
 IncomeESL[["income"]] <- factor((as.numeric(IncomeESL[["income"]]) > 6) +1,
   levels = 1 : 2 , labels = c("$0-$40,000", "$40,000+"))
@@ -126,9 +280,45 @@ IncomeESL[["number in household"]] <- factor(
 IncomeESL[["number of children"]] <- factor(
   (as.numeric(IncomeESL[["number of children"]]) > 1) +0,
   levels = 0 : 1 , labels = c("0", "1+"))
-calapriori(IncomeESL, 0.5,0.9)
+@
+<<real_association_calc>>=
+income <- calapriori(IncomeESL, 0.5,0.9)
 @
 
+\begin{center}
+<<grafica_apriori_income_two_key, fig=TRUE>>=
+plot(income, method = "two-key plot")
+@
+<<grafica_apriori_income_paracoord, fig=TRUE>>=
+plot(income, method = "paracoord", control = list(reorder = TRUE))
+@
+<<grafica_apriori_income_graph, fig=TRUE>>=
+plot(income, method = "graph")
+@
+\end{center}
+
+Haremos ahora el mismo proceso sobre datos de los supervivientes del titanic.
+En este caso, los datos encontrados ya están en formato de transacciones tay y como apriori los espera.
+<<>>=
+load("./titanic.raw.rdata")
+titanic_data <- apriori(titanic.raw, 
+      parameter=list(minlen=2, support=0.5,confidence=0.8), 
+      control=list(verbose=F))
+inspect(titanic_data)
+@
+Podemos ver que los primeros en salvarse fueron las mujeres y los niños.
+
+\begin{center}
+<<grafica_apriori_titanic_data_two_key, fig=TRUE>>=
+plot(titanic_data, method = "two-key plot")
+@
+<<grafica_apriori_titanic_data_paracoord, fig=TRUE>>=
+plot(titanic_data, method = "paracoord", control = list(reorder = TRUE))
+@
+<<grafica_apriori_titanic_data_graph, fig=TRUE>>=
+plot(titanic_data, method = "graph")
+@
+\end{center}
 
 \section{Otros algoritmos de asociación}
 
@@ -160,9 +350,15 @@ Ejecución sobre la muestra de los datos demográficos incluídos en el paquete 
 caleclat(IncomeESL, 0.5)
 @
 
+Ejecución sobre la muestra de los datos de los supervivientes del titanic.
+<<eclat_of_titanic>>=
+inspect(eclat(titanic.raw, parameter=list(minlen=2, support=0.5),
+                           control=list(verbose=F)))
+@
+
 Podemos observar que obtenemos el mismo soporte que con apriori y que tal y como hemos dicho la confianza no es calculada.
 Para compara los resultados de apriori con los de eclat debemos buscar en apriori los conjuntos que se correspondan con los de eclar.
 
-Ej: los conjuntos de apriori: {Pan} => {Agua} y {Agua} => {Pan} en eclat serán solo uno: {Pan, Agua}
+Ej: los conjuntos de apriori: \{Pan\} => \{Agua\} y \{Agua\} => \{Pan\} en eclat serán solo uno: {Pan, Agua}
 
 \end{document}
