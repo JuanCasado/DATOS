@@ -6,6 +6,7 @@ calapriori<-function(matrix,soporte,confianza){
         parameter=list(minlen=2, support=soporte,confidence=confianza), 
         control=list(verbose=F))
     inspect(asociaciones)
+    asociaciones
 }
 
 caleclat<-function(matrix,soporte){
@@ -14,4 +15,5 @@ caleclat<-function(matrix,soporte){
         parameter=list(minlen=2, support=soporte), 
         control=list(verbose=F))
     inspect(asociaciones)
+    asociaciones
 }
