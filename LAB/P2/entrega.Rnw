@@ -6,7 +6,13 @@
 \maketitle
 
 \begin{abstract}
+Para esta práctica vamos a investigar sobre los algoritmos de asociación.
+Utilizaremos apriori para analizar cestas de la compra y datos de vehículos.
+Posterioremente explicaremos como funciona el algoritmo de apriori y proporcionaremos un pequeño manual sobre cómo utilizarlo.
 
+Para la parte final aplicaremos el algoritmo apriori sobre conjuntos de datos reales.
+También estudiaremos otros algoritmos que calculen la asociación y compararemos sus resultados respecto de los de apriori.
+Para estos otros algoritmos haremos también un manual sobre cómo utilizarlos.
 \end{abstract}
 
 \newpage
@@ -16,7 +22,7 @@
 <<cargar_funciones_credas, echo=FALSE>>=
 source("calapriori.R")
 source("f_apriori.R")
-options(width = 160)
+options(width = 100)
 @
 
 \section{Asociación sobre los datos de las cestas de la compra}
@@ -41,25 +47,27 @@ calapriori
 
 \subsection{Calcular asociación}
 Calculamos la asociación con soporte 0.5 y confianza 0.8 para los datos de las cestas de la compra.
-<<clapriori_of_shop>>=
+<<calapriori_of_shop>>=
 calapriori(readAprioriFile("datos1.txt"),0.5,0.8)
 @
 
 \section{Asociación sobre los datos de los vehículos}
 Ya habíamos creado las función para leer datos de un .txt y suministrárselos a apriori.
 Repetimos el proceso ahora con los datos de los automóbiles iobteniendo los siguentes resultados para un soporte de 0.4 y una confianza de 0.9.
-<<clapriori_of_cars>>=
+<<calapriori_of_cars>>=
 calapriori(readAprioriFile("datos2.txt"),0.4,0.9)
 @
 
 \section{Qué es apriori y cómo utilizarlo}
 El algoritmo a priori surge como respuesta al problema existente a la hora de analizar las reglas de asociación 
 entre diferentes datos, puesto que con unas decenas de datos diferentes podemos encontrar miles de reglas diferentes y el
- principio en el que se basa es que si un conjunto de datos es frecuente, cualquier subconjunto del mismo también lo será. 
+principio en el que se basa es que si un conjunto de datos es frecuente, cualquier subconjunto del mismo también lo será. 
 Este algoritmo encuentra reglas de asociación entre diferentes datos en base a dos parámetros que establecemos 
 arbitrariamente que tienen que cumplirse en ellas, que son el soporte y la confianza. El soporte de un conjunto de datos se 
 define como la proporción de apariciones que contiene dicho conjunto de datos en el espacio muestral. La confianza define 
 la probabilidad de encontrar relacionadas una parte derecha de una regla de asociación con una parte izquierda determinadas.
+
+\vspace{5mm}
 
 Invocamos la función escribiendo apriori() y los diferentes parámetros que nos interesan para su uso son los siguientes:
 Apriori(data, parameter = NULL, appearance = NULL, control = NULL)
@@ -70,6 +78,8 @@ Control: diferentes parámetros de la clase APcontrol. Controla el rendimiento d
 
 \section{Creación de un algoritmo apriori}
 Hemos programado una versión simplificada del algoritmo eliminando algunas de las optimizaciones que este realiza.
+La funcionalidad de nuestro algoritmo también es reducida y solo está pensado para tomar como entrada tablas de datos booleanos 
+a diferencia del apriori original que puede tomar otros tipos de dato como entrada.
 Para implementarlo lo hemos hecho utilizando tres funciones.
 
 Repetimos el cálculo de la asociación para los datos de las cestas de la compra y de los automóbiles comprobando que nuestro algoritmo proporciona
@@ -107,11 +117,7 @@ IncomeESL[["number in household"]] <- factor(
 IncomeESL[["number of children"]] <- factor(
   (as.numeric(IncomeESL[["number of children"]]) > 1) +0,
   levels = 0 : 1 , labels = c("0", "1+"))
-Income <- as(IncomeESL, "transactions")
-asociaciones <- apriori(Income, 
-        parameter=list(minlen=2, support=0.5,confidence=0.9), 
-        control=list(verbose=F))
-inspect(asociaciones)
+calapriori(IncomeESL, 0.5,0.9)
 @
 
 
@@ -123,12 +129,31 @@ elemento mencionado, reduciendo así enormemente el tiempo de cómputo, pero aum
 es que usa estas listas y realiza intersecciones con otras para calcular el soporte del elemento, evitando generar subconjuntos 
 que no existan en el espacio muestral.
 
-
 Invocamos la función escribiendo eclat() y los diferentes parámetros que nos interesan para su uso son los siguientes:
 Eclat(data, parameter = NULL,  control = NULL)
 Data: estructura de datos (por ejemplo, una matriz binaria o un data.frame) que se puede convertir en transacciones.
 Parameter: diferentes parámetros de la clase ECparameter. El comportamiento por defecto de los parámetros importantes es: soporte (support) de 10% y un límite (maxlen) de 5 elementos por conjunto de elementos.
 Control: diferentes parámetros de la clase ECcontrol. Controla el rendimiento del algoritmo (sort, heap, filter…) y aspectos como la ordenación o el reporte del rendimiento (verbose).
 
+\subsubsection{Ejemplos de con eclat}
+Ejecución sobre la muestra de los datos de las cestas de la compra.
+<<caleclat_of_shop>>=
+caleclat(readAprioriFile("datos1.txt"),0.5)
+@
+
+Ejecución sobre la muestra de los datos de los componentes de los coches.
+<<caleclat_of_cars>>=
+caleclat(readAprioriFile("datos2.txt"),0.4)
+@
+
+Ejecución sobre la muestra de los datos demográficos incluídos en el paquete arules.
+<<caleclat_of_real_data>>=
+caleclat(IncomeESL, 0.5)
+@
+
+Podemos observar que obtenemos el mismo soporte que con apriori y que tal y como hemos dicho la confianza no es calculada.
+Para compara los resultados de apriori con los de eclat debemos buscar en apriori los conjuntos que se correspondan con los de eclar.
+
+Ej: los conjuntos de apriori: {Pan} => {Agua} y {Agua} => {Pan} en eclat serán solo uno: {Pan, Agua}
 
 \end{document}

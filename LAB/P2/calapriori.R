@@ -7,3 +7,11 @@ calapriori<-function(matrix,soporte,confianza){
         control=list(verbose=F))
     inspect(asociaciones)
 }
+
+caleclat<-function(matrix,soporte){
+    transacciones<-as(matrix,"transactions")
+    asociaciones <- eclat(transacciones, 
+        parameter=list(minlen=2, support=soporte), 
+        control=list(verbose=F))
+    inspect(asociaciones)
+}
