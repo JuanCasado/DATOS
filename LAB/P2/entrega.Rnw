@@ -14,7 +14,8 @@ Para la parte final aplicaremos el algoritmo apriori sobre conjuntos de datos re
 También estudiaremos otros algoritmos que calculen la asociación y compararemos sus resultados respecto de los de apriori.
 Para estos otros algoritmos haremos también un manual sobre cómo utilizarlos.
 
-A lo largo del documento añadiremos gráficas que nos
+A lo largo del documento añadiremos gráficas que nos permitirán visualizar los resultados de forma más conveniente.
+Pra ello hemos utilizado el paquete arulesViz.
 \end{abstract}
 
 \newpage
