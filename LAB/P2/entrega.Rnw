@@ -187,7 +187,9 @@ Calculamos la asociación con soporte 0.5 y confianza 0.8 para los datos de las 
 <<calapriori_of_shop>>=
 shop_data = calapriori(readAprioriFile("datos1.txt"),0.5,0.8)
 @
-
+Como podemos observar en el resultado de la ejecución del algoritmo apriori, en la muestra de datos es común que, por ejemplo, 
+en la misma cesta de la compra, si se ha comprado agua y leche, se compra también pan. Lo mismo sucede entre pan y agua (en ambas direcciones) y 
+leche y pan (en ambas direcciones) aunque con una confianza menor.
 \begin{center}
 <<grafica_apriori_shop_two_key, fig=TRUE>>=
 plot(shop_data, method = "two-key plot")
@@ -208,7 +210,8 @@ Repetimos el proceso ahora con los datos de los automóbiles iobteniendo los sig
 <<calapriori_of_cars>>=
 car_data <<- calapriori(readAprioriFile("datos2.txt"),0.4,0.9)
 @
-
+Observamos tras ejecutar el algoritmo que los coches que poseen control de velocidad y bluetooth por separado tienen faros de xenon y en conjunto también los tienen,
+ pero con menor soporte.
 \begin{center}
 <<grafica_apriori_car_two_key, fig=TRUE>>=
 plot(car_data, method = "two-key plot")
@@ -285,7 +288,7 @@ IncomeESL[["number of children"]] <- factor(
 <<real_association_calc>>=
 income <- calapriori(IncomeESL, 0.5,0.9)
 @
-
+hay un gran conjunto de datos en la muestra que tienen alto soporte y confianza en que hablen en Ingles en casa.
 \begin{center}
 <<grafica_apriori_income_two_key, fig=TRUE>>=
 plot(income, method = "two-key plot")
