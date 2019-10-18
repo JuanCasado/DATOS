@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.10.8)  18 OCT 2019 17:07
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.10.8)  18 OCT 2019 17:28
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -355,7 +355,7 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 \openout4 = `entrega.toc'.
 
  [2]
-LaTeX Font Info:    Try loading font information for T1+aett on input line 35.
+LaTeX Font Info:    Try loading font information for T1+aett on input line 38.
  (/usr/local/texlive/2019/texmf-dist/tex/latex/ae/t1aett.fd
 File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
 ) [3]
@@ -363,20 +363,20 @@ File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
 File: entrega-grafica_apriori_shop_two_key.pdf Graphic file (type pdf)
 <use entrega-grafica_apriori_shop_two_key.pdf>
 Package pdftex.def Info: entrega-grafica_apriori_shop_two_key.pdf  used on inpu
-t line 88.
+t line 94.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
 <entrega-grafica_apriori_shop_paracoord.pdf, id=22, 433.62pt x 433.62pt>
 File: entrega-grafica_apriori_shop_paracoord.pdf Graphic file (type pdf)
 <use entrega-grafica_apriori_shop_paracoord.pdf>
 Package pdftex.def Info: entrega-grafica_apriori_shop_paracoord.pdf  used on in
-put line 94.
+put line 100.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
  [4 <./entrega-grafica_apriori_shop_two_key.pdf>]
 <entrega-grafica_apriori_shop_graph.pdf, id=33, 433.62pt x 433.62pt>
 File: entrega-grafica_apriori_shop_graph.pdf Graphic file (type pdf)
 <use entrega-grafica_apriori_shop_graph.pdf>
 Package pdftex.def Info: entrega-grafica_apriori_shop_graph.pdf  used on input 
-line 100.
+line 106.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
  [5 <./entrega-grafica_apriori_shop_paracoord.pdf> <./entrega-grafica_apriori_s
 hop_graph.pdf>]
@@ -384,94 +384,94 @@ hop_graph.pdf>]
 File: entrega-grafica_apriori_car_two_key.pdf Graphic file (type pdf)
 <use entrega-grafica_apriori_car_two_key.pdf>
 Package pdftex.def Info: entrega-grafica_apriori_car_two_key.pdf  used on input
- line 126.
+ line 133.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
 <entrega-grafica_apriori_car_paracoord.pdf, id=56, 433.62pt x 433.62pt>
 File: entrega-grafica_apriori_car_paracoord.pdf Graphic file (type pdf)
 <use entrega-grafica_apriori_car_paracoord.pdf>
 Package pdftex.def Info: entrega-grafica_apriori_car_paracoord.pdf  used on inp
-ut line 132.
+ut line 139.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
  [6 <./entrega-grafica_apriori_car_two_key.pdf>]
 <entrega-grafica_apriori_car_graph.pdf, id=67, 433.62pt x 433.62pt>
 File: entrega-grafica_apriori_car_graph.pdf Graphic file (type pdf)
 <use entrega-grafica_apriori_car_graph.pdf>
 Package pdftex.def Info: entrega-grafica_apriori_car_graph.pdf  used on input l
-ine 138.
+ine 145.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
  [7 <./entrega-grafica_apriori_car_paracoord.pdf> <./entrega-grafica_apriori_ca
-r_graph.pdf>] [8]
-<entrega-grafica_apriori_income_two_key.pdf, id=93, 433.62pt x 433.62pt>
+r_graph.pdf>] [8] [9]
+<entrega-grafica_apriori_income_two_key.pdf, id=96, 433.62pt x 433.62pt>
 File: entrega-grafica_apriori_income_two_key.pdf Graphic file (type pdf)
 <use entrega-grafica_apriori_income_two_key.pdf>
 Package pdftex.def Info: entrega-grafica_apriori_income_two_key.pdf  used on in
-put line 228.
+put line 237.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
- [9]
-<entrega-grafica_apriori_income_paracoord.pdf, id=97, 433.62pt x 433.62pt>
+ [10]
+<entrega-grafica_apriori_income_paracoord.pdf, id=100, 433.62pt x 433.62pt>
 File: entrega-grafica_apriori_income_paracoord.pdf Graphic file (type pdf)
 <use entrega-grafica_apriori_income_paracoord.pdf>
 Package pdftex.def Info: entrega-grafica_apriori_income_paracoord.pdf  used on 
-input line 234.
+input line 243.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
-<entrega-grafica_apriori_income_graph.pdf, id=98, 433.62pt x 433.62pt>
+<entrega-grafica_apriori_income_graph.pdf, id=101, 433.62pt x 433.62pt>
 File: entrega-grafica_apriori_income_graph.pdf Graphic file (type pdf)
 <use entrega-grafica_apriori_income_graph.pdf>
 Package pdftex.def Info: entrega-grafica_apriori_income_graph.pdf  used on inpu
-t line 240.
+t line 249.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
- [10 <./entrega-grafica_apriori_income_two_key.pdf> <./entrega-grafica_apriori_
+ [11 <./entrega-grafica_apriori_income_two_key.pdf> <./entrega-grafica_apriori_
 income_paracoord.pdf>]
-<entrega-grafica_apriori_titanic_data_two_key.pdf, id=115, 433.62pt x 433.62pt>
+<entrega-grafica_apriori_titanic_data_two_key.pdf, id=118, 433.62pt x 433.62pt>
 
 File: entrega-grafica_apriori_titanic_data_two_key.pdf Graphic file (type pdf)
 <use entrega-grafica_apriori_titanic_data_two_key.pdf>
 Package pdftex.def Info: entrega-grafica_apriori_titanic_data_two_key.pdf  used
- on input line 270.
+ on input line 279.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
- [11 <./entrega-grafica_apriori_income_graph.pdf>]
-<entrega-grafica_apriori_titanic_data_paracoord.pdf, id=131, 433.62pt x 433.62p
+ [12 <./entrega-grafica_apriori_income_graph.pdf>]
+<entrega-grafica_apriori_titanic_data_paracoord.pdf, id=134, 433.62pt x 433.62p
 t>
 File: entrega-grafica_apriori_titanic_data_paracoord.pdf Graphic file (type pdf
 )
 <use entrega-grafica_apriori_titanic_data_paracoord.pdf>
 Package pdftex.def Info: entrega-grafica_apriori_titanic_data_paracoord.pdf  us
-ed on input line 276.
+ed on input line 285.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
-<entrega-grafica_apriori_titanic_data_graph.pdf, id=132, 433.62pt x 433.62pt>
+<entrega-grafica_apriori_titanic_data_graph.pdf, id=135, 433.62pt x 433.62pt>
 File: entrega-grafica_apriori_titanic_data_graph.pdf Graphic file (type pdf)
 <use entrega-grafica_apriori_titanic_data_graph.pdf>
 Package pdftex.def Info: entrega-grafica_apriori_titanic_data_graph.pdf  used o
-n input line 282.
+n input line 291.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
- [12 <./entrega-grafica_apriori_titanic_data_two_key.pdf> <./entrega-grafica_ap
-riori_titanic_data_paracoord.pdf>] [13 <./entrega-grafica_apriori_titanic_data_
-graph.pdf>] [14] [15]
-(./entrega.aux) ) 
+ [13 <./entrega-grafica_apriori_titanic_data_two_key.pdf> <./entrega-grafica_ap
+riori_titanic_data_paracoord.pdf>] [14 <./entrega-grafica_apriori_titanic_data_
+graph.pdf>] [15]
+[16] (./entrega.aux) ) 
 Here is how much of TeX's memory you used:
  2814 strings out of 492609
  42150 string characters out of 6129048
- 98541 words of memory out of 5000000
+ 97541 words of memory out of 5000000
  6643 multiletter control sequences out of 15000+600000
  32927 words of font info for 72 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,6n,25p,409b,280s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmbx10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmbx12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmbx9.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmmi10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmr10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cm
-r12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr1
-7.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.p
-fb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsltt10.
-pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.p
-fb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pf
-b>
-Output written on entrega.pdf (15 pages, 210579 bytes).
+ 41i,6n,25p,409b,276s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local/texlive/2019/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmbx10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmbx12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmbx9.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmmi10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmr10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmr12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmr17.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mr9.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl
+tt10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cms
+y10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt
+10.pfb>
+Output written on entrega.pdf (16 pages, 212339 bytes).
 PDF statistics:
- 210 PDF objects out of 1000 (max. 8388607)
- 156 compressed objects within 2 object streams
+ 213 PDF objects out of 1000 (max. 8388607)
+ 158 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  61 words of extra memory for PDF output out of 10000 (max. 10000000)
 

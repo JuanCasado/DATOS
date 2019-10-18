@@ -181,6 +181,7 @@ Con minlen=2 indicamos que no queremos calcular asociaciones con el conjunto vac
 calapriori
 @
 
+\newpage
 \subsection{Calcular asociación}
 Calculamos la asociación con soporte 0.5 y confianza 0.8 para los datos de las cestas de la compra.
 
@@ -242,6 +243,7 @@ Parameter: diferentes parámetros de la clase APparameter. El comportamiento por
 Appearance: diferentes parámetros de la clase APappearance. Con esto podemos restringir la aparición de algunos datos.
 Control: diferentes parámetros de la clase APcontrol. Controla el rendimiento del algoritmo (sort, heap, filter…) y aspectos como la ordenación o el reporte del rendimiento (verbose).
 
+\newpage
 \section{Creación de un algoritmo apriori}
 Hemos programado una versión simplificada del algoritmo eliminando algunas de las optimizaciones que este realiza.
 La funcionalidad de nuestro algoritmo también es reducida y solo está pensado para tomar como entrada tablas de datos booleanos 
@@ -255,6 +257,7 @@ print(toTable(f_apriori(readAprioriFile("datos1.txt"),0.5,0.8)),right=F)
 print(toTable(f_apriori(readAprioriFile("datos2.txt"),0.4,0.9)),right=F)
 @
 
+\newpage
 \section{Apriori sobre un dataset real}
 Buscando informcación sobre el algoritmo apriori y sobre otros algoritmos de asociación hemos encontrado distintas fuentes de las que obtener datos típicos 
 sobre los que aplicar algoritmos de asociación.
@@ -324,6 +327,7 @@ plot(titanic_data, method = "graph")
 @
 \end{center}
 
+\newpage
 \section{Otros algoritmos de asociación}
 
 \subsection{Que es eclat y cómo utilizarlo}
