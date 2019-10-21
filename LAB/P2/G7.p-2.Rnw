@@ -6,16 +6,16 @@
 \maketitle
 
 \begin{abstract}
-Para esta práctica vamos a investigar sobre los algoritmos de asociación.
+Para esta práctica vamos a investigar los algoritmos de asociación.
 Utilizaremos apriori para analizar cestas de la compra y datos de vehículos.
 Posterioremente explicaremos como funciona el algoritmo de apriori y proporcionaremos un pequeño manual sobre cómo utilizarlo.
 
 Para la parte final aplicaremos el algoritmo apriori sobre conjuntos de datos reales.
-También estudiaremos otros algoritmos que calculen la asociación y compararemos sus resultados respecto de los de apriori.
+También estudiaremos otros algoritmos que calculen la asociación (eclat) y compararemos sus resultados respecto de los de apriori.
 Para estos otros algoritmos haremos también un manual sobre cómo utilizarlos.
 
 A lo largo del documento añadiremos gráficas que nos permitirán visualizar los resultados de forma más conveniente.
-Pra ello hemos utilizado el paquete arulesViz.
+Para ello hemos utilizado el paquete arulesViz.
 \end{abstract}
 
 \newpage
@@ -165,7 +165,7 @@ caleclat<-function(matrix,soporte){
 Hemos introducido los datos de las cestas de la compra en un fichero .txt para evitar tener que escribirlos varias veces.
 Utilizamos funciones que hemos creado para automatizar la lectura del fichero y también para utilizar el algoritmo apriori.
 En estas funciones solo realizamos una lectura y una ejecición del algoritmo con los parámetros que nosotros hemos elegido.
-En el caso del fichero txt guardamos los elementos como listas de la compra en horizonal y los transformamos a como la función que llama a apriori espera recibirlos.
+En el fichero .txt guardamos los elementos como listas de la compra en horizonal y los transformamos a como la función que llama a apriori espera recibirlos.
 En la función que llama a apriori configuramos como queremos utilizar el algoritmo de modo que no se nos impriman los detalles de su ejecución
 ni se calculen las asociaciones con conjuntos vacíos.
 
@@ -365,8 +365,8 @@ inspect(eclat(titanic.raw, parameter=list(minlen=2, support=0.5),
 @
 
 Podemos observar que obtenemos el mismo soporte que con apriori y que tal y como hemos dicho la confianza no es calculada.
-Para compara los resultados de apriori con los de eclat debemos buscar en apriori los conjuntos que se correspondan con los de eclar.
+Para compara los resultados de apriori con los de eclat debemos buscar en apriori los conjuntos que se correspondan con los de eclat.
 
-Ej: los conjuntos de apriori: \{Pan\} => \{Agua\} y \{Agua\} => \{Pan\} en eclat serán solo uno: {Pan, Agua}
+Ej: los conjuntos de apriori: \{Pan\} => \{Agua\} y \{Agua\} => \{Pan\} en eclat serán solo uno: \{Pan, Agua\}
 
 \end{document}
