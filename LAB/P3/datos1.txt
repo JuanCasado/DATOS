@@ -1,0 +1,10 @@
+ Teoría Laboratorio Prácticas Global
+1 A A B AP
+2 A B D SS
+3 D D C SS
+4 D D A SS
+5 B C B SS
+6 C B B AP
+7 B B A AP
+8 C D C SS
+9 B A C SS

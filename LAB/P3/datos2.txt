@@ -1,0 +1,5 @@
+ Nombre Radio  Densidad
+1 Mercurio  2.4 5.4
+2 Venus 6.1 5.2
+3 Tierra  6.4 5.5
+4 Marte 3.4 3.9
