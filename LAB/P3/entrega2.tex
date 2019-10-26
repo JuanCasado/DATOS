@@ -37,25 +37,45 @@ Calculamos la regresión sobre dichos datos para obtener la recta que más se ap
 \begin{Schunk}
 \begin{Sinput}
 > regresion2 <- lm(Densidad~Radio, data=datos2)
+> regresion2_own <- regLine(datos2$Radio, datos2$Densidad)
 \end{Sinput}
 \end{Schunk}
 
 Podemos ver los valores que adopta la ecucaión de la recta que se generará.
+
+y = ax + b
+
+b
 \begin{Schunk}
 \begin{Sinput}
-> # y = ax + b
-> regresion2$coefficients[1] # b
+> regresion2$coefficients[1]
 \end{Sinput}
 \begin{Soutput}
 (Intercept) 
    4.362396 
 \end{Soutput}
 \begin{Sinput}
-> regresion2$coefficients[2] # a
+> regresion2_own$coefficients[1]
+\end{Sinput}
+\begin{Soutput}
+[1] 4.362396
+\end{Soutput}
+\end{Schunk}
+
+a
+\begin{Schunk}
+\begin{Sinput}
+> regresion2$coefficients[2]
 \end{Sinput}
 \begin{Soutput}
     Radio 
 0.1393669 
+\end{Soutput}
+\begin{Sinput}
+> regresion2_own$coefficients[2]
+\end{Sinput}
+\begin{Soutput}
+[1] 0.1393669
 \end{Soutput}
 \end{Schunk}
 

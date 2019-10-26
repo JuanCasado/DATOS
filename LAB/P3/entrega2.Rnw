@@ -25,7 +25,7 @@ mediaAritmetica <- function(data){
   }
   acc / length(data)
 }
-varianza <- function(data){
+varianza <- function(data) {
   v_media <- mediaAritmetica(data)
   acc = 0
   for (value in data){
@@ -80,6 +80,15 @@ errorEstandar <- function (x, y, regresion) {
   }
   sqrt(acc/(len-2))
 }
+regLine <- function (x, y) {
+  covarianza_ <- covarianza (x, y)
+  varianza_ <- varianza (x)
+  media_x <- mediaAritmetica(x)
+  media_y <- mediaAritmetica(y)
+  a <- covarianza_/varianza_
+  b <- media_y - a * media_x
+  data.frame(coefficients=c(b, a))
+}
 regPlot <- function (x, y, regresion) {
   plot(x, y)
   reg95up <- regresion
@@ -110,13 +119,23 @@ datos2
 Calculamos la regresión sobre dichos datos para obtener la recta que más se aproxime a los puntos que tenemos.
 <<regresion_datos2>>=
 regresion2 <- lm(Densidad~Radio, data=datos2)
+regresion2_own <- regLine(datos2$Radio, datos2$Densidad)
 @
 
 Podemos ver los valores que adopta la ecucaión de la recta que se generará.
+
+y = ax + b
+
+b=
 <<recta_datos2>>=
-# y = ax + b
-regresion2$coefficients[1] # b
-regresion2$coefficients[2] # a
+regresion2$coefficients[1]
+regresion2_own$coefficients[1]
+@
+
+a=
+<<recta_datos2>>=
+regresion2$coefficients[2]
+regresion2_own$coefficients[2]
 @
 
 Cuando calculamos la recta de regresión sobre unos datos es necesario evaluar la calidad de esta.
@@ -154,9 +173,14 @@ correlacionCuadrada(datos2$Radio, datos2$Densidad)
 Para finalizar dibujaremos una gráfica en la que se representarán lod datos junto a la recta de regresión.
 Paralela a la recta de regresión dibujaremos las rectas que marcan el error estándar entorno a la recta de regresión.
 En trazado gris grueso la que marca la región en la que estarán el 66\% de los datos y en gris fino la que marca el 95\%.
+
 <<plot_regresion2, fig=TRUE, echo=FALSE>>=
 regPlot (datos2$Radio, datos2$Densidad, regresion2)
 @
+
+Como podemos ver la recta se ajusta muy mal a los datos que tenemos quedando las rectas que marcan el error estandas fuera del gráfico.
+La correlación cuadrada obtenida es muy baja.
+En parte esto se debe a que tenemos muy pocos datos.
 
 
 \section{EJ3}
