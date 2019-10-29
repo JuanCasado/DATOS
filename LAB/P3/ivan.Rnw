@@ -1,0 +1,49 @@
+\section{El segundo ejercicio de clasificación para datos cualitativos}
+
+<<cargar_funciones_credas, echo=FALSE>>=
+library('rpart')
+library('rpart.plot')
+library('tree')
+library(maptree)
+
+En esta parte realizamos el algoritmo hurt con otros datos. Lo primero sera realizar el ejercicio normal
+usando Gini como metodo para realizar la clasificación. La segunda parte la calcularemos usando la entropia. En
+ la siguiente parte usaremos la libreria tree, veremos otro forma de realizarlo. 
+
+
+\begin{center}
+clas_2-1-gini=rpart(TipoVehiculo~., data=muestra_2-1,method="class",minsplit=1) 
+@
+<<rpart_gini, fig=TRUE>>=
+rpart.plot(clas_2-1-gini)
+@
+\end{center}
+
+Ahora realizamos el programa usando la entropia. Para ello añadimos al  realizar el codigo de apart una parametro 
+de la funcion parms=list(split="information"). Por defecto esta lo clasifica por Gini. 
+
+\begin{center}
+clas_2-1-entropia=rpart(TipoVehiculo~., data=muestra_2-1,method="class",minsplit=1, parms=list(split="information")) 
+@
+<<rpart_entropia, fig=TRUE>>=
+rpart.plot(clas_2-1-entropia)
+@
+\end{center}
+
+Vemos que el resultado el mismo, en cuanto a clasificacion. El algoritomo siempre encontra el valor. La 
+primera diferencia que se observa, en el caso del arbol Gini su profundidad es de 3 mientras que el Entropia 
+es de 2. Esto implica una mejora en cuanto a tiempo de busqueda. 
+
+Ahora realizamos con una libreria diferente llamada tree. Esta libreria aplica el algoritmo de hurt. 
+
+\begin{center}
+clas_2-1-tree=tree(TipoVehiculo~.,data=muestra,mincut=1,minsize=2) 
+@
+<<tree_tree, fig=TRUE>>=
+draw.tree(clas_2-1-tree)
+@
+\end{center}
+
+En este caso el arbol es igual que rpart con aplicando gini. Ya que por defecto tree implementa el gini. 
+En esta libreria no esta implentado el calculo por entropia. Esta libreria para poco datos se requiere un
+parametro que es minsize que indica el tamaño minimo permitido para un nodo.
