@@ -17,6 +17,7 @@
 library("rpart")
 library("tree")
 library("rpart.plot")
+library("maptree")
 #-----------------------------------------------
 mediaAritmetica <- function(data){
   acc <- 0
@@ -185,6 +186,50 @@ En parte esto se debe a que tenemos muy pocos datos.
 
 \section{EJ3}
 
+En esta parte realizamos el algoritmo Hunt con la librería rpart sobre los datos de los vehículos.
+Lo primero sera realizar el ejercicio usando Gini como metodo para calculart la impureza.
+La segunda parte la calcularemos usando la entropia. 
+Por último utilizaremos la libreria tree para repetir estos cálculos aunque solo podremos utilizar Gini para calcular la impuraza.
+En ambos casos mostraremos los árboles obtenidos con las librerías adecuadas.
+
+\begin{center}
+@
+<<rpart_gini, fig=TRUE>>=
+muestra3 = data.frame(read.table("datos3.txt"))
+clas_3gini=rpart(TipoVehiculo~., data=muestra3,method="class",minsplit=1)
+rpart.plot(clas_3gini)
+@
+\end{center}
+
+Ahora utilizaemos la entropia. 
+Para ello añadimos el parametro parms=list(split="information").
+Por defecto esta se clasifica por Gini.
+
+\begin{center}
+@
+<<rpart_gini, fig=TRUE>>=
+clas_3entropia=rpart(TipoVehiculo~., data=muestra3,method="class",minsplit=1,parms=list(split="information"))
+rpart.plot(clas_3entropia)
+@
+\end{center}
+
+Vemos que el árbol obtenido es distinto.
+La primera diferencia que se observa, en el caso del arbol Gini su profundidad es de 3 mientras que con Entropia es de 2. 
+Es preferible por tanto la clasificación utilizando entropia pues el tiempo de búsqueda en el árbol será menor.
+
+Ahora realizamremos los mismo cálculos con tree.
+
+\begin{center}
+@
+<<tree_tree, fig=TRUE>>=
+clas_3tree=tree(TipoVehiculo~.,data=muestra3,mincut=1,minsize=2) 
+draw.tree(clas_3tree)
+@
+\end{center}
+
+El arbol generado es igual que el obtenido con rpart con aplicando gini.
+Ya que por defecto tree implementa el gini.
+En esta libreria no esta implentado el calculo por entropia.
 
 
 

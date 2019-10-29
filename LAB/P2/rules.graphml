@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns
+         http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+<!-- Created by igraph -->
+  <key id="v_name" for="node" attr.name="name" attr.type="string"/>
+  <key id="v_label" for="node" attr.name="label" attr.type="string"/>
+  <key id="v_support" for="node" attr.name="support" attr.type="double"/>
+  <key id="v_confidence" for="node" attr.name="confidence" attr.type="double"/>
+  <key id="v_lift" for="node" attr.name="lift" attr.type="double"/>
+  <key id="v_count" for="node" attr.name="count" attr.type="double"/>
+  <key id="v_order" for="node" attr.name="order" attr.type="double"/>
+  <graph id="G" edgedefault="directed">
+    <node id="n0">
+      <data key="v_name">1</data>
+      <data key="v_label">Pan</data>
+      <data key="v_count">-2147483648</data>
+      <data key="v_order">-2147483648</data>
+    </node>
+    <node id="n1">
+      <data key="v_name">2</data>
+      <data key="v_label">Agua</data>
+      <data key="v_count">-2147483648</data>
+      <data key="v_order">-2147483648</data>
+    </node>
+    <node id="n2">
+      <data key="v_name">4</data>
+      <data key="v_label">Leche</data>
+      <data key="v_count">-2147483648</data>
+      <data key="v_order">-2147483648</data>
+    </node>
+    <node id="n3">
+      <data key="v_name">assoc1</data>
+      <data key="v_label"></data>
+      <data key="v_support">0.666666666666667</data>
+      <data key="v_confidence">0.8</data>
+      <data key="v_lift">1.2</data>
+      <data key="v_count">4</data>
+      <data key="v_order">2</data>
+    </node>
+    <node id="n4">
+      <data key="v_name">assoc2</data>
+      <data key="v_label"></data>
+      <data key="v_support">0.666666666666667</data>
+      <data key="v_confidence">1</data>
+      <data key="v_lift">1.2</data>
+      <data key="v_count">4</data>
+      <data key="v_order">2</data>
+    </node>
+    <node id="n5">
+      <data key="v_name">assoc3</data>
+      <data key="v_label"></data>
+      <data key="v_support">0.5</data>
+      <data key="v_confidence">1</data>
+      <data key="v_lift">1.2</data>
+      <data key="v_count">3</data>
+      <data key="v_order">3</data>
+    </node>
+    <node id="n6">
+      <data key="v_name">assoc4</data>
+      <data key="v_label"></data>
+      <data key="v_support">0.666666666666667</data>
+      <data key="v_confidence">0.8</data>
+      <data key="v_lift">0.96</data>
+      <data key="v_count">4</data>
+      <data key="v_order">2</data>
+    </node>
+    <node id="n7">
+      <data key="v_name">assoc5</data>
+      <data key="v_label"></data>
+      <data key="v_support">0.666666666666667</data>
+      <data key="v_confidence">0.8</data>
+      <data key="v_lift">0.96</data>
+      <data key="v_count">4</data>
+      <data key="v_order">2</data>
+    </node>
+    <edge source="n0" target="n3">
+    </edge>
+    <edge source="n1" target="n4">
+    </edge>
+    <edge source="n1" target="n5">
+    </edge>
+    <edge source="n2" target="n5">
+    </edge>
+    <edge source="n2" target="n6">
+    </edge>
+    <edge source="n0" target="n7">
+    </edge>
+    <edge source="n3" target="n1">
+    </edge>
+    <edge source="n4" target="n0">
+    </edge>
+    <edge source="n5" target="n0">
+    </edge>
+    <edge source="n6" target="n0">
+    </edge>
+    <edge source="n7" target="n2">
+    </edge>
+  </graph>
+</graphml>
