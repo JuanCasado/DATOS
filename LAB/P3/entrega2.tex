@@ -17,6 +17,37 @@
 
 \section{EJ1}
 
+\begin{center}
+\begin{Schunk}
+\begin{Sinput}
+> muestra1 = data.frame(read.table("datos1.txt"))
+> clas_1gini=rpart(Global~., data=muestra1,method="class",minsplit=1)
+> rpart.plot(clas_1gini)
+\end{Sinput}
+\end{Schunk}
+\includegraphics{entrega2-rpart1_gini}
+\end{center}
+
+\begin{center}
+\begin{Schunk}
+\begin{Sinput}
+> clas_1entropia=rpart(Global~., data=muestra1,method="class",minsplit=1,parms=list(split="information"))
+> rpart.plot(clas_1entropia)
+\end{Sinput}
+\end{Schunk}
+\includegraphics{entrega2-rpart1_entropia}
+\end{center}
+
+\begin{center}
+\begin{Schunk}
+\begin{Sinput}
+> clas_1tree=tree(Global~.,data=muestra1,mincut=1,minsize=2) 
+> draw.tree(clas_1tree)
+\end{Sinput}
+\end{Schunk}
+\includegraphics{entrega2-tree1}
+\end{center}
+
 \section{EJ2}
 Creamos un .txt con los datos proporcionados sobre el radio y densidad de los planetas y lo leemos.
 \begin{Schunk}
@@ -173,7 +204,7 @@ En ambos casos mostraremos los árboles obtenidos con las librerías adecuadas.
 > rpart.plot(clas_3gini)
 \end{Sinput}
 \end{Schunk}
-\includegraphics{entrega2-rpart_gini}
+\includegraphics{entrega2-rpart3_gini}
 \end{center}
 
 Ahora utilizaemos la entropia. 
@@ -187,7 +218,7 @@ Por defecto esta se clasifica por Gini.
 > rpart.plot(clas_3entropia)
 \end{Sinput}
 \end{Schunk}
-\includegraphics{entrega2-rpart_gini}
+\includegraphics{entrega2-rpart3_entropia}
 \end{center}
 
 Vemos que el árbol obtenido es distinto.
@@ -203,7 +234,7 @@ Ahora realizamremos los mismo cálculos con tree.
 > draw.tree(clas_3tree)
 \end{Sinput}
 \end{Schunk}
-\includegraphics{entrega2-tree_tree}
+\includegraphics{entrega2-tree3}
 \end{center}
 
 El arbol generado es igual que el obtenido con rpart con aplicando gini.

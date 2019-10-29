@@ -110,6 +110,31 @@ regPlot <- function (x, y, regresion) {
 
 \section{EJ1}
 
+\begin{center}
+@
+<<rpart1_gini, fig=TRUE>>=
+muestra1 = data.frame(read.table("datos1.txt"))
+clas_1gini=rpart(Global~., data=muestra1,method="class",minsplit=1)
+rpart.plot(clas_1gini)
+@
+\end{center}
+
+\begin{center}
+@
+<<rpart1_entropia, fig=TRUE>>=
+clas_1entropia=rpart(Global~., data=muestra1,method="class",minsplit=1,parms=list(split="information"))
+rpart.plot(clas_1entropia)
+@
+\end{center}
+
+\begin{center}
+@
+<<tree1, fig=TRUE>>=
+clas_1tree=tree(Global~.,data=muestra1,mincut=1,minsize=2) 
+draw.tree(clas_1tree)
+@
+\end{center}
+
 \section{EJ2}
 Creamos un .txt con los datos proporcionados sobre el radio y densidad de los planetas y lo leemos.
 <<cargar_datos2>>=
@@ -194,7 +219,7 @@ En ambos casos mostraremos los árboles obtenidos con las librerías adecuadas.
 
 \begin{center}
 @
-<<rpart_gini, fig=TRUE>>=
+<<rpart3_gini, fig=TRUE>>=
 muestra3 = data.frame(read.table("datos3.txt"))
 clas_3gini=rpart(TipoVehiculo~., data=muestra3,method="class",minsplit=1)
 rpart.plot(clas_3gini)
@@ -207,7 +232,7 @@ Por defecto esta se clasifica por Gini.
 
 \begin{center}
 @
-<<rpart_gini, fig=TRUE>>=
+<<rpart3_entropia, fig=TRUE>>=
 clas_3entropia=rpart(TipoVehiculo~., data=muestra3,method="class",minsplit=1,parms=list(split="information"))
 rpart.plot(clas_3entropia)
 @
@@ -221,7 +246,7 @@ Ahora realizamremos los mismo cálculos con tree.
 
 \begin{center}
 @
-<<tree_tree, fig=TRUE>>=
+<<tree3, fig=TRUE>>=
 clas_3tree=tree(TipoVehiculo~.,data=muestra3,mincut=1,minsize=2) 
 draw.tree(clas_3tree)
 @
