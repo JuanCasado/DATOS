@@ -79,7 +79,7 @@ errorEstandar <- function (x, y, regresion) {
   for (i in 1:len){
     acc <- acc + (y[i] - (regresion2$coefficients[2]*x[i]+regresion2$coefficients[1]))^2
   }
-  sqrt(acc/(len-2))
+  sqrt(acc/(len))
 }
 regLine <- function (x, y) {
   covarianza_ <- covarianza (x, y)
@@ -181,7 +181,8 @@ summary(regresion2)$coefficients
 @
 
 \subsection{Error estándar}
-Podemos comprobar que coincide con nuestra implementación.
+R implemnta el error estándar de la población y no el de la muestra que el que hemos visto en clase por lo que los cálculos no coincidirán.
+El error estándar de la población se divide por n-2 y el de la muestra solo por n.
 Cuanto más próximo a 0 sea el error estándar mejor será la recta de regresión.
 <<summary_datos2>>=
 summary(regresion2)$sigma
