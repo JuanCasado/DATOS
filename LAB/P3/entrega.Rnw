@@ -1,0 +1,562 @@
+\documentclass [a4paper] {article}
+\usepackage[utf8]{inputenc}
+\title{Ciencia de datos, práctica 2}
+\author{Juan Casado Ballesteros, Samuel García Gonzalez, Iván Anaya Martín}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+En este documento realizaremos anális de clasificación supervisada de cuatro muestras de datos propuestas por el profesor y cuatro muestras elegidas por nosotros.
+La mitad de las muestras de cada tipo serán datos cuyo anális es realizable mediante árboles de clasificación de Hunt y la otra mitad por anális de regresión.
+
+En el caso de los árboles de decisión de Hunt compareremos la clasificación atendiendo al criterio de maximización del incremeto de información
+calculando esta mediante GINI y entropía comparando los resultado de utilizar una u otra métrica.
+En esta parte (EJ1, EJ2 y las dos primeras muestras del EJ5) utilizaremos las librerías rpart, tree y party donde la función ctree nos permite crear los árboles de decisión.
+Adicionalmente utilizaremos la librería rpart.plot como complemento de rpart para mostrar los árboles de decisión que esta librería genera.
+
+En el anális de la regresión utilizaremos la función de R lm.
+Adicionalmente hemos implementado nuestras propias funciones para el cálculo de regresión basadas en las fórmulas vistass en teoría.
+Compararemos nuestros resultado con los de lm para comprobar que realizamos los cálculos correctamente y explicaremos por qué algunos de ellos difieren.
+
+Las muestras proporcionadas se almecenarán en archivos .txt siendo esta de tamaño reducido.
+Las muestras que nosotros hemos buscado en keaggle están en archivos .csv y tienen una cantidad de datos considerablemente mayor.
+\end{abstract}
+
+\newpage
+\tableofcontents
+
+<<cargar_funciones_credas, echo=FALSE>>=
+library("rpart")
+library("tree")
+library("rpart.plot")
+library("maptree")
+library("party")
+#-----------------------------------------------
+mediaAritmetica <- function(data){
+  acc <- 0
+  for (value in data) {
+    acc <- acc + value
+  }
+  acc / length(data)
+}
+varianza <- function(data) {
+  v_media <- mediaAritmetica(data)
+  acc = 0
+  for (value in data){
+    acc <- acc + (value - v_media)^2
+  }
+  acc/length(data)
+}
+desviacionTipica <- function (data) {
+  varianza(data)^(1/2)
+}
+#-----------------------------------------------
+covarianza <- function(x, y) {
+  media_x <- mediaAritmetica(x)
+  media_y <- mediaAritmetica(y)
+  len <- min(length(x), length(y))
+  acc <- 0
+  for (i in 1:len) {
+    acc <- acc + x[i] * y[i]
+  }
+  acc/len - media_x*media_y
+}
+correlacion <- function(x, y) {
+  covarianza_ <- covarianza(x, y)
+  desviacion_tipica_x <- desviacionTipica(x)
+  desviacion_tipica_y <- desviacionTipica(y)
+  covarianza_/(desviacion_tipica_x*desviacion_tipica_y)
+}
+SSR <- function (x, y, regresion){
+  media_y <- mediaAritmetica(y)
+  acc <- 0
+  for (value in x){
+    acc <- acc + ((regresion$coefficients[2]*value+regresion$coefficients[1]) - media_y)^2
+  }
+  acc
+}
+SSY <- function (y, regresion){
+  media_y <- mediaAritmetica(y)
+  acc <- 0
+  for (value in y){
+    acc <- acc + (value - media_y)^2
+  }
+  acc
+}
+correlacionCuadrada <- function (x, y ,regresion){
+  SSR(x, y ,regresion) / SSY(y ,regresion)
+}
+errorEstandar <- function (x, y, regresion) {
+  len <- min(length(x), length(y))
+  acc <- 0
+  for (i in 1:len){
+    acc <- acc + (y[i] - (regresion2$coefficients[2]*x[i]+regresion2$coefficients[1]))^2
+  }
+  sqrt(acc/(len))
+}
+regLine <- function (x, y) {
+  covarianza_ <- covarianza (x, y)
+  varianza_ <- varianza (x)
+  media_x <- mediaAritmetica(x)
+  media_y <- mediaAritmetica(y)
+  a <- covarianza_/varianza_
+  b <- media_y - a * media_x
+  data.frame(coefficients=c(b, a))
+}
+regPlot <- function (x, y, regresion, xlabel="", ylabel="") {
+  plot(x, y, xlab=xlabel, ylab=ylabel)
+  reg95up <- regresion
+  reg95up$coefficients[1] = reg95up$coefficients[1] + 2*summary(regresion)$sigma
+  reg66up <- regresion
+  reg66up$coefficients[1] = reg66up$coefficients[1] + summary(regresion)$sigma
+  reg66down <- regresion
+  reg66down$coefficients[1] = reg66down$coefficients[1] - summary(regresion)$sigma
+  reg95down <- regresion
+  reg95down$coefficients[1] = reg95down$coefficients[1] - 2*summary(regresion)$sigma
+  abline(reg95up, "gray", lty=3, lwd=1)
+  abline(reg66up, "gray", lty=2, lwd=2)
+  abline(regresion, "black", lty=1, lwd=3)
+  abline(reg66down, "gray", lty=2, lwd=2)
+  abline(reg95down, "gray", lty=3, lwd=1)
+}
+@
+
+%------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+\newpage
+\section{EJ1}
+Analizaremos los árboles de decisión mediante GINI y ENTROPÍA generados por rpart y tree para los datos de la muestra 1.
+Los datos se componen de las calificaciones de distintos estudiantes en distintas pruebas y de la calificación final (Aprobado o Suspenso).
+Predendemos averguar si se puede predecir la calificación final con menos pruebas.
+
+Para los tres casos obtendremos el mismo árbol, los datos son reducidos y solo hay una solución posible en la que el incremento de la información se minimice.
+Si hubiera más datos podríamos darse el caso de que se obtuviueran árboles distintos al utilizar GINI o entropía.
+<<cargar_datos_1>>=
+muestra1 = data.frame(read.table("datos1.txt"))
+muestra1
+@
+
+\newpage
+\subsection{Rpart GINI}
+\begin{center}
+@
+<<rpart1_gini, fig=TRUE>>=
+clas_1gini=rpart(Global~., data=muestra1,method="class",minsplit=1)
+rpart.plot(clas_1gini)
+@
+\end{center}
+
+\newpage
+\subsection{Rpart ENTROPÍA}
+\begin{center}
+@
+<<rpart1_entropia, fig=TRUE>>=
+clas_1entropia=rpart(Global~., data=muestra1,method="class",minsplit=1,
+                      parms=list(split="information"))
+rpart.plot(clas_1entropia)
+@
+\end{center}
+
+\newpage
+\subsection{Tree GINI}
+\begin{center}
+@
+<<tree1, fig=TRUE>>=
+clas_1tree=tree(Global~.,data=muestra1,mincut=1,minsize=2) 
+draw.tree(clas_1tree)
+@
+\end{center}
+
+\subsection{Conclusiones}
+Los árboles de decisión generados nos indican que para poder dilucidar si un alumno ha aprobado o no solo nos hace falta evaluar las notas de laboratorio y prácticas,
+si en ambas han obtenido calificaciones de A o B podremos inferir que el alumno habrá aprobado si tener que considerar su nota de teoría.
+
+%------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+\newpage
+\section{EJ2}
+Creamos un .txt con los datos proporcionados sobre el radio y densidad de los planetas y lo leemos.
+<<cargar_datos2>>=
+datos2 <- read.table("datos2.txt")
+datos2
+@
+
+\subsection{Cálculo de la recta de regresión}
+Calculamos la regresión sobre dichos datos para obtener la recta que más se aproxime a los puntos que tenemos.
+<<regresion_datos2>>=
+regresion2 <- lm(Densidad~Radio, data=datos2)
+regresion2_own <- regLine(datos2$Radio, datos2$Densidad)
+@
+
+Podemos ver los valores que adopta la ecucaión de la recta que se generará.
+
+<<recta_datos2_print, echo=FALSE>>=
+paste("y =", regresion2$coefficients[2], "* x +", regresion2$coefficients[1])
+paste("y =", regresion2_own$coefficients[2], "* x +", regresion2_own$coefficients[1])
+@
+
+\subsection{Análisis de la regresión}
+Cuando calculamos la recta de regresión sobre unos datos es necesario evaluar la calidad de esta.
+Debemos analizar cómo de bien se ajusta a nuestros datos.
+Podemos ver esta información mediante summary.
+
+\subsubsection{Residuos}
+Diferencias entre cada valor de y real y cada valor de y obtenido mediante la función de regresión.
+<<summary_datos2_residuos>>=
+summary(regresion2)$residuals
+@
+
+\subsubsection{Coeficientes}
+Coeficientes estimados para y error estándar para cada uno de ellos.
+<<summary_datos2_coeficiente>>=
+summary(regresion2)$coefficients
+@
+
+\subsubsection{Error estándar}
+R implemnta el error estándar de la población y no el de la muestra que el que hemos visto en clase por lo que los cálculos no coincidirán.
+El error estándar de la población se divide por n-2 y el de la muestra solo por n.
+Cuanto más próximo a 0 sea el error estándar mejor será la recta de regresión.
+<<summary_datos2_error>>=
+summary(regresion2)$sigma
+errorEstandar(datos2$Radio, datos2$Densidad, regresion2_own)
+@
+
+\subsubsection{Correlación cuadrada}
+Podemos comprobar que coincide con nuestra implementación.
+Este valor está entre 0 y 1 siendo mejor cuanto más próximo a 1 sea (idealmente a partir de 0.8).
+<<summary_datos2_correlacion>>=
+summary(regresion2)$r.squared
+correlacionCuadrada(datos2$Radio, datos2$Densidad, regresion2_own)
+@
+
+\subsection{Visualización de la recta de regresión}
+Para finalizar dibujaremos una gráfica en la que se representarán lod datos junto a la recta de regresión.
+Paralela a la recta de regresión dibujaremos las rectas que marcan el error estándar entorno a la recta de regresión.
+En trazado gris grueso la que marca la región en la que estarán el 66\% de los datos y en gris fino la que marca el 95\%.
+\begin{center}
+<<plot_regresion2, fig=TRUE, echo=FALSE>>=
+regPlot (datos2$Radio, datos2$Densidad, regresion2, xlabel="Radio", ylabel="Densidad")
+@
+\end{center}
+
+Como podemos ver la recta se ajusta muy mal a los datos que tenemos quedando las rectas que marcan el error estandas fuera del gráfico.
+La correlación cuadrada obtenida es muy baja.
+En parte esto se debe a que tenemos muy pocos datos.
+
+%------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+\newpage
+\section{EJ3}
+En esta parte realizamos el algoritmo Hunt con la librería rpart sobre los datos de los vehículos.
+Lo primero sera realizar el ejercicio usando Gini como metodo para calculart la impureza.
+La segunda parte la calcularemos usando la entropia. 
+Por último utilizaremos la libreria tree para repetir estos cálculos aunque solo podremos utilizar Gini para calcular la impuraza.
+En ambos casos mostraremos los árboles obtenidos con las librerías adecuadas.
+<<cargar_datos_3>>=
+muestra3 = data.frame(read.table("datos3.txt"))
+muestra3
+@
+
+\newpage
+\subsection{Rpart GINI}
+\begin{center}
+@
+<<rpart3_gini, fig=TRUE>>=
+clas_3gini=rpart(TipoVehiculo~., data=muestra3,method="class",minsplit=1)
+rpart.plot(clas_3gini)
+@
+\end{center}
+
+\newpage
+\subsection{Rpart ENTROPÍA}
+Ahora utilizaemos la entropia. 
+Para ello añadimos el parametro parms=list(split="information").
+Por defecto esta se clasifica por Gini.
+\begin{center}
+@
+<<rpart3_entropia, fig=TRUE>>=
+clas_3entropia=rpart(TipoVehiculo~., data=muestra3,method="class",minsplit=1,
+                      parms=list(split="information"))
+rpart.plot(clas_3entropia)
+@
+\end{center}
+
+Vemos que el árbol obtenido es distinto.
+En el caso del arbol obtenido con Gini la profundidad es 3 mientras que en el obtenido con Entropia es de 2.
+Cuando utilizamos Gini para generar los árboles estos tienden a tener una rama muy oprofunda de la que cuelgan otras de profundidad relativa de 2.
+Dependiendo del tipo de árbol que queramos generar será recomendable utilizar una medida de información u otra.
+
+\newpage
+\subsection{Tree GINI}
+Ahora realizamremos los mismo cálculos con tree.
+\begin{center}
+@
+<<tree3, fig=TRUE>>=
+clas_3tree=tree(TipoVehiculo~.,data=muestra3,mincut=1,minsize=2) 
+draw.tree(clas_3tree)
+@
+\end{center}
+
+El arbol generado es igual que el obtenido con rpart con aplicando gini.
+Ya que por defecto tree implementa el gini.
+En esta libreria no esta implentado el calculo por entropia.
+
+\subsection{Conclusiones}
+En este caso podremos ver que obtenemos dos árboles de decisión distintos pero igualmente válidos.
+Si no tenemos carnet tendremos una bicicleta,
+si tenemos carnet y menos de tres ruedas una moto,
+si tenemos más de cinco ruedas tendremos un camión y
+si tenemos cuatro ruedas tendremos un coche.
+
+
+%------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+\newpage
+\section{EJ4}
+Realizaremos un anális de regresión lineal de los datos de las 4 muestras proporcionadas.
+Al igual que en el EJ2 utilizaremos la función lm y compararemos los resultados de esta con los obtenidos por las funciones que hemos implementado nosotros.
+Comenzamos por cargar los datos del fichero .txt.
+<<cargar_datos4>>=
+datos4 <- read.table("datos4.txt")
+datos4
+@
+\subsection{Cálculo de las rectas de regresión}
+Utilizando lm y nuestra función propia obtenemos las rectas de regresión que serán 4 rectas, una para cada muestra.
+<<regresion_datos4>>=
+regresion41 <- lm(y1~x1, data=datos4)
+regresion41_own <- regLine(datos4$x1, datos4$y1)
+regresion42 <- lm(y2~x2, data=datos4)
+regresion42_own <- regLine(datos4$x2, datos4$y2)
+regresion43 <- lm(y3~x3, data=datos4)
+regresion43_own <- regLine(datos4$x3, datos4$y3)
+regresion44 <- lm(y4~x4, data=datos4)
+regresion44_own <- regLine(datos4$x4, datos4$y4)
+@
+
+Podemos ver como la pendiente de todas las recta y su intersección con el origen es muy similar.
+Las recta de regresión obtenidas para cada muestra se parecerán mucho.
+<<regresion_datos4_print, echo=FALSE>>=
+paste("y1 =", regresion41$coefficients[2], "* x1 +", regresion41$coefficients[1])
+paste("y1 =", regresion41_own$coefficients[2], "* x1 +", regresion41_own$coefficients[1])
+paste("y2 =", regresion41$coefficients[2], "* x2 +", regresion41$coefficients[1])
+paste("y2 =", regresion41_own$coefficients[2], "* x2 +", regresion41_own$coefficients[1])
+paste("y3 =", regresion41$coefficients[2], "* x3 +", regresion41$coefficients[1])
+paste("y3 =", regresion41_own$coefficients[2], "* x3 +", regresion41_own$coefficients[1])
+paste("y4 =", regresion41$coefficients[2], "* x4 +", regresion41$coefficients[1])
+paste("y4 =", regresion41_own$coefficients[2], "* x4 +", regresion41_own$coefficients[1])
+@
+
+\subsection{Análisis de la regresión}
+Analizaremos ahora lo bien o mal que se ajusta cada recta a los datos a partir los que se creó.
+
+\subsubsection{Error estándar}
+Podemos ver que el error estándar es alto, podría estar mucho más próximo a 0.
+La recta de regresión no es especialmente buena.
+El error obtenido para todas las recta es aproximadamente el mismo.
+<<summary_datos_error4, echo=FALSE>>=
+paste("Error estándar de la población 1:", summary(regresion41)$sigma, "y de la muestra 1:", errorEstandar(datos4$x1, datos4$y1, regresion41_own))
+paste("Error estándar de la población 2:", summary(regresion42)$sigma, "y de la muestra 2:", errorEstandar(datos4$x2, datos4$y2, regresion42_own))
+paste("Error estándar de la población 3:", summary(regresion43)$sigma, "y de la muestra 3:", errorEstandar(datos4$x3, datos4$y3, regresion43_own))
+paste("Error estándar de la población 4:", summary(regresion44)$sigma, "y de la muestra 4:", errorEstandar(datos4$x4, datos4$y4, regresion44_own))
+@
+
+\subsubsection{Correlación cuadrada}
+Al igual que hemos visto con el error estardar, la correlación no es muy buena, es ente caso por no estar sufic iéntemente próximas a 1.
+Las rectas de regresión obtenidas no son de calidad, no se ajustan bien a los datos.
+<<summary_datos_correlacion4, echo=FALSE>>=
+paste("Calculada con lm 1:", summary(regresion41)$r.squared, "y calculada por nosotros 1:", correlacionCuadrada(datos4$x1, datos4$y1, regresion41_own))
+paste("Calculada con lm 2:", summary(regresion42)$r.squared, "y calculada por nosotros 2:", correlacionCuadrada(datos4$x2, datos4$y2, regresion42_own))
+paste("Calculada con lm 3:", summary(regresion43)$r.squared, "y calculada por nosotros 3:", correlacionCuadrada(datos4$x3, datos4$y3, regresion43_own))
+paste("Calculada con lm 4:", summary(regresion44)$r.squared, "y calculada por nosotros 4:", correlacionCuadrada(datos4$x4, datos4$y4, regresion44_own))
+@
+
+\subsection{Visualización de las rectas de regresión}
+Dibujaremos ahora cada recta junto a las líneas que marcan las regiones en las que se deben encontrar al menos el 66\% de los datos y en gris fino la que marca el 95\%.
+Podemos ver las que rectas son muy similares, ninguna se ajusta bien a los datos.
+Los datos son de naturaleza muy distinta.
+
+Los primeros datos son muy dispersos,
+la relación en los segundos no es lineal,
+en el tercer caso hay un dato anómalo que "estropea" la regresión y
+en el último caso los datos no parecen estar relacionados con la resta si no fuera por el último valor que también es anómalo.
+\begin{center}
+<<plot_regresion4, fig=TRUE, echo=FALSE>>=
+par(mfrow=c(2,2))
+regPlot (datos4$x1, datos4$y1, regresion41, xlabel="x", ylabel="y")
+regPlot (datos4$x2, datos4$y2, regresion42, xlabel="x", ylabel="y")
+regPlot (datos4$x3, datos4$y3, regresion43, xlabel="x", ylabel="y")
+regPlot (datos4$x4, datos4$y4, regresion44, xlabel="x", ylabel="y")
+@
+\end{center}
+El orden en el que se han analizado las gráficas es el [1,1]; [1,2]; [2,1]; [2,2] primero en horizonal y luego en vertical.
+
+%------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+\newpage
+\section{EJ5}
+Para este último ejecrcicio hemos tomado cuatro muestras de la página de keaggle y analizaremos cada una de ellas mediante árboles de decisión de Hunt
+o mediante regresión según sea más conveniente por la naturaleza de los datos.
+Todos los datos analizados se encuentran en formato .csv
+
+\subsection{Análisis de los datos de un banco pra decidir si conceder créditos o no a sus clientes}
+Los datos se han obtenido de https://www.kaggle.com/ajay1735/hmeq-data.
+En este caso el árbol de decisión nos genera hojas en las que se indica la probabilidad de que a un cliente se le deba conceder o no un crédito.
+Vemos que de las 12 varibales consideradas en los datos de entrada para decidirlo en el árbol solo se utilizan 8 teniendo que hacer en el peor caso 7 comprobaciones y 4 en el mejor.
+
+En en dos nodos donde se centra la mayor cantidad de gente a la que no se le be conceder,
+si tienen alguna línea de crédito con deudas y
+tinen un ratio de deuda respecto a ingresos mayor del 46\% y
+el crédito que piden supera los 5050 dólares así como
+si no tienen menos de cinco líneas de crédito endeudadas
+con más de cuatro líneas de crédito solicitadas recientemente y
+su ratio de rentas e ingresos en menor del 44\% y
+ha pedido más de 6050 dólares de crédito y
+tienen menos de 3 prórrogas de pago y
+la línea de crédito más antigua es de más de 76 meses.
+
+Hay otros dos nodos donde tampoco es recomdable dar crédito pero en estos hay clasificada menos gente.
+Es sorprendente que el porcentaje de gente a la que se le deba dar crádito es muy bajo.
+<<analisis_banco>>=
+bank <- read.csv("hmeq.csv")
+bank <- data.frame(bank, method="class", minsplit=1)
+@
+\begin{center}
+<<analisis_banco_rpart, fig=TRUE>>=
+cls_bank_rpart <- rpart(BAD~., data=bank, method="class", minsplit=1)
+rpart.plot(cls_bank_rpart, box.palette="RdBu", shadow.col="gray", nn=TRUE)
+@
+<<analisis_banco_ctree, fig=TRUE>>=
+cls_bank_ctree <- ctree(BAD~., data=bank)
+plot(cls_bank_ctree)
+@
+\end{center}
+Podemos ver que las capacidades de rpart para visualizar los datos de modo inteligible son mayores que las de la librería party.
+En el árbol dibujado con esta librería es difícil verlo.
+
+\subsection{Análisis del juego de las tres en raya}
+Los datos se obtuvieron de https://www.kaggle.com/aungpyaeap/tictactoe-endgame-dataset-uci.
+En este caso analizaremos el fin de partidas de tres en raya para determinar cuando un jugador gana o pierde.
+El árbol nos proporciona las probabilidades de que cada suceso ocurra en función de las posiciones de las piezas en el tablero.
+Vemos que tendremos posibilidades de ganar cuando las piezas del rival están en ciertas casillas que no cortan que nosotros podamos hacer 3 en raya.
+Es sorprendente que el a´rbol de decisión se genere entorno a este hecho en vez de mostrarnos las casillas en las que nosotros hacemos en tres en raya.
+Esto se debe a que el número de casillas que nos cortan un tres en raya es inferior al casillas desde las que nosotoros podemos hacerlo.
+También en elagunos casos se considera que algunas casillas no tengan ficha (b).
+<<analisis_juego>>=
+game <- read.csv("tic-tac-toe-endgame.csv")
+game <- data.frame(game)
+@
+\begin{center}
+<<analisis_juego_rpart, fig=TRUE>>=
+cls_game_rpart <- rpart(V10~., data=game, method="class", minsplit=1)
+rpart.plot(cls_game_rpart, box.palette="RdBu", shadow.col="gray", nn=TRUE)
+@
+<<analisis_juego_ctree, fig=TRUE>>=
+cls_game_ctree <- ctree(V10~., data=game)
+plot(cls_game_ctree)
+@
+\end{center}
+Comprobamos una vez que el árbol generado por party es difícil de entender mientras que en el generado por rpart podemos hacerlo sin problemas.
+
+\subsection{Análisis de los componente del cemento respecto de la resistencia de este}
+Hemos tomado estos datos de https://www.kaggle.com/maajdl/yeh-concret-data.
+Los datos representan la resistencia del hormigón respecto a la cantidad de distintas sustancias de las que este está compuesto.
+<<analisis_concrete>>=
+concrete <- read.csv("compresive_strength_concrete.csv")
+regresion_water <- lm(Water~Strength, data=concrete)
+regresion_cement <- lm(Cement~Strength, data=concrete)
+regresion_blast <- lm(Blast~Strength, data=concrete)
+regresion_ash <- lm(FlyAsh~Strength, data=concrete)
+regresion_plast <- lm(Superplasticizer~Strength, data=concrete)
+regresion_coarse <- lm(Coarse~Strength, data=concrete)
+regresion_fine <- lm(Fine~Strength, data=concrete)
+regresion_age <- lm(Age~Strength, data=concrete)
+@
+Vemos que la correlación cuadrada entre cada variable y la resistencia del hormigón es baja en todos los casos.
+Ninguna variable considerada tiene relación directa con la resistencia final del hormigón.
+En este caso esto se debe a que la relación de las varibales con la resistencia del hormigón no es lineal y que adimás es multidimensional.
+<<analisis_grades_correlacion_cuadrada, echo=FALSE>>=
+paste("Correlación cuadrada Water:", correlacionCuadrada(concrete$Strength, concrete$Water, regresion_water))
+paste("Correlación cuadrada Cement:", correlacionCuadrada(concrete$Strength, concrete$Cement, regresion_cement))
+paste("Correlación cuadrada Blast:", correlacionCuadrada(concrete$Strength, concrete$Blast, regresion_blast))
+paste("Correlación cuadrada FlyAsh:", correlacionCuadrada(concrete$Strength, concrete$FlyAsh, regresion_ash))
+paste("Correlación cuadrada Superplasticizer:", correlacionCuadrada(concrete$Strength, concrete$Superplasticizer, regresion_plast))
+paste("Correlación cuadrada Coarse:", correlacionCuadrada(concrete$Strength, concrete$Coarse, regresion_coarse))
+paste("Correlación cuadrada Fine:", correlacionCuadrada(concrete$Strength, concrete$Fine, regresion_fine))
+paste("Correlación cuadrada Age:", correlacionCuadrada(concrete$Strength, concrete$Age, regresion_age))
+@
+Pueden observarse tendencias como que si hay demsiada agua o demasiado agregado fino la resistenci de este será baja (rectas con pendiente negativa).
+\begin{center}
+<<analisis_concrete_plot_1, fig=TRUE, echo=FALSE>>=
+par(mfrow=c(2,2))
+regPlot(concrete$Strength, concrete$Water, regresion_water, xlabel="Strength", ylabel="Water")
+regPlot(concrete$Strength, concrete$Cement, regresion_cement, xlabel="Strength", ylabel="Cement")
+regPlot(concrete$Strength, concrete$Blast, regresion_blast, xlabel="Strength", ylabel="Blast")
+regPlot(concrete$Strength, concrete$FlyAsh, regresion_ash, xlabel="Strength", ylabel="FlyAsh")
+@
+<<analisis_concrete_plot_2, fig=TRUE, echo=FALSE>>=
+par(mfrow=c(2,2))
+regPlot(concrete$Strength, concrete$Superplasticizer, regresion_plast, xlabel="Strength", ylabel="Superplasticizer")
+regPlot(concrete$Strength, concrete$Coarse, regresion_coarse, xlabel="Strength", ylabel="Coarse")
+regPlot(concrete$Strength, concrete$Fine, regresion_fine, xlabel="Strength", ylabel="Fine")
+regPlot(concrete$Strength, concrete$Age, regresion_age, xlabel="Strength", ylabel="Age")
+@
+\end{center}
+
+\subsection{Análisis de las notas de alumnos respecto de su probabilidad de ser admitidos en la universidad}
+Los datos fueron obtenidos de https://www.kaggle.com/mohansacharya/graduate-admissions.
+La muestra representa las notas obtenidas en distintos exámenes con la probabilidad de admisión.
+<<analisis_grades>>=
+grades <- read.csv("Admission_Predict.csv")
+regresion_gre <- lm(GRE~Admit, data=grades)
+regresion_toefel <- lm(TOEFL~Admit, data=grades)
+regresion_rating <- lm(UniversityRating~Admit, data=grades)
+regresion_sop <- lm(SOP~Admit, data=grades)
+regresion_lor <- lm(LOR~Admit, data=grades)
+regresion_research <- lm(Research~Admit, data=grades)
+regresion_cgpa <- lm(CGPA~Admit, data=grades)
+@
+En este caso podemos ver como las notas de los exámenes TOEFL y GRE así como la nota media del expediente tienen gran relación con la probabilidad de admisión.
+En el resto de casos la correlación cuadrada es mucho menor.
+La que más relacionada está es la nota media del expediente y la que menos es si el estudiante a realizado investigaciones o no.
+<<analisis_grades_correlacion_cuadrada, echo=FALSE>>=
+paste("Correlación cuadrada GRE:", correlacionCuadrada(grades$Admit, grades$GRE, regresion_gre))
+paste("Correlación cuadrada TOEFL:", correlacionCuadrada(grades$Admit, grades$TOEFL, regresion_toefel))
+paste("Correlación cuadrada UniversityRating:", correlacionCuadrada(grades$Admit, grades$UniversityRating, regresion_rating))
+paste("Correlación cuadrada SOP:", correlacionCuadrada(grades$Admit, grades$SOP, regresion_sop))
+paste("Correlación cuadrada LOR:", correlacionCuadrada(grades$Admit, grades$LOR, regresion_lor))
+paste("Correlación cuadrada Research:", correlacionCuadrada(grades$Admit, grades$Research, regresion_research))
+paste("Correlación cuadrada CGPA:", correlacionCuadrada(grades$Admit, grades$CGPA, regresion_cgpa))
+@
+Se puede ver que las notas están directamente relacionados con la probabilidad de admisión, todas tiene una pendiente positiva.
+\begin{center}
+<<analisis_grades_plot_1, fig=TRUE, echo=FALSE>>=
+par(mfrow=c(2,3))
+regPlot(grades$Admit, grades$GRE, regresion_gre, xlabel="Admit", ylabel="GRE")
+regPlot(grades$Admit, grades$TOEFL, regresion_toefel, xlabel="Admit", ylabel="TOEFL")
+regPlot(grades$Admit, grades$UniversityRating, regresion_rating, xlabel="Admit", ylabel="UniversityRating")
+regPlot(grades$Admit, grades$SOP, regresion_sop, xlabel="Admit", ylabel="SOP")
+regPlot(grades$Admit, grades$LOR, regresion_lor, xlabel="Admit", ylabel="LOR")
+regPlot(grades$Admit, grades$Research, regresion_research, xlabel="Admit", ylabel="Research")
+@
+<<analisis_grades_plot_2, fig=TRUE, echo=FALSE>>=
+regPlot(grades$Admit, grades$CGPA, regresion_cgpa, xlabel="Admit", ylabel="CGPA")
+@
+\end{center}
+Vemos como en la nota media la recta de regresión se ajusta muy bien a los datos que se tienen.
+
+%------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+\newpage
+\section{Funciones implementadas por nosotros}
+\subsection{Tomadas de la práctica 1}
+<<funciones_estadísticas>>=
+mediaAritmetica
+varianza
+desviacionTipica
+@
+\subsection{Para el anális de regresión}
+<<funciones_regresion>>=
+covarianza
+correlacion
+SSR
+SSY
+correlacionCuadrada
+errorEstandar
+regLine
+regPlot
+@
+\end{document}

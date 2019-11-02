@@ -72,7 +72,7 @@ concrete7 <- function (){
   regPlot(data$Strength, data$Fine, regresion)
 }
 
-concrete7 <- function (){
+concrete8 <- function (){
   data <- read.csv("compresive_strength_concrete.csv")
   regresion <- lm(Age~Strength, data=data)
   regPlot(data$Strength, data$Age, regresion)
@@ -114,7 +114,7 @@ grades5 <- function (){
   regPlot(data$Admit, data$CGPA, regresion)
 }
 
-grades5 <- function (){
+grades6 <- function (){
   data <- read.csv("Admission_Predict.csv")
   regresion <- lm(Research~Admit, data=data)
   regPlot(data$Admit, data$Research, regresion)
