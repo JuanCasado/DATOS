@@ -7,7 +7,7 @@
 
 \begin{abstract}
 En este documento realizaremos anális de clasificación supervisada de cuatro muestras de datos propuestas por el profesor y cuatro muestras elegidas por nosotros.
-La mitad de las muestras de cada tipo serán datos cuyo anális es realizable mediante árboles de clasificación de Hunt y la otra mitad por anális de regresión.
+La mitad de las muestras de cada tipo serán datos cuyo análisis es realizable mediante árboles de clasificación de Hunt y la otra mitad por análisis de regresión.
 
 En el caso de los árboles de decisión de Hunt compareremos la clasificación atendiendo al criterio de maximización del incremeto de información
 calculando esta mediante GINI y entropía comparando los resultado de utilizar una u otra métrica.
@@ -18,7 +18,7 @@ En el anális de la regresión utilizaremos la función de R lm.
 Adicionalmente hemos implementado nuestras propias funciones para el cálculo de regresión basadas en las fórmulas vistass en teoría.
 Compararemos nuestros resultado con los de lm para comprobar que realizamos los cálculos correctamente y explicaremos por qué algunos de ellos difieren.
 
-Las muestras proporcionadas se almecenarán en archivos .txt siendo esta de tamaño reducido.
+Las muestras proporcionadas se almecenarán en archivos .txt siendo estas de tamaño reducido.
 Las muestras que nosotros hemos buscado en keaggle están en archivos .csv y tienen una cantidad de datos considerablemente mayor.
 \end{abstract}
 
@@ -126,10 +126,10 @@ regPlot <- function (x, y, regresion, xlabel="", ylabel="") {
 \section{EJ1}
 Analizaremos los árboles de decisión mediante GINI y ENTROPÍA generados por rpart y tree para los datos de la muestra 1.
 Los datos se componen de las calificaciones de distintos estudiantes en distintas pruebas y de la calificación final (Aprobado o Suspenso).
-Predendemos averguar si se puede predecir la calificación final con menos pruebas.
+Pretendemos averiguar si se puede predecir la calificación final con menos pruebas.
 
-Para los tres casos obtendremos el mismo árbol, los datos son reducidos y solo hay una solución posible en la que el incremento de la información se minimice.
-Si hubiera más datos podríamos darse el caso de que se obtuviueran árboles distintos al utilizar GINI o entropía.
+Para los tres casos obtendremos el mismo árbol, los datos son reducidos y solo hay una solución posible en la que el incremento de la información se maximice.
+Si hubiera más datos podría darse el caso de que se obtuvieran árboles distintos al utilizar GINI o entropía.
 <<cargar_datos_1>>=
 muestra1 = data.frame(read.table("datos1.txt"))
 muestra1
@@ -211,8 +211,8 @@ summary(regresion2)$coefficients
 @
 
 \subsubsection{Error estándar}
-R implemnta el error estándar de la población y no el de la muestra que el que hemos visto en clase por lo que los cálculos no coincidirán.
-El error estándar de la población se divide por n-2 y el de la muestra solo por n.
+R implementa el error estándar de la población y no el de la muestra que el que hemos visto en clase por lo que los cálculos no coincidirán.
+El error estándar de la población se divide entre n-2 y el de la muestra solo entre n.
 Cuanto más próximo a 0 sea el error estándar mejor será la recta de regresión.
 <<summary_datos2_error>>=
 summary(regresion2)$sigma
@@ -228,8 +228,8 @@ correlacionCuadrada(datos2$Radio, datos2$Densidad, regresion2_own)
 @
 
 \subsection{Visualización de la recta de regresión}
-Para finalizar dibujaremos una gráfica en la que se representarán lod datos junto a la recta de regresión.
-Paralela a la recta de regresión dibujaremos las rectas que marcan el error estándar entorno a la recta de regresión.
+Para finalizar dibujaremos una gráfica en la que se representarán los datos junto a la recta de regresión.
+Paralelas a la recta de regresión dibujaremos las rectas que marcan el error estándar entorno a la recta de regresión.
 En trazado gris grueso la que marca la región en la que estarán el 66\% de los datos y en gris fino la que marca el 95\%.
 \begin{center}
 <<plot_regresion2, fig=TRUE, echo=FALSE>>=
@@ -245,9 +245,9 @@ En parte esto se debe a que tenemos muy pocos datos.
 \newpage
 \section{EJ3}
 En esta parte realizamos el algoritmo Hunt con la librería rpart sobre los datos de los vehículos.
-Lo primero sera realizar el ejercicio usando Gini como metodo para calculart la impureza.
+Lo primero sera realizar el ejercicio usando Gini como metodo para calcular la impureza.
 La segunda parte la calcularemos usando la entropia. 
-Por último utilizaremos la libreria tree para repetir estos cálculos aunque solo podremos utilizar Gini para calcular la impuraza.
+Por último utilizaremos la libreria tree para repetir estos cálculos aunque solo podremos utilizar Gini para calcular la impureza.
 En ambos casos mostraremos los árboles obtenidos con las librerías adecuadas.
 <<cargar_datos_3>>=
 muestra3 = data.frame(read.table("datos3.txt"))
@@ -266,7 +266,7 @@ rpart.plot(clas_3gini)
 
 \newpage
 \subsection{Rpart ENTROPÍA}
-Ahora utilizaemos la entropia. 
+Ahora utilizaremos la entropia. 
 Para ello añadimos el parametro parms=list(split="information").
 Por defecto esta se clasifica por Gini.
 \begin{center}
@@ -279,13 +279,13 @@ rpart.plot(clas_3entropia)
 \end{center}
 
 Vemos que el árbol obtenido es distinto.
-En el caso del arbol obtenido con Gini la profundidad es 3 mientras que en el obtenido con Entropia es de 2.
-Cuando utilizamos Gini para generar los árboles estos tienden a tener una rama muy oprofunda de la que cuelgan otras de profundidad relativa de 2.
+En el caso del arbol obtenido con Gini la profundidad es 3 mientras que en el obtenido con Entropía es de 2.
+Cuando utilizamos Gini para generar los árboles estos tienden a tener una rama muy profunda de la que cuelgan otras de profundidad relativa de 2.
 Dependiendo del tipo de árbol que queramos generar será recomendable utilizar una medida de información u otra.
 
 \newpage
 \subsection{Tree GINI}
-Ahora realizamremos los mismo cálculos con tree.
+Ahora realizaremos los mismo cálculos con tree.
 \begin{center}
 @
 <<tree3, fig=TRUE>>=
@@ -294,9 +294,9 @@ draw.tree(clas_3tree)
 @
 \end{center}
 
-El arbol generado es igual que el obtenido con rpart con aplicando gini.
+El arbol generado es igual que el obtenido con rpart aplicando gini.
 Ya que por defecto tree implementa el gini.
-En esta libreria no esta implentado el calculo por entropia.
+En esta libreria no esta implentado el calculo por entropía.
 
 \subsection{Conclusiones}
 En este caso podremos ver que obtenemos dos árboles de decisión distintos pero igualmente válidos.
@@ -357,7 +357,7 @@ paste("Error estándar de la población 4:", summary(regresion44)$sigma, "y de l
 @
 
 \subsubsection{Correlación cuadrada}
-Al igual que hemos visto con el error estardar, la correlación no es muy buena, es ente caso por no estar sufic iéntemente próximas a 1.
+Al igual que hemos visto con el error estardar, la correlación no es muy buena, es ente caso por no estar suficientemente próximas a 1.
 Las rectas de regresión obtenidas no son de calidad, no se ajustan bien a los datos.
 <<summary_datos_correlacion4, echo=FALSE>>=
 paste("Calculada con lm 1:", summary(regresion41)$r.squared, "y calculada por nosotros 1:", correlacionCuadrada(datos4$x1, datos4$y1, regresion41_own))
@@ -389,7 +389,7 @@ El orden en el que se han analizado las gráficas es el [1,1]; [1,2]; [2,1]; [2,
 %------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 \newpage
 \section{EJ5}
-Para este último ejecrcicio hemos tomado cuatro muestras de la página de keaggle y analizaremos cada una de ellas mediante árboles de decisión de Hunt
+Para este último ejercicio hemos tomado cuatro muestras de la página de keaggle y analizaremos cada una de ellas mediante árboles de decisión de Hunt
 o mediante regresión según sea más conveniente por la naturaleza de los datos.
 Todos los datos analizados se encuentran en formato .csv
 
@@ -398,9 +398,9 @@ Los datos se han obtenido de https://www.kaggle.com/ajay1735/hmeq-data.
 En este caso el árbol de decisión nos genera hojas en las que se indica la probabilidad de que a un cliente se le deba conceder o no un crédito.
 Vemos que de las 12 varibales consideradas en los datos de entrada para decidirlo en el árbol solo se utilizan 8 teniendo que hacer en el peor caso 7 comprobaciones y 4 en el mejor.
 
-En en dos nodos donde se centra la mayor cantidad de gente a la que no se le be conceder,
+En dos nodos donde se centra la mayor cantidad de gente a la que no se le be conceder,
 si tienen alguna línea de crédito con deudas y
-tinen un ratio de deuda respecto a ingresos mayor del 46\% y
+tienen un ratio de deuda respecto a ingresos mayor del 46\% y
 el crédito que piden supera los 5050 dólares así como
 si no tienen menos de cinco líneas de crédito endeudadas
 con más de cuatro líneas de crédito solicitadas recientemente y
@@ -409,7 +409,7 @@ ha pedido más de 6050 dólares de crédito y
 tienen menos de 3 prórrogas de pago y
 la línea de crédito más antigua es de más de 76 meses.
 
-Hay otros dos nodos donde tampoco es recomdable dar crédito pero en estos hay clasificada menos gente.
+Hay otros dos nodos donde tampoco es recomendable dar crédito pero en estos hay clasificada menos gente.
 Es sorprendente que el porcentaje de gente a la que se le deba dar crádito es muy bajo.
 <<analisis_banco>>=
 bank <- read.csv("hmeq.csv")
@@ -433,9 +433,9 @@ Los datos se obtuvieron de https://www.kaggle.com/aungpyaeap/tictactoe-endgame-d
 En este caso analizaremos el fin de partidas de tres en raya para determinar cuando un jugador gana o pierde.
 El árbol nos proporciona las probabilidades de que cada suceso ocurra en función de las posiciones de las piezas en el tablero.
 Vemos que tendremos posibilidades de ganar cuando las piezas del rival están en ciertas casillas que no cortan que nosotros podamos hacer 3 en raya.
-Es sorprendente que el a´rbol de decisión se genere entorno a este hecho en vez de mostrarnos las casillas en las que nosotros hacemos en tres en raya.
-Esto se debe a que el número de casillas que nos cortan un tres en raya es inferior al casillas desde las que nosotoros podemos hacerlo.
-También en elagunos casos se considera que algunas casillas no tengan ficha (b).
+Es sorprendente que el árbol de decisión se genere entorno a este hecho en vez de mostrarnos las casillas en las que nosotros hacemos en tres en raya.
+Esto se debe a que el número de casillas que nos cortan un tres en raya es inferior al de las casillas desde las que nosotros podemos hacerlo.
+También en algunos casos se considera que algunas casillas no tengan ficha (b).
 <<analisis_juego>>=
 game <- read.csv("tic-tac-toe-endgame.csv")
 game <- data.frame(game)
@@ -468,7 +468,7 @@ regresion_age <- lm(Age~Strength, data=concrete)
 @
 Vemos que la correlación cuadrada entre cada variable y la resistencia del hormigón es baja en todos los casos.
 Ninguna variable considerada tiene relación directa con la resistencia final del hormigón.
-En este caso esto se debe a que la relación de las varibales con la resistencia del hormigón no es lineal y que adimás es multidimensional.
+En este caso esto se debe a que la relación de las varibales con la resistencia del hormigón no es lineal y que además es multidimensional.
 <<analisis_grades_correlacion_cuadrada, echo=FALSE>>=
 paste("Correlación cuadrada Water:", correlacionCuadrada(concrete$Strength, concrete$Water, regresion_water))
 paste("Correlación cuadrada Cement:", correlacionCuadrada(concrete$Strength, concrete$Cement, regresion_cement))
@@ -479,7 +479,7 @@ paste("Correlación cuadrada Coarse:", correlacionCuadrada(concrete$Strength, co
 paste("Correlación cuadrada Fine:", correlacionCuadrada(concrete$Strength, concrete$Fine, regresion_fine))
 paste("Correlación cuadrada Age:", correlacionCuadrada(concrete$Strength, concrete$Age, regresion_age))
 @
-Pueden observarse tendencias como que si hay demsiada agua o demasiado agregado fino la resistenci de este será baja (rectas con pendiente negativa).
+Pueden observarse tendencias como que si hay demasiada agua o demasiado agregado fino la resistencia de este será baja (rectas con pendiente negativa).
 \begin{center}
 <<analisis_concrete_plot_1, fig=TRUE, echo=FALSE>>=
 par(mfrow=c(2,2))
@@ -512,7 +512,7 @@ regresion_cgpa <- lm(CGPA~Admit, data=grades)
 @
 En este caso podemos ver como las notas de los exámenes TOEFL y GRE así como la nota media del expediente tienen gran relación con la probabilidad de admisión.
 En el resto de casos la correlación cuadrada es mucho menor.
-La que más relacionada está es la nota media del expediente y la que menos es si el estudiante a realizado investigaciones o no.
+La que más relacionada está es la nota media del expediente y la que menos es si el estudiante ha realizado investigaciones o no.
 <<analisis_grades_correlacion_cuadrada, echo=FALSE>>=
 paste("Correlación cuadrada GRE:", correlacionCuadrada(grades$Admit, grades$GRE, regresion_gre))
 paste("Correlación cuadrada TOEFL:", correlacionCuadrada(grades$Admit, grades$TOEFL, regresion_toefel))
@@ -522,7 +522,7 @@ paste("Correlación cuadrada LOR:", correlacionCuadrada(grades$Admit, grades$LOR
 paste("Correlación cuadrada Research:", correlacionCuadrada(grades$Admit, grades$Research, regresion_research))
 paste("Correlación cuadrada CGPA:", correlacionCuadrada(grades$Admit, grades$CGPA, regresion_cgpa))
 @
-Se puede ver que las notas están directamente relacionados con la probabilidad de admisión, todas tiene una pendiente positiva.
+Se puede ver que las notas están directamente relacionados con la probabilidad de admisión, todas tienen una pendiente positiva.
 \begin{center}
 <<analisis_grades_plot_1, fig=TRUE, echo=FALSE>>=
 par(mfrow=c(2,3))

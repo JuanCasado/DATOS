@@ -8,7 +8,7 @@
 
 \begin{abstract}
 En este documento realizaremos anális de clasificación supervisada de cuatro muestras de datos propuestas por el profesor y cuatro muestras elegidas por nosotros.
-La mitad de las muestras de cada tipo serán datos cuyo anális es realizable mediante árboles de clasificación de Hunt y la otra mitad por anális de regresión.
+La mitad de las muestras de cada tipo serán datos cuyo análisis es realizable mediante árboles de clasificación de Hunt y la otra mitad por análisis de regresión.
 
 En el caso de los árboles de decisión de Hunt compareremos la clasificación atendiendo al criterio de maximización del incremeto de información
 calculando esta mediante GINI y entropía comparando los resultado de utilizar una u otra métrica.
@@ -19,7 +19,7 @@ En el anális de la regresión utilizaremos la función de R lm.
 Adicionalmente hemos implementado nuestras propias funciones para el cálculo de regresión basadas en las fórmulas vistass en teoría.
 Compararemos nuestros resultado con los de lm para comprobar que realizamos los cálculos correctamente y explicaremos por qué algunos de ellos difieren.
 
-Las muestras proporcionadas se almecenarán en archivos .txt siendo esta de tamaño reducido.
+Las muestras proporcionadas se almecenarán en archivos .txt siendo estas de tamaño reducido.
 Las muestras que nosotros hemos buscado en keaggle están en archivos .csv y tienen una cantidad de datos considerablemente mayor.
 \end{abstract}
 
@@ -32,26 +32,26 @@ Las muestras que nosotros hemos buscado en keaggle están en archivos .csv y tie
 \section{EJ1}
 Analizaremos los árboles de decisión mediante GINI y ENTROPÍA generados por rpart y tree para los datos de la muestra 1.
 Los datos se componen de las calificaciones de distintos estudiantes en distintas pruebas y de la calificación final (Aprobado o Suspenso).
-Predendemos averguar si se puede predecir la calificación final con menos pruebas.
+Pretendemos averiguar si se puede predecir la calificación final con menos pruebas.
 
-Para los tres casos obtendremos el mismo árbol, los datos son reducidos y solo hay una solución posible en la que el incremento de la información se minimice.
-Si hubiera más datos podríamos darse el caso de que se obtuviueran árboles distintos al utilizar GINI o entropía.
+Para los tres casos obtendremos el mismo árbol, los datos son reducidos y solo hay una solución posible en la que el incremento de la información se maximice.
+Si hubiera más datos podría darse el caso de que se obtuvieran árboles distintos al utilizar GINI o entropía.
 \begin{Schunk}
 \begin{Sinput}
 > muestra1 = data.frame(read.table("datos1.txt"))
 > muestra1
 \end{Sinput}
 \begin{Soutput}
-  Teoría Laboratorio Prácticas Global
-1      A           A         B     AP
-2      A           B         D     SS
-3      D           D         C     SS
-4      D           D         A     SS
-5      B           C         B     SS
-6      C           B         B     AP
-7      B           B         A     AP
-8      C           D         C     SS
-9      B           A         C     SS
+  TeorÃ.a Laboratorio PrÃ.cticas Global
+1       A           A          B     AP
+2       A           B          D     SS
+3       D           D          C     SS
+4       D           D          A     SS
+5       B           C          B     SS
+6       C           B          B     AP
+7       B           B          A     AP
+8       C           D          C     SS
+9       B           A          C     SS
 \end{Soutput}
 \end{Schunk}
 
@@ -165,8 +165,8 @@ Radio       0.1393669  0.2466205 0.5651067 0.62893696
 \end{Schunk}
 
 \subsubsection{Error estándar}
-R implemnta el error estándar de la población y no el de la muestra que el que hemos visto en clase por lo que los cálculos no coincidirán.
-El error estándar de la población se divide por n-2 y el de la muestra solo por n.
+R implementa el error estándar de la población y no el de la muestra que el que hemos visto en clase por lo que los cálculos no coincidirán.
+El error estándar de la población se divide entre n-2 y el de la muestra solo entre n.
 Cuanto más próximo a 0 sea el error estándar mejor será la recta de regresión.
 \begin{Schunk}
 \begin{Sinput}
@@ -203,8 +203,8 @@ Este valor está entre 0 y 1 siendo mejor cuanto más próximo a 1 sea (idealmen
 \end{Schunk}
 
 \subsection{Visualización de la recta de regresión}
-Para finalizar dibujaremos una gráfica en la que se representarán lod datos junto a la recta de regresión.
-Paralela a la recta de regresión dibujaremos las rectas que marcan el error estándar entorno a la recta de regresión.
+Para finalizar dibujaremos una gráfica en la que se representarán los datos junto a la recta de regresión.
+Paralelas a la recta de regresión dibujaremos las rectas que marcan el error estándar entorno a la recta de regresión.
 En trazado gris grueso la que marca la región en la que estarán el 66\% de los datos y en gris fino la que marca el 95\%.
 \begin{center}
 \includegraphics{entrega-plot_regresion2}
@@ -218,9 +218,9 @@ En parte esto se debe a que tenemos muy pocos datos.
 \newpage
 \section{EJ3}
 En esta parte realizamos el algoritmo Hunt con la librería rpart sobre los datos de los vehículos.
-Lo primero sera realizar el ejercicio usando Gini como metodo para calculart la impureza.
+Lo primero sera realizar el ejercicio usando Gini como metodo para calcular la impureza.
 La segunda parte la calcularemos usando la entropia. 
-Por último utilizaremos la libreria tree para repetir estos cálculos aunque solo podremos utilizar Gini para calcular la impuraza.
+Por último utilizaremos la libreria tree para repetir estos cálculos aunque solo podremos utilizar Gini para calcular la impureza.
 En ambos casos mostraremos los árboles obtenidos con las librerías adecuadas.
 \begin{Schunk}
 \begin{Sinput}
@@ -256,7 +256,7 @@ En ambos casos mostraremos los árboles obtenidos con las librerías adecuadas.
 
 \newpage
 \subsection{Rpart ENTROPÍA}
-Ahora utilizaemos la entropia. 
+Ahora utilizaremos la entropia. 
 Para ello añadimos el parametro parms=list(split="information").
 Por defecto esta se clasifica por Gini.
 \begin{center}
@@ -271,13 +271,13 @@ Por defecto esta se clasifica por Gini.
 \end{center}
 
 Vemos que el árbol obtenido es distinto.
-En el caso del arbol obtenido con Gini la profundidad es 3 mientras que en el obtenido con Entropia es de 2.
-Cuando utilizamos Gini para generar los árboles estos tienden a tener una rama muy oprofunda de la que cuelgan otras de profundidad relativa de 2.
+En el caso del arbol obtenido con Gini la profundidad es 3 mientras que en el obtenido con Entropía es de 2.
+Cuando utilizamos Gini para generar los árboles estos tienden a tener una rama muy profunda de la que cuelgan otras de profundidad relativa de 2.
 Dependiendo del tipo de árbol que queramos generar será recomendable utilizar una medida de información u otra.
 
 \newpage
 \subsection{Tree GINI}
-Ahora realizamremos los mismo cálculos con tree.
+Ahora realizaremos los mismo cálculos con tree.
 \begin{center}
 \begin{Schunk}
 \begin{Sinput}
@@ -288,9 +288,9 @@ Ahora realizamremos los mismo cálculos con tree.
 \includegraphics{entrega-tree3}
 \end{center}
 
-El arbol generado es igual que el obtenido con rpart con aplicando gini.
+El arbol generado es igual que el obtenido con rpart aplicando gini.
 Ya que por defecto tree implementa el gini.
-En esta libreria no esta implentado el calculo por entropia.
+En esta libreria no esta implentado el calculo por entropía.
 
 \subsection{Conclusiones}
 En este caso podremos ver que obtenemos dos árboles de decisión distintos pero igualmente válidos.
@@ -393,7 +393,7 @@ El error obtenido para todas las recta es aproximadamente el mismo.
 \end{Schunk}
 
 \subsubsection{Correlación cuadrada}
-Al igual que hemos visto con el error estardar, la correlación no es muy buena, es ente caso por no estar sufic iéntemente próximas a 1.
+Al igual que hemos visto con el error estardar, la correlación no es muy buena, es ente caso por no estar suficientemente próximas a 1.
 Las rectas de regresión obtenidas no son de calidad, no se ajustan bien a los datos.
 \begin{Schunk}
 \begin{Soutput}
@@ -427,7 +427,7 @@ El orden en el que se han analizado las gráficas es el [1,1]; [1,2]; [2,1]; [2,
 %------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 \newpage
 \section{EJ5}
-Para este último ejecrcicio hemos tomado cuatro muestras de la página de keaggle y analizaremos cada una de ellas mediante árboles de decisión de Hunt
+Para este último ejercicio hemos tomado cuatro muestras de la página de keaggle y analizaremos cada una de ellas mediante árboles de decisión de Hunt
 o mediante regresión según sea más conveniente por la naturaleza de los datos.
 Todos los datos analizados se encuentran en formato .csv
 
@@ -436,9 +436,9 @@ Los datos se han obtenido de https://www.kaggle.com/ajay1735/hmeq-data.
 En este caso el árbol de decisión nos genera hojas en las que se indica la probabilidad de que a un cliente se le deba conceder o no un crédito.
 Vemos que de las 12 varibales consideradas en los datos de entrada para decidirlo en el árbol solo se utilizan 8 teniendo que hacer en el peor caso 7 comprobaciones y 4 en el mejor.
 
-En en dos nodos donde se centra la mayor cantidad de gente a la que no se le be conceder,
+En dos nodos donde se centra la mayor cantidad de gente a la que no se le be conceder,
 si tienen alguna línea de crédito con deudas y
-tinen un ratio de deuda respecto a ingresos mayor del 46\% y
+tienen un ratio de deuda respecto a ingresos mayor del 46\% y
 el crédito que piden supera los 5050 dólares así como
 si no tienen menos de cinco líneas de crédito endeudadas
 con más de cuatro líneas de crédito solicitadas recientemente y
@@ -447,7 +447,7 @@ ha pedido más de 6050 dólares de crédito y
 tienen menos de 3 prórrogas de pago y
 la línea de crédito más antigua es de más de 76 meses.
 
-Hay otros dos nodos donde tampoco es recomdable dar crédito pero en estos hay clasificada menos gente.
+Hay otros dos nodos donde tampoco es recomendable dar crédito pero en estos hay clasificada menos gente.
 Es sorprendente que el porcentaje de gente a la que se le deba dar crádito es muy bajo.
 \begin{Schunk}
 \begin{Sinput}
@@ -479,9 +479,9 @@ Los datos se obtuvieron de https://www.kaggle.com/aungpyaeap/tictactoe-endgame-d
 En este caso analizaremos el fin de partidas de tres en raya para determinar cuando un jugador gana o pierde.
 El árbol nos proporciona las probabilidades de que cada suceso ocurra en función de las posiciones de las piezas en el tablero.
 Vemos que tendremos posibilidades de ganar cuando las piezas del rival están en ciertas casillas que no cortan que nosotros podamos hacer 3 en raya.
-Es sorprendente que el a´rbol de decisión se genere entorno a este hecho en vez de mostrarnos las casillas en las que nosotros hacemos en tres en raya.
-Esto se debe a que el número de casillas que nos cortan un tres en raya es inferior al casillas desde las que nosotoros podemos hacerlo.
-También en elagunos casos se considera que algunas casillas no tengan ficha (b).
+Es sorprendente que el árbol de decisión se genere entorno a este hecho en vez de mostrarnos las casillas en las que nosotros hacemos en tres en raya.
+Esto se debe a que el número de casillas que nos cortan un tres en raya es inferior al de las casillas desde las que nosotros podemos hacerlo.
+También en algunos casos se considera que algunas casillas no tengan ficha (b).
 \begin{Schunk}
 \begin{Sinput}
 > game <- read.csv("tic-tac-toe-endgame.csv")
@@ -524,7 +524,7 @@ Los datos representan la resistencia del hormigón respecto a la cantidad de dis
 \end{Schunk}
 Vemos que la correlación cuadrada entre cada variable y la resistencia del hormigón es baja en todos los casos.
 Ninguna variable considerada tiene relación directa con la resistencia final del hormigón.
-En este caso esto se debe a que la relación de las varibales con la resistencia del hormigón no es lineal y que adimás es multidimensional.
+En este caso esto se debe a que la relación de las varibales con la resistencia del hormigón no es lineal y que además es multidimensional.
 \begin{Schunk}
 \begin{Soutput}
 [1] "Correlación cuadrada Water: 0.083887497698046"
@@ -551,7 +551,7 @@ En este caso esto se debe a que la relación de las varibales con la resistencia
 [1] "Correlación cuadrada Age: 0.108157450642031"
 \end{Soutput}
 \end{Schunk}
-Pueden observarse tendencias como que si hay demsiada agua o demasiado agregado fino la resistenci de este será baja (rectas con pendiente negativa).
+Pueden observarse tendencias como que si hay demasiada agua o demasiado agregado fino la resistencia de este será baja (rectas con pendiente negativa).
 \begin{center}
 \includegraphics{entrega-analisis_concrete_plot_1}
 \includegraphics{entrega-analisis_concrete_plot_2}
@@ -574,7 +574,7 @@ La muestra representa las notas obtenidas en distintos exámenes con la probabil
 \end{Schunk}
 En este caso podemos ver como las notas de los exámenes TOEFL y GRE así como la nota media del expediente tienen gran relación con la probabilidad de admisión.
 En el resto de casos la correlación cuadrada es mucho menor.
-La que más relacionada está es la nota media del expediente y la que menos es si el estudiante a realizado investigaciones o no.
+La que más relacionada está es la nota media del expediente y la que menos es si el estudiante ha realizado investigaciones o no.
 \begin{Schunk}
 \begin{Soutput}
 [1] "Correlación cuadrada GRE: 0.644183549843835"
@@ -598,7 +598,7 @@ La que más relacionada está es la nota media del expediente y la que menos es 
 [1] "Correlación cuadrada CGPA: 0.762633851052797"
 \end{Soutput}
 \end{Schunk}
-Se puede ver que las notas están directamente relacionados con la probabilidad de admisión, todas tiene una pendiente positiva.
+Se puede ver que las notas están directamente relacionados con la probabilidad de admisión, todas tienen una pendiente positiva.
 \begin{center}
 \includegraphics{entrega-analisis_grades_plot_1}
 \includegraphics{entrega-analisis_grades_plot_2}
@@ -621,7 +621,7 @@ function(data){
   }
   acc / length(data)
 }
-<bytecode: 0x7fd1ae42f338>
+<bytecode: 0x000001b677cea1c8>
 \end{Soutput}
 \begin{Sinput}
 > varianza
@@ -635,7 +635,7 @@ function(data) {
   }
   acc/length(data)
 }
-<bytecode: 0x7fd1aed427f8>
+<bytecode: 0x000001b67766d1c0>
 \end{Soutput}
 \begin{Sinput}
 > desviacionTipica
@@ -662,7 +662,7 @@ function(x, y) {
   }
   acc/len - media_x*media_y
 }
-<bytecode: 0x7fd1b0956d80>
+<bytecode: 0x000001b675f08408>
 \end{Soutput}
 \begin{Sinput}
 > correlacion
@@ -687,7 +687,7 @@ function (x, y, regresion){
   }
   acc
 }
-<bytecode: 0x7fd1b20e6378>
+<bytecode: 0x000001b6745bec50>
 \end{Soutput}
 \begin{Sinput}
 > SSY
@@ -701,7 +701,7 @@ function (y, regresion){
   }
   acc
 }
-<bytecode: 0x7fd1b3518800>
+<bytecode: 0x000001b6705db248>
 \end{Soutput}
 \begin{Sinput}
 > correlacionCuadrada
@@ -710,7 +710,7 @@ function (y, regresion){
 function (x, y ,regresion){
   SSR(x, y ,regresion) / SSY(y ,regresion)
 }
-<bytecode: 0x7fd1b2083bc0>
+<bytecode: 0x000001b67d5aa378>
 \end{Soutput}
 \begin{Sinput}
 > errorEstandar
@@ -724,7 +724,7 @@ function (x, y, regresion) {
   }
   sqrt(acc/(len))
 }
-<bytecode: 0x7fd1af103380>
+<bytecode: 0x000001b675cfc400>
 \end{Soutput}
 \begin{Sinput}
 > regLine
@@ -739,7 +739,7 @@ function (x, y) {
   b <- media_y - a * media_x
   data.frame(coefficients=c(b, a))
 }
-<bytecode: 0x7fd1b30caf20>
+<bytecode: 0x000001b67b323420>
 \end{Soutput}
 \begin{Sinput}
 > regPlot
@@ -761,7 +761,7 @@ function (x, y, regresion, xlabel="", ylabel="") {
   abline(reg66down, "gray", lty=2, lwd=2)
   abline(reg95down, "gray", lty=3, lwd=1)
 }
-<bytecode: 0x7fd1b3809e70>
+<bytecode: 0x000001b67da519a0>
 \end{Soutput}
 \end{Schunk}
 \end{document}
