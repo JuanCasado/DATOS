@@ -42,16 +42,16 @@ Si hubiera más datos podría darse el caso de que se obtuvieran árboles distin
 > muestra1
 \end{Sinput}
 \begin{Soutput}
-  TeorÃ.a Laboratorio PrÃ.cticas Global
-1       A           A          B     AP
-2       A           B          D     SS
-3       D           D          C     SS
-4       D           D          A     SS
-5       B           C          B     SS
-6       C           B          B     AP
-7       B           B          A     AP
-8       C           D          C     SS
-9       B           A          C     SS
+  Teoría Laboratorio Prácticas Global
+1      A           A         B     AP
+2      A           B         D     SS
+3      D           D         C     SS
+4      D           D         A     SS
+5      B           C         B     SS
+6      C           B         B     AP
+7      B           B         A     AP
+8      C           D         C     SS
+9      B           A         C     SS
 \end{Soutput}
 \end{Schunk}
 
@@ -621,7 +621,7 @@ function(data){
   }
   acc / length(data)
 }
-<bytecode: 0x000001b677cea1c8>
+<bytecode: 0x7fecb90d0f30>
 \end{Soutput}
 \begin{Sinput}
 > varianza
@@ -635,7 +635,7 @@ function(data) {
   }
   acc/length(data)
 }
-<bytecode: 0x000001b67766d1c0>
+<bytecode: 0x7fecb92fdec0>
 \end{Soutput}
 \begin{Sinput}
 > desviacionTipica
@@ -662,7 +662,7 @@ function(x, y) {
   }
   acc/len - media_x*media_y
 }
-<bytecode: 0x000001b675f08408>
+<bytecode: 0x7fecb9d28f70>
 \end{Soutput}
 \begin{Sinput}
 > correlacion
@@ -687,7 +687,7 @@ function (x, y, regresion){
   }
   acc
 }
-<bytecode: 0x000001b6745bec50>
+<bytecode: 0x7fecbabe42e0>
 \end{Soutput}
 \begin{Sinput}
 > SSY
@@ -701,7 +701,7 @@ function (y, regresion){
   }
   acc
 }
-<bytecode: 0x000001b6705db248>
+<bytecode: 0x7fecbb09c6e8>
 \end{Soutput}
 \begin{Sinput}
 > correlacionCuadrada
@@ -710,7 +710,7 @@ function (y, regresion){
 function (x, y ,regresion){
   SSR(x, y ,regresion) / SSY(y ,regresion)
 }
-<bytecode: 0x000001b67d5aa378>
+<bytecode: 0x7fecbc623250>
 \end{Soutput}
 \begin{Sinput}
 > errorEstandar
@@ -724,7 +724,7 @@ function (x, y, regresion) {
   }
   sqrt(acc/(len))
 }
-<bytecode: 0x000001b675cfc400>
+<bytecode: 0x7fecba6d9050>
 \end{Soutput}
 \begin{Sinput}
 > regLine
@@ -739,7 +739,7 @@ function (x, y) {
   b <- media_y - a * media_x
   data.frame(coefficients=c(b, a))
 }
-<bytecode: 0x000001b67b323420>
+<bytecode: 0x7fecbb2437d0>
 \end{Soutput}
 \begin{Sinput}
 > regPlot
@@ -761,7 +761,7 @@ function (x, y, regresion, xlabel="", ylabel="") {
   abline(reg66down, "gray", lty=2, lwd=2)
   abline(reg95down, "gray", lty=3, lwd=1)
 }
-<bytecode: 0x000001b67da519a0>
+<bytecode: 0x7fecbc0e5cb8>
 \end{Soutput}
 \end{Schunk}
 \end{document}
