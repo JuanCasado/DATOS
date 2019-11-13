@@ -1,0 +1,167 @@
+\documentclass [a4paper] {article}
+\usepackage[utf8]{inputenc}
+\title{Ciencia de datos, práctica 4}
+\author{Juan Casado Ballesteros, Samuel García Gonzalez, Iván Anaya Martín}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+
+\end{abstract}
+
+\newpage
+\tableofcontents
+
+<<functions>>=
+plot_kmeans <- function (clusters, centers, xlab="", ylab="") {
+  maxx <- max(clusters[[1]][,1])
+  maxy <- max(clusters[[1]][,2])
+  minx <- min(clusters[[1]][,1])
+  miny <- min(clusters[[1]][,2])
+  for (cluster in clusters){
+    maxx <- max(maxx, max(cluster[,1]))
+    maxy <- max(maxy, max(cluster[,2]))
+    minx <- min(minx, min(cluster[,1]))
+    miny <- min(miny, min(cluster[,2]))
+
+  }
+  color_i <- 1
+  colors = c("red", "blue", "pink", "yellow", "black", "brown")
+  for (cluster in clusters){
+    plot(cluster[,1], cluster[,2], type="p", col=colors[color_i],  xlim=c(minx, maxx), ylim=c(miny, maxy), xlab=xlab, ylab=ylab)
+    par(new=TRUE)
+    color_i <- (color_i%%(length(colors)+1))+1
+  }
+  plot(centers[,1], centers[,2],   type="p", col="green", xlim=c(minx, maxx), ylim=c(miny, maxy), xlab=xlab, ylab=ylab)
+}
+
+distance <- function (point1, point2) {
+  acc <- 0
+  len <- length(point1)
+  for (i in 1:len){
+    acc <- acc + (point1[i]-point2[i])^2
+  }
+  acc^(1/2)
+}
+
+kmeans_cluster <- function (data, centroids) {
+  d_default <- distance(c(max(data), max(data)), c(min(data), min(data)))
+  classification <- c()
+  for (j in 1:nrow(data)){
+      point <- data[j,]
+      best_c <- 0
+      best_d <- d_default
+      for (i in 1:nrow(centroids)){
+        centroid <- centroids[i,]
+        d <- distance (point, centroid)
+        if (d < best_d){
+          best_d <- d
+          best_c <- i
+        }
+    }
+    classification <- c(classification, best_c)
+  }
+  classification <- as.data.frame(classification)
+  rownames(classification) <- rownames(datos1)
+  classification
+}
+kmeans_split <- function (data, cluster) {
+  clusters=cbind(cluster,data)
+  cluster1=subset(clusters,clusters[,1]==1)
+  cluster2=subset(clusters,clusters[,1]==2)
+  cluster1=cluster1[,-1]
+  cluster2=cluster2[,-1]
+  list(cluster1, cluster2)
+}
+kmeans_new_centroids <- function(split){
+  centroids <- c()
+  for (cluster in split) {
+    for (colum in cluster) {
+      acc <- 0
+      for (element in colum){
+        acc <- acc + element/length(colum)
+      }
+      centroids <- c(centroids, acc)
+    }
+  }
+  t(matrix(centroids,length(split[[1]]),length(split)))
+}
+
+same_centroids <- function(c1, c2){
+  len <- length(c1)
+  ans <- T
+  for (i in 1:len){
+    if (c1[i]!=c2[i]){
+      ans <- F
+    }
+  }
+  ans
+}
+@
+
+<<cargar_datos>>=
+datos1 <- read.table("datos1.txt")
+datos1
+@
+
+<<elegir_centroides>>=
+centroides <- matrix(c(0,1,2,2),2,2)
+centroides <- t(centroides)
+centroides
+@
+
+<<ejecutar_kmenas>>=
+classkms<-kmeans(datos1,centroides,4)
+@
+
+<<clasificacion_obtenida>>=
+classkms$cluster
+classkms$centers
+classkms$size
+@
+
+<<datos_de_la_ejecucion>>=
+classkms$iter
+classkms$ifault
+@
+
+<<datos_de_la_clasificacion>>=
+classkms$totss
+classkms$withinss
+classkms$totss.withinss
+classkms$betweenss
+@
+
+<<datos_de_la_clasificacion>>=
+clusters <- cbind(classkms$cluster,datos1)
+cluster1 <- subset(clusters,clusters[,1]==1)
+cluster2 <- subset(clusters,clusters[,1]==2)
+cluster1 <- cluster1[,-1]
+cluster2 <- cluster2[,-1]
+clusters <- list(cluster1, cluster2)
+@
+
+<<representacion_del_resultado, echo=FALSE, fig=TRUE>>=
+plot_kmeans(clusters, classkms$centers, xlab="Teroría", ylab="Laboratorio")
+@
+
+<<custom_kmeans, echo=FALSE, fig=TRUE>>=
+datos1 <- read.table("datos1.txt")
+centroides <- matrix(c(0,1,2,2),2,2)
+par(mfrow=c(2,2))
+for (i in 1:4){
+  cluster <- kmeans_cluster (datos1, centroides)
+  split <- kmeans_split(datos1, cluster)
+  new_centroides <- kmeans_new_centroids(split)
+  plot_kmeans(split, centroides, xlab="Teroría", ylab="Laboratorio")
+  if (same_centroids(new_centroides, centroides)){
+    break
+  }else{
+    centroides <- new_centroides
+  }
+}
+centroides
+@
+
+
+\end{document}
