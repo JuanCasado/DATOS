@@ -9,7 +9,7 @@
 \begin{abstract}
 A lo largo de esta práctica analizaremos y compararemos distintos métodos de clasificación no supervisada o clusterización.
 
-Utilizaremos el algoritmo de k-means para realizar el ejercicio propuesto y la primera parte del ejercicio libre.
+Utilizaremos el algoritmo de k-mean para realizar el ejercicio propuesto y la primera parte del ejercicio libre.
 Nos centraremos principalmente en las técnicas de selección del número de clusters óptimo para lo cual exploraremos tres de ellas.
 Adicionalmente hemos relizado una implementación propia de k-means que validaremos comparándola con los resultados de la implementación de R.
 La ventaja de nuestra implementación frente a la de R es que nos permite visualizar paso a paso el estado de cada iteración del algoritmo.
@@ -249,20 +249,20 @@ Mostraramos a continuación un extracto de los datos.
 > head(df)
 \end{Sinput}
 \begin{Soutput}
-            A            P            C          LK        WK     A_Coef        LKG
-1  0.14175904  0.214948819 6.045733e-05  0.30349301 0.1413640 -0.9838010 -0.3826631
-2  0.01116136  0.008204153 4.274938e-01 -0.16822270 0.1969616 -1.7839036 -0.9198156
-3 -0.19160873 -0.359341919 1.438945e+00 -0.76181710 0.2075516 -0.6658882 -1.1863572
-4 -0.34626388 -0.474200066 1.036904e+00 -0.68733567 0.3187467 -0.9585276 -1.2270506
-5  0.44419577  0.329806966 1.371233e+00  0.06650665 0.8032397 -1.5597684 -0.4742231
-6 -0.16067770 -0.267455401 1.019976e+00 -0.54740087 0.1413640 -0.8235144 -0.9198156
-     target
-1 -1.221825
-2 -1.221825
-3 -1.221825
-4 -1.221825
-5 -1.221825
-6 -1.221825
+            A            P            C          LK        WK     A_Coef
+1  0.14175904  0.214948819 6.045733e-05  0.30349301 0.1413640 -0.9838010
+2  0.01116136  0.008204153 4.274938e-01 -0.16822270 0.1969616 -1.7839036
+3 -0.19160873 -0.359341919 1.438945e+00 -0.76181710 0.2075516 -0.6658882
+4 -0.34626388 -0.474200066 1.036904e+00 -0.68733567 0.3187467 -0.9585276
+5  0.44419577  0.329806966 1.371233e+00  0.06650665 0.8032397 -1.5597684
+6 -0.16067770 -0.267455401 1.019976e+00 -0.54740087 0.1413640 -0.8235144
+         LKG    target
+1 -0.3826631 -1.221825
+2 -0.9198156 -1.221825
+3 -1.1863572 -1.221825
+4 -1.2270506 -1.221825
+5 -0.4742231 -1.221825
+6 -0.9198156 -1.221825
 \end{Soutput}
 \end{Schunk}
 
@@ -301,17 +301,17 @@ Obtenemos dos centroides, uno para cada clase, además visualizamos la cantidad 
 \end{Sinput}
 \begin{Soutput}
            A          P          C         LK         WK     A_Coef        LKG
-1  0.9762244  0.9775903  0.5620442  0.9369531  0.9466365 -0.2368903  0.9012350
-2 -0.7611241 -0.7621890 -0.4382039 -0.7305058 -0.7380556  0.1846941 -0.7026578
+1 -0.7291716 -0.7302497 -0.4033226 -0.7036119 -0.7025866  0.1381082 -0.6853159
+2  1.0308978  1.0324220  0.5702148  0.9947616  0.9933121 -0.1952564  0.9688949
       target
-1 -0.2921756
-2  0.2277979
+1  0.1688702
+2 -0.2387475
 \end{Soutput}
 \begin{Sinput}
 > k2$size
 \end{Sinput}
 \begin{Soutput}
-[1]  92 118
+[1] 123  87
 \end{Soutput}
 \end{Schunk}
 Adicionalmente mostramos las distancias cuadráticas medias entre los elementos de cada cluster y entre los clusters.
@@ -321,13 +321,13 @@ Utilizaremos estas medidas posteriormente para compararlas con la clasificación
 > k2$withinss
 \end{Sinput}
 \begin{Soutput}
-[1] 318.7524 542.4133
+[1] 578.4479 281.9642
 \end{Soutput}
 \begin{Sinput}
 > k2$betweenss
 \end{Sinput}
 \begin{Soutput}
-[1] 810.8343
+[1] 811.5879
 \end{Soutput}
 \end{Schunk}
 
@@ -363,12 +363,12 @@ Adicionalmente podemos comprobar que los centrides obtenidos con nuestra impleme
 > current_centroides
 \end{Sinput}
 \begin{Soutput}
-           [,1]       [,2]       [,3]       [,4]       [,5]       [,6]       [,7]
-[1,]  1.0524252  1.0543592  0.5698886  1.0159125  1.0086859 -0.1837993  1.0016537
-[2,] -0.7156491 -0.7169642 -0.3875242 -0.6908205 -0.6859064  0.1249835 -0.6811245
-           [,8]
-[1,] -0.2156162
-[2,]  0.1466190
+           [,1]       [,2]       [,3]       [,4]      [,5]       [,6]
+[1,]  0.6452339  0.6391703  0.5202648  0.5885697  0.662255 -0.3346674
+[2,] -0.9872857 -0.9780076 -0.7960679 -0.9005826 -1.013330  0.5120814
+           [,7]       [,8]
+[1,]  0.4498369 -0.5483783
+[2,] -0.6883046  0.8390849
 \end{Soutput}
 \end{Schunk}
 \includegraphics{entrega-kmeans_our_implementation}
@@ -418,7 +418,7 @@ El resultado es positivo.
 > max(same1,same2)/nrow(datos)
 \end{Sinput}
 \begin{Soutput}
-[1] 0.9666667
+[1] 0.8095238
 \end{Soutput}
 \end{Schunk}
 
@@ -539,13 +539,13 @@ Es por tanto que la elección del número de cluster es una optimización de est
 > c(k2$betweens, k3$betweens, k4$betweens, k5$betweens)
 \end{Sinput}
 \begin{Soutput}
-[1]  810.8343 1217.4627 1271.8794 1318.4474
+[1]  811.5879 1217.4627 1271.8794 1318.4474
 \end{Soutput}
 \begin{Sinput}
 > c(k2$tot.withinss, k3$tot.withinss, k4$tot.withinss, k5$tot.withinss)
 \end{Sinput}
 \begin{Soutput}
-[1] 861.1657 454.5373 400.1206 353.5526
+[1] 860.4121 454.5373 400.1206 353.5526
 \end{Soutput}
 \end{Schunk}
 
@@ -638,34 +638,6 @@ Utilizaremos funciones de las siguiente librerías: "cluster", "purrr", "dendext
 \end{Schunk}
 \includegraphics{entrega-jerarquico_6}
 
-
-\section{Kmeans sobre una imagen}
-Vamos a clusterizar una imagen utilizando el algoritmo kmeans, primero mostramos la imagen original
-\begin{center}
-\begin{Schunk}
-\begin{Sinput}
-> url <- "https://raw.githubusercontent.com/mages/diesunddas/master/Blog/LloydsBuilding.jpg"
-> readImage <- readJPEG(getURLContent(url, binary=TRUE))
-> dm <- dim(readImage)
-> rgbImage <- data.frame(x=rep(1:dm[2], each=dm[1]),y=rep(dm[1]:1, dm[2]),r.value=as.vector(readImage[,,1]),
-+ g.value=as.vector(readImage[,,2]),b.value=as.vector(readImage[,,3]))
-> plot(y ~ x, data=rgbImage, main="Lloyd’s building",col = rgb(rgbImage[c("r.value", "g.value", "b.value")]), asp = 1, pch = ".")
-\end{Sinput}
-\end{Schunk}
-\includegraphics{entrega-image}
-\end{center}
-Ahora mostramos la imagen clusterizada en 5 colores.
-\begin{center}
-\begin{Schunk}
-\begin{Sinput}
-> kMeans <- kmeans(rgbImage[, c("r.value", "g.value", "b.value")], centers = 5)
-> clusterColour <- rgb(kMeans$centers[kMeans$cluster, ])
-> plot(y ~ x, data=rgbImage, main="Lloyd’s building",col = clusterColour, asp = 1, pch = ".",axes=FALSE, ylab="", xlab="k-means cluster analysis of 5 colours")
-\end{Sinput}
-\end{Schunk}
-\includegraphics{entrega-image_kmeans}
-\end{center}
-
 \newpage
 \section{Funciones implementadas}
 Las funcines creadas son las que implementan k-means así como una función adicional para crear las gráficas con los resultados.
@@ -682,7 +654,7 @@ function (point1, point2) {
   }
   acc^(1/2)
 }
-<bytecode: 0x0000029dcd22a530>
+<bytecode: 0x7ff9c6ec64a8>
 \end{Soutput}
 \begin{Sinput}
 > kmeans_cluster
@@ -709,7 +681,7 @@ function (data, centroids) {
   rownames(classification) <- rownames(data)
   classification
 }
-<bytecode: 0x0000029dccff57f8>
+<bytecode: 0x7ff9c7b7eee8>
 \end{Soutput}
 \begin{Sinput}
 > kmeans_split
@@ -723,7 +695,7 @@ function (data, cluster) {
   cluster2=cluster2[,-1]
   list(cluster1, cluster2)
 }
-<bytecode: 0x0000029dc670ed80>
+<bytecode: 0x7ff9c763dff0>
 \end{Soutput}
 \begin{Sinput}
 > kmeans_new_centroids
@@ -742,7 +714,7 @@ function(split){
   }
   t(matrix(centroids,length(split[[1]]),length(split)))
 }
-<bytecode: 0x0000029dcadae1e8>
+<bytecode: 0x7ff9c44b4e68>
 \end{Soutput}
 \begin{Sinput}
 > same_centroids
@@ -758,7 +730,7 @@ function(c1, c2){
   }
   ans
 }
-<bytecode: 0x0000029dc49531b8>
+<bytecode: 0x7ff9c49ee2a8>
 \end{Soutput}
 \begin{Sinput}
 > plot_kmeans
@@ -787,10 +759,9 @@ function (clusters, centers, main="", xlab="", ylab="") {
   plot( centers[,1], centers[,2], type="p", col="green",
         xlim=c(minx, maxx), ylim=c(miny, maxy), xlab=xlab, ylab=ylab)
 }
-<bytecode: 0x0000029dc4674a08>
+<bytecode: 0x7ff9ca6b61e0>
 \end{Soutput}
 \end{Schunk}
-
 
 
 \end{document}
