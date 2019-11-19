@@ -24,7 +24,7 @@ Las principales variaciones en estos métodos residen en la métrica utilizada p
 Exploraremos distintas métricas, visualizaremos los árboles generados y compararemos las clasificaciones jerárquicas entre si y con los resultados de k-means.
 
 Debido a que deseamos comparar los resultados de k-means con la clasificación jerarquica utilizaremos para explorar ambos algoritmos el mismo dataset.
-Este es un dataset ya incluido en R que tiene la cantidad de veces que 4 crímenes distintos se han cometido en cada estado de EEUU.
+Se utilizará un dataset obtenido de kaggle en que se presentan las características de un conjunto de semillas.
 \end{abstract}
 
 \newpage
@@ -224,18 +224,18 @@ Comprobamos que el resultado de la ejecución con nuestra implementación coinci
 
 \newpage
 \section{K-means}
-En este apartado vamos a realizar un ejemplo práctico de clustering de la muestra "USArrests" incluida en R.
+En este apartado vamos a realizar un ejemplo práctico de clustering sobre una muestra obtenida de kaggle.
+En dicha muestra se presentan 7 características sobre un conjunto de semillas.
+
 Utilizaremos distintas funciones de las librerías: "tidyverse", "cluster", "factoextra" y "gridExtra" para mostrar los datos y calcular el número óptimo de clusters.
 El algoritmo encargado de realizar la clusterización será kmeans del que utilizaremos la implementación que R proporciona.
-
-La muestra que se utilizará contiene la cantidad de veces que se han cometido 4 crímenes distintos en distintos estados de EEUU.
 
 \subsection{Preparar los datos}
 Deberemos eliminar los datos que estén incompletos ya que kmeans no podría manejarlos.
 Adicionalmente escalaremos las variables con la intención de hacerlas comparables entre ellas.
 Esto es necesario debido a que la escala de las variables de entrada adecta al algoritmo pues se utilizar distancias euclídeas para realizar la clusterización.
 Escalar las variables consiste en hacer que la media de cada una de ellas sea 0 y desviación estándar de 1.
-Es por ello que se acaban obteniendo valores negativos para las variables, tendría poco sentido que se hubiera cometido una cantidad negativa de crímenes en un estado.
+Tras haber realizado el escalado aparecerán por tanto valores negativos en las características, estas dejan de estar en sus unidades originales.
 \begin{Schunk}
 \begin{Sinput}
 > df <- read.csv("Seed_Data.csv")
@@ -256,13 +256,13 @@ Mostraramos a continuación un extracto de los datos.
 4 -0.34626388 -0.474200066 1.036904e+00 -0.68733567 0.3187467 -0.9585276
 5  0.44419577  0.329806966 1.371233e+00  0.06650665 0.8032397 -1.5597684
 6 -0.16067770 -0.267455401 1.019976e+00 -0.54740087 0.1413640 -0.8235144
-         LKG    target
-1 -0.3826631 -1.221825
-2 -0.9198156 -1.221825
-3 -1.1863572 -1.221825
-4 -1.2270506 -1.221825
-5 -0.4742231 -1.221825
-6 -0.9198156 -1.221825
+         LKG
+1 -0.3826631
+2 -0.9198156
+3 -1.1863572
+4 -1.2270506
+5 -0.4742231
+6 -0.9198156
 \end{Soutput}
 \end{Schunk}
 
@@ -300,18 +300,15 @@ Obtenemos dos centroides, uno para cada clase, además visualizamos la cantidad 
 > k2$centers
 \end{Sinput}
 \begin{Soutput}
-           A          P          C         LK         WK     A_Coef        LKG
-1 -0.7291716 -0.7302497 -0.4033226 -0.7036119 -0.7025866  0.1381082 -0.6853159
-2  1.0308978  1.0324220  0.5702148  0.9947616  0.9933121 -0.1952564  0.9688949
-      target
-1  0.1688702
-2 -0.2387475
+           A         P          C         LK         WK      A_Coef        LKG
+1  1.1379346  1.145151  0.5424726  1.1260130  1.0640703 -0.14617607  1.1468793
+2 -0.6588042 -0.662982 -0.3140631 -0.6519023 -0.6160407  0.08462825 -0.6639828
 \end{Soutput}
 \begin{Sinput}
 > k2$size
 \end{Sinput}
 \begin{Soutput}
-[1] 123  87
+[1]  77 133
 \end{Soutput}
 \end{Schunk}
 Adicionalmente mostramos las distancias cuadráticas medias entre los elementos de cada cluster y entre los clusters.
@@ -321,13 +318,13 @@ Utilizaremos estas medidas posteriormente para compararlas con la clasificación
 > k2$withinss
 \end{Sinput}
 \begin{Soutput}
-[1] 578.4479 281.9642
+[1] 196.2357 459.7972
 \end{Soutput}
 \begin{Sinput}
 > k2$betweenss
 \end{Sinput}
 \begin{Soutput}
-[1] 811.5879
+[1] 806.9672
 \end{Soutput}
 \end{Schunk}
 
@@ -339,16 +336,16 @@ Mostramos la clasificación obtenida.
 \newpage
 \subsection{Ejecución con implementación propia}
 Realizaremos la misma ejecución utilizando ahora la implementación de kmeans hecha por nosotros.
-En este caso debemos elegir nosotros los centrides iniciales que serán 2 centroides de 4 elementos cada uno.
+Para realizar la ejecución tomaremos un vector aleatorio de tantos elementos como el número de clases multiplicado por la cantidad de variables asociadas a cada dato.
 Tras la ejecución podremos ver en las gráficas como los centroides logran clasificar los elementos en 5 iteraciones.
 Adicionalmente podemos comprobar que los centrides obtenidos con nuestra implementación y con la de R son los mismos.
 \begin{center}
 \begin{Schunk}
 \begin{Sinput}
 > datos <- df
-> current_centroides <- matrix(runif(16, -2, 2), 2,8)
-> par(mfrow=c(2,3))
-> for (i in 1:6){
+> current_centroides <- matrix(runif(14, -2, 2), 2,7)
+> par(mfrow=c(3,3))
+> for (i in 1:9){
 +   cluster <- kmeans_cluster (datos, current_centroides)
 +   split <- kmeans_split(datos, cluster)
 +   new_centroides <- kmeans_new_centroids(split)
@@ -363,12 +360,12 @@ Adicionalmente podemos comprobar que los centrides obtenidos con nuestra impleme
 > current_centroides
 \end{Sinput}
 \begin{Soutput}
-           [,1]       [,2]       [,3]       [,4]      [,5]       [,6]
-[1,]  0.6452339  0.6391703  0.5202648  0.5885697  0.662255 -0.3346674
-[2,] -0.9872857 -0.9780076 -0.7960679 -0.9005826 -1.013330  0.5120814
-           [,7]       [,8]
-[1,]  0.4498369 -0.5483783
-[2,] -0.6883046  0.8390849
+           [,1]       [,2]       [,3]       [,4]       [,5]        [,6]
+[1,]  1.1060769  1.1081623  0.5740801  1.0691564  1.0501524 -0.16202391
+[2,] -0.6806627 -0.6819461 -0.3532801 -0.6579424 -0.6462476  0.09970702
+           [,7]
+[1,]  1.0887331
+[2,] -0.6699896
 \end{Soutput}
 \end{Schunk}
 \includegraphics{entrega-kmeans_our_implementation}
@@ -384,41 +381,10 @@ El resultado es positivo.
 > cluster1 <- cluster1[,-1]
 > cluster2 <- cluster2[,-1]
 > clusters <- list(cluster1, cluster2)
-> len <- length(clusters)
-> same1 = 0
-> for (i in 1:len){
-+   r_results = clusters[[i]]
-+   our_results = split[[i]]
-+   if (nrow(r_results) < nrow(our_results)){
-+     temp <- r_results
-+     r_results <- our_results
-+     our_results <- temp
-+   }
-+   for (name in rownames(r_results)){
-+     if (name %in% rownames(our_results)){
-+       same1 <- same1+1
-+     }
-+   }
-+ }
-> same2 = 0
-> for (i in 1:len){
-+   r_results = clusters[[i]]
-+   our_results = split[[((i)%%len)+1]]
-+   if (nrow(r_results) < nrow(our_results)){
-+     temp <- r_results
-+     r_results <- our_results
-+     our_results <- temp
-+   }
-+   for (name in rownames(r_results)){
-+     if (name %in% rownames(our_results)){
-+       same2 <- same2+1
-+     }
-+   }
-+ }
-> max(same1,same2)/nrow(datos)
+> compare_clusters(clusters, split)
 \end{Sinput}
 \begin{Soutput}
-[1] 0.8095238
+[1] 0.9857143
 \end{Soutput}
 \end{Schunk}
 
@@ -539,13 +505,13 @@ Es por tanto que la elección del número de cluster es una optimización de est
 > c(k2$betweens, k3$betweens, k4$betweens, k5$betweens)
 \end{Sinput}
 \begin{Soutput}
-[1]  811.5879 1217.4627 1271.8794 1318.4474
+[1]  806.9672 1034.3918 1093.5829 1138.0440
 \end{Soutput}
 \begin{Sinput}
 > c(k2$tot.withinss, k3$tot.withinss, k4$tot.withinss, k5$tot.withinss)
 \end{Sinput}
 \begin{Soutput}
-[1] 860.4121 454.5373 400.1206 353.5526
+[1] 656.0328 428.6082 369.4171 324.9560
 \end{Soutput}
 \end{Schunk}
 
@@ -577,7 +543,7 @@ Utilizaremos funciones de las siguiente librerías: "cluster", "purrr", "dendext
 > hc2$ac
 \end{Sinput}
 \begin{Soutput}
-[1] 0.9228468
+[1] 0.9231512
 \end{Soutput}
 \begin{Sinput}
 > m <- c( "average", "single", "complete", "ward")
@@ -589,7 +555,7 @@ Utilizaremos funciones de las siguiente librerías: "cluster", "purrr", "dendext
 \end{Sinput}
 \begin{Soutput}
   average    single  complete      ward 
-0.8705518 0.7471995 0.9228468 0.9843637 
+0.8649547 0.6055379 0.9231512 0.9846264 
 \end{Soutput}
 \begin{Sinput}
 > hc3 <- agnes(data, method = "ward")
@@ -604,7 +570,7 @@ Utilizaremos funciones de las siguiente librerías: "cluster", "purrr", "dendext
 > hc4$dc
 \end{Sinput}
 \begin{Soutput}
-[1] 0.912948
+[1] 0.918148
 \end{Soutput}
 \begin{Sinput}
 > pltree(hc4, cex = 0.6, hang = -1, main = "Dendrogram of diana")
@@ -654,7 +620,7 @@ function (point1, point2) {
   }
   acc^(1/2)
 }
-<bytecode: 0x7ff9c6ec64a8>
+<bytecode: 0x7ff9c3d663f8>
 \end{Soutput}
 \begin{Sinput}
 > kmeans_cluster
@@ -681,7 +647,7 @@ function (data, centroids) {
   rownames(classification) <- rownames(data)
   classification
 }
-<bytecode: 0x7ff9c7b7eee8>
+<bytecode: 0x7ff9ca8805b8>
 \end{Soutput}
 \begin{Sinput}
 > kmeans_split
@@ -695,7 +661,7 @@ function (data, cluster) {
   cluster2=cluster2[,-1]
   list(cluster1, cluster2)
 }
-<bytecode: 0x7ff9c763dff0>
+<bytecode: 0x7ff9c4417c90>
 \end{Soutput}
 \begin{Sinput}
 > kmeans_new_centroids
@@ -714,7 +680,7 @@ function(split){
   }
   t(matrix(centroids,length(split[[1]]),length(split)))
 }
-<bytecode: 0x7ff9c44b4e68>
+<bytecode: 0x7ff9c6a2a188>
 \end{Soutput}
 \begin{Sinput}
 > same_centroids
@@ -730,7 +696,7 @@ function(c1, c2){
   }
   ans
 }
-<bytecode: 0x7ff9c49ee2a8>
+<bytecode: 0x7ff9c24f5988>
 \end{Soutput}
 \begin{Sinput}
 > plot_kmeans
@@ -746,7 +712,6 @@ function (clusters, centers, main="", xlab="", ylab="") {
     maxy <- max(maxy, max(cluster[,2]))
     minx <- min(minx, min(cluster[,1]))
     miny <- min(miny, min(cluster[,2]))
-
   }
   color_i <- 1
   colors = c("red", "blue", "pink", "yellow", "black", "brown")
@@ -759,7 +724,40 @@ function (clusters, centers, main="", xlab="", ylab="") {
   plot( centers[,1], centers[,2], type="p", col="green",
         xlim=c(minx, maxx), ylim=c(miny, maxy), xlab=xlab, ylab=ylab)
 }
-<bytecode: 0x7ff9ca6b61e0>
+<bytecode: 0x7ff9cc756400>
+\end{Soutput}
+\begin{Sinput}
+> compare_clusters
+\end{Sinput}
+\begin{Soutput}
+function(c1, c2) {
+  len <- length(c1)
+  number_of_elements <- 0
+  for (i in 1:len){
+    number_of_elements <- number_of_elements + nrow(c1[[i]])
+  }
+  same <- 0
+  for (j in 1:len){
+    current_same = 0
+    for (i in 1:len){
+      r_results = clusters[[i]]
+      our_results = split[[((i+j)%%len)+1]]
+      if (nrow(r_results) < nrow(our_results)){
+        temp <- r_results
+        r_results <- our_results
+        our_results <- temp
+      }
+      for (name in rownames(r_results)){
+        if (name %in% rownames(our_results)){
+          current_same <- current_same+1
+        }
+      }
+    }
+    same <- max(same, current_same)
+  }
+  same/number_of_elements
+}
+<bytecode: 0x7ff9cac9a278>
 \end{Soutput}
 \end{Schunk}
 
