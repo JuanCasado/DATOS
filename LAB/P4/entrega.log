@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.10.8)  18 NOV 2019 20:59
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.10.8)  19 NOV 2019 09:04
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -382,94 +382,94 @@ Package pdftex.def Info: entrega-kmeans_distances.pdf  used on input line 283.
 File: entrega-kmeans_show_resultse.pdf Graphic file (type pdf)
 <use entrega-kmeans_show_resultse.pdf>
 Package pdftex.def Info: entrega-kmeans_show_resultse.pdf  used on input line 3
-36.
+33.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
  [9] [10 <./entrega-kmeans_show_resultse.pdf>]
 <entrega-kmeans_our_implementation.pdf, id=75, 433.62pt x 433.62pt>
 File: entrega-kmeans_our_implementation.pdf Graphic file (type pdf)
 <use entrega-kmeans_our_implementation.pdf>
 Package pdftex.def Info: entrega-kmeans_our_implementation.pdf  used on input l
-ine 374.
+ine 371.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
  [11] [12 <./entrega-kmeans_our_implementation.pdf>]
-[13]
-<entrega-optimal_number_of_clusters_1.pdf, id=93, 433.62pt x 433.62pt>
+<entrega-optimal_number_of_clusters_1.pdf, id=89, 433.62pt x 433.62pt>
 File: entrega-optimal_number_of_clusters_1.pdf Graphic file (type pdf)
 <use entrega-optimal_number_of_clusters_1.pdf>
 Package pdftex.def Info: entrega-optimal_number_of_clusters_1.pdf  used on inpu
-t line 451.
+t line 417.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
- [14 <./entrega-optimal_number_of_clusters_1.pdf>]
-<entrega-optimal_number_of_clusters_2.pdf, id=103, 433.62pt x 433.62pt>
+
+[13 <./entrega-optimal_number_of_clusters_1.pdf>]
+<entrega-optimal_number_of_clusters_2.pdf, id=100, 433.62pt x 433.62pt>
 File: entrega-optimal_number_of_clusters_2.pdf Graphic file (type pdf)
 <use entrega-optimal_number_of_clusters_2.pdf>
 Package pdftex.def Info: entrega-optimal_number_of_clusters_2.pdf  used on inpu
-t line 460.
+t line 426.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
-<entrega-optimal_number_of_clusters_3.pdf, id=104, 433.62pt x 433.62pt>
+<entrega-optimal_number_of_clusters_3.pdf, id=101, 433.62pt x 433.62pt>
 File: entrega-optimal_number_of_clusters_3.pdf Graphic file (type pdf)
 <use entrega-optimal_number_of_clusters_3.pdf>
 Package pdftex.def Info: entrega-optimal_number_of_clusters_3.pdf  used on inpu
-t line 485.
+t line 451.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
- [15 <./entrega-optimal_number_of_clusters_2.pdf>]
-<entrega-optimal_number_of_clusters_4.pdf, id=114, 433.62pt x 433.62pt>
+ [14 <./entrega-optimal_number_of_clusters_2.pdf>]
+<entrega-optimal_number_of_clusters_4.pdf, id=111, 433.62pt x 433.62pt>
 File: entrega-optimal_number_of_clusters_4.pdf Graphic file (type pdf)
 <use entrega-optimal_number_of_clusters_4.pdf>
 Package pdftex.def Info: entrega-optimal_number_of_clusters_4.pdf  used on inpu
-t line 494.
+t line 460.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
- [16 <./entrega-optimal_number_of_clusters_3.pdf> <./entrega-optimal_number_of_
+ [15 <./entrega-optimal_number_of_clusters_3.pdf> <./entrega-optimal_number_of_
 clusters_4.pdf>]
-<entrega-optimal_number_of_clusters_5.pdf, id=130, 433.62pt x 433.62pt>
+<entrega-optimal_number_of_clusters_5.pdf, id=127, 433.62pt x 433.62pt>
 File: entrega-optimal_number_of_clusters_5.pdf Graphic file (type pdf)
 <use entrega-optimal_number_of_clusters_5.pdf>
 Package pdftex.def Info: entrega-optimal_number_of_clusters_5.pdf  used on inpu
-t line 512.
+t line 478.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
-<entrega-kmeans_different_number_of_clusters.pdf, id=131, 433.62pt x 433.62pt>
+<entrega-kmeans_different_number_of_clusters.pdf, id=128, 433.62pt x 433.62pt>
 File: entrega-kmeans_different_number_of_clusters.pdf Graphic file (type pdf)
 <use entrega-kmeans_different_number_of_clusters.pdf>
 Package pdftex.def Info: entrega-kmeans_different_number_of_clusters.pdf  used 
-on input line 531.
+on input line 497.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
- [17 <./entrega-optimal_number_of_clusters_5.pdf>] [18 <./entrega-kmeans_differ
+ [16 <./entrega-optimal_number_of_clusters_5.pdf>] [17 <./entrega-kmeans_differ
 ent_number_of_clusters.pdf>]
-<entrega-jerarquico_1.pdf, id=153, 433.62pt x 433.62pt>
+<entrega-jerarquico_1.pdf, id=150, 433.62pt x 433.62pt>
 File: entrega-jerarquico_1.pdf Graphic file (type pdf)
 <use entrega-jerarquico_1.pdf>
-Package pdftex.def Info: entrega-jerarquico_1.pdf  used on input line 572.
+Package pdftex.def Info: entrega-jerarquico_1.pdf  used on input line 538.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
- [19 <./entrega-jerarquico_1.pdf>]
-<entrega-jerarquico_2.pdf, id=165, 433.62pt x 433.62pt>
+ [18 <./entrega-jerarquico_1.pdf>]
+<entrega-jerarquico_2.pdf, id=161, 433.62pt x 433.62pt>
 File: entrega-jerarquico_2.pdf Graphic file (type pdf)
 <use entrega-jerarquico_2.pdf>
-Package pdftex.def Info: entrega-jerarquico_2.pdf  used on input line 599.
+Package pdftex.def Info: entrega-jerarquico_2.pdf  used on input line 565.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
-<entrega-jerarquico_3.pdf, id=166, 433.62pt x 433.62pt>
+<entrega-jerarquico_3.pdf, id=162, 433.62pt x 433.62pt>
 File: entrega-jerarquico_3.pdf Graphic file (type pdf)
 <use entrega-jerarquico_3.pdf>
-Package pdftex.def Info: entrega-jerarquico_3.pdf  used on input line 613.
+Package pdftex.def Info: entrega-jerarquico_3.pdf  used on input line 579.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
- [20 <./entrega-jerarquico_2.pdf>]
-<entrega-jerarquico_4.pdf, id=176, 433.62pt x 433.62pt>
+ [19 <./entrega-jerarquico_2.pdf>]
+<entrega-jerarquico_4.pdf, id=173, 433.62pt x 433.62pt>
 File: entrega-jerarquico_4.pdf Graphic file (type pdf)
 <use entrega-jerarquico_4.pdf>
-Package pdftex.def Info: entrega-jerarquico_4.pdf  used on input line 621.
+Package pdftex.def Info: entrega-jerarquico_4.pdf  used on input line 587.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
- [21 <./entrega-jerarquico_3.pdf> <./entrega-jerarquico_4.pdf>]
-<entrega-jerarquico_5.pdf, id=195, 433.62pt x 433.62pt>
+ [20 <./entrega-jerarquico_3.pdf> <./entrega-jerarquico_4.pdf>]
+<entrega-jerarquico_5.pdf, id=192, 433.62pt x 433.62pt>
 File: entrega-jerarquico_5.pdf Graphic file (type pdf)
 <use entrega-jerarquico_5.pdf>
-Package pdftex.def Info: entrega-jerarquico_5.pdf  used on input line 629.
+Package pdftex.def Info: entrega-jerarquico_5.pdf  used on input line 595.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
-<entrega-jerarquico_6.pdf, id=196, 433.62pt x 433.62pt>
+<entrega-jerarquico_6.pdf, id=193, 433.62pt x 433.62pt>
 File: entrega-jerarquico_6.pdf Graphic file (type pdf)
 <use entrega-jerarquico_6.pdf>
-Package pdftex.def Info: entrega-jerarquico_6.pdf  used on input line 639.
+Package pdftex.def Info: entrega-jerarquico_6.pdf  used on input line 605.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
- [22 <./entrega-jerarquico_5.pdf>]
-[23 <./entrega-jerarquico_6.pdf>] [24] [25] [26] (./entrega.aux) ) 
+ [21 <./entrega-jerarquico_5.pdf>]
+[22 <./entrega-jerarquico_6.pdf>] [23] [24] [25] (./entrega.aux) ) 
 Here is how much of TeX's memory you used:
  2838 strings out of 492609
  42580 string characters out of 6129048
@@ -488,10 +488,10 @@ ve/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive
 9/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2019/t
 exmf-dist/fonts/type1/public/amsfonts/cm/cmsltt10.pfb></usr/local/texlive/2019/
 texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on entrega.pdf (26 pages, 610090 bytes).
+Output written on entrega.pdf (25 pages, 610953 bytes).
 PDF statistics:
- 254 PDF objects out of 1000 (max. 8388607)
- 180 compressed objects within 2 object streams
+ 251 PDF objects out of 1000 (max. 8388607)
+ 178 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  86 words of extra memory for PDF output out of 10000 (max. 10000000)
 

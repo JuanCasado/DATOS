@@ -23,7 +23,7 @@ Las principales variaciones en estos métodos residen en la métrica utilizada p
 Exploraremos distintas métricas, visualizaremos los árboles generados y compararemos las clasificaciones jerárquicas entre si y con los resultados de k-means.
 
 Debido a que deseamos comparar los resultados de k-means con la clasificación jerarquica utilizaremos para explorar ambos algoritmos el mismo dataset.
-Este es un dataset ya incluido en R que tiene la cantidad de veces que 4 crímenes distintos se han cometido en cada estado de EEUU.
+Se utilizará un dataset obtenido de kaggle en que se presentan las características de un conjunto de semillas.
 \end{abstract}
 
 \newpage
@@ -46,7 +46,6 @@ plot_kmeans <- function (clusters, centers, main="", xlab="", ylab="") {
     maxy <- max(maxy, max(cluster[,2]))
     minx <- min(minx, min(cluster[,1]))
     miny <- min(miny, min(cluster[,2]))
-
   }
   color_i <- 1
   colors = c("red", "blue", "pink", "yellow", "black", "brown")
@@ -90,6 +89,7 @@ kmeans_cluster <- function (data, centroids) {
   rownames(classification) <- rownames(data)
   classification
 }
+
 kmeans_split <- function (data, cluster) {
   clusters=cbind(cluster,data)
   cluster1=subset(clusters,clusters[,1]==1)
@@ -98,6 +98,7 @@ kmeans_split <- function (data, cluster) {
   cluster2=cluster2[,-1]
   list(cluster1, cluster2)
 }
+
 kmeans_new_centroids <- function(split){
   centroids <- c()
   for (cluster in split) {
@@ -121,6 +122,34 @@ same_centroids <- function(c1, c2){
     }
   }
   ans
+}
+
+compare_clusters <- function(c1, c2) {
+  len <- length(c1)
+  number_of_elements <- 0
+  for (i in 1:len){
+    number_of_elements <- number_of_elements + nrow(c1[[i]])
+  }
+  same <- 0
+  for (j in 1:len){
+    current_same = 0
+    for (i in 1:len){
+      r_results = clusters[[i]]
+      our_results = split[[((i+j)%%len)+1]]
+      if (nrow(r_results) < nrow(our_results)){
+        temp <- r_results
+        r_results <- our_results
+        our_results <- temp
+      }
+      for (name in rownames(r_results)){
+        if (name %in% rownames(our_results)){
+          current_same <- current_same+1
+        }
+      }
+    }
+    same <- max(same, current_same)
+  }
+  same/number_of_elements
 }
 @
 
@@ -239,18 +268,18 @@ current_centroides
 
 \newpage
 \section{K-means}
-En este apartado vamos a realizar un ejemplo práctico de clustering de la muestra "USArrests" incluida en R.
+En este apartado vamos a realizar un ejemplo práctico de clustering sobre una muestra obtenida de kaggle.
+En dicha muestra se presentan 7 características sobre un conjunto de semillas.
+
 Utilizaremos distintas funciones de las librerías: "tidyverse", "cluster", "factoextra" y "gridExtra" para mostrar los datos y calcular el número óptimo de clusters.
 El algoritmo encargado de realizar la clusterización será kmeans del que utilizaremos la implementación que R proporciona.
-
-La muestra que se utilizará contiene la cantidad de veces que se han cometido 4 crímenes distintos en distintos estados de EEUU.
 
 \subsection{Preparar los datos}
 Deberemos eliminar los datos que estén incompletos ya que kmeans no podría manejarlos.
 Adicionalmente escalaremos las variables con la intención de hacerlas comparables entre ellas.
 Esto es necesario debido a que la escala de las variables de entrada adecta al algoritmo pues se utilizar distancias euclídeas para realizar la clusterización.
 Escalar las variables consiste en hacer que la media de cada una de ellas sea 0 y desviación estándar de 1.
-Es por ello que se acaban obteniendo valores negativos para las variables, tendría poco sentido que se hubiera cometido una cantidad negativa de crímenes en un estado.
+Tras haber realizado el escalado aparecerán por tanto valores negativos en las características, estas dejan de estar en sus unidades originales.
 <<kmeans_prepare_data>>=
 df <- read.csv("Seed_Data.csv")
 df <- na.omit(df)
@@ -306,15 +335,16 @@ fviz_cluster(k2, data = df)
 \newpage
 \subsection{Ejecución con implementación propia}
 Realizaremos la misma ejecución utilizando ahora la implementación de kmeans hecha por nosotros.
-En este caso debemos elegir nosotros los centrides iniciales que serán 2 centroides de 4 elementos cada uno.
-Tras la ejecución podremos ver en las gráficas como los centroides logran clasificar los elementos en 5 iteraciones.
-Adicionalmente podemos comprobar que los centrides obtenidos con nuestra implementación y con la de R son los mismos.
+Para realizar la ejecución tomaremos un vector aleatorio de tantos elementos como el número de clases multiplicado por la cantidad de variables asociadas a cada dato.
+Tras la ejecución podremos ver en las gráficas como los centroides logran clasificarse en un número de iteraciones dependiente del vector aleatorio inicial.
+Hemos podido observar que el número de iteraciones oscila entre 6 y 9 iteraciones.
+Adicionalmente podemos comprobar que los centrides obtenidos con nuestra implementación y con la de R son muy similares.
 \begin{center}
 <<kmeans_our_implementation, fig=TRUE>>=
 datos <- df
-current_centroides <- matrix(runif(16, -2, 2), 2,8)
-par(mfrow=c(2,3))
-for (i in 1:6){
+current_centroides <- matrix(runif(14, -2, 2), 2,7)
+par(mfrow=c(3,3))
+for (i in 1:9){
   cluster <- kmeans_cluster (datos, current_centroides)
   split <- kmeans_split(datos, cluster)
   new_centroides <- kmeans_new_centroids(split)
@@ -331,6 +361,7 @@ current_centroides
 \end{center}
 
 Comprobamos adicionalmente que ambas clasificaciones, la de R y la nuestara coinciden como método de validación de nuestro algoritmo.
+El porcentaje de similitud entre ambas clasificaciones oscila entre el 96% y el 99%.
 El resultado es positivo.
 <<comparar_resultados>>=
 clusters <- cbind(k2$cluster,datos)
@@ -339,38 +370,7 @@ cluster2 <- subset(clusters,clusters[,1]==2)
 cluster1 <- cluster1[,-1]
 cluster2 <- cluster2[,-1]
 clusters <- list(cluster1, cluster2)
-len <- length(clusters)
-same1 = 0
-for (i in 1:len){
-  r_results = clusters[[i]]
-  our_results = split[[i]]
-  if (nrow(r_results) < nrow(our_results)){
-    temp <- r_results
-    r_results <- our_results
-    our_results <- temp
-  }
-  for (name in rownames(r_results)){
-    if (name %in% rownames(our_results)){
-      same1 <- same1+1
-    }
-  }
-}
-same2 = 0
-for (i in 1:len){
-  r_results = clusters[[i]]
-  our_results = split[[((i)%%len)+1]]
-  if (nrow(r_results) < nrow(our_results)){
-    temp <- r_results
-    r_results <- our_results
-    our_results <- temp
-  }
-  for (name in rownames(r_results)){
-    if (name %in% rownames(our_results)){
-      same2 <- same2+1
-    }
-  }
-}
-max(same1,same2)/nrow(datos)
+compare_clusters(clusters, split)
 @
 
 \newpage
@@ -433,7 +433,7 @@ fviz_nbclust(df, kmeans, method = "silhouette")
 @
 \end{center}
 
-Podemos ver que 2 clases tiene la mayor pertenencia de los elementos clasificados a los clusters seguido de 4 clases.
+Podemos ver que 2 clases tiene la mayor pertenencia de los elementos clasificados a los clusters seguido de 3 clases.
 Estos valores coinciden con los obtenidos con el método anterior.
 
 \subsubsection{Gap Statistic Method}
@@ -450,7 +450,7 @@ fviz_gap_stat(gap_stat)
 
 Podemos ver que en este caso 3 sería el mejor número de cluster en los que realizar nuestra clasificación.
 
-Mostramos a continuación las distintas clasificciones que se obtienen cuando tenemos de 3 a 5 clases.
+Mostramos a continuación las distintas clasificciones que se obtienen cuando tenemos de 2 a 5 clases.
 \begin{center}
 <<kmeans_different_number_of_clusters, fig=TRUE>>=
 k3 <- kmeans(df, centers = 3, nstart = 25)
@@ -482,6 +482,7 @@ data <- read.csv("Seed_Data.csv")
 data <- na.omit(data)
 data <- scale(data)
 @
+library(jpeg)
 
 <<jerarquico_1, fig=TRUE>>=
 d <- dist(data, method = "euclidean")
@@ -535,6 +536,7 @@ kmeans_split
 kmeans_new_centroids
 same_centroids
 plot_kmeans
+compare_clusters
 @
 
 
