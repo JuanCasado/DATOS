@@ -13,6 +13,7 @@ Nos centraremos principalmente en las técnicas de selección del número de clu
 Adicionalmente hemos relizado una implementación propia de k-means que validaremos comparándola con los resultados de la implementación de R.
 La ventaja de nuestra implementación frente a la de R es que nos permite visualizar paso a paso el estado de cada iteración del algoritmo.
 Esto nos permite ver cómo se desplazan los centroides así como ver en cada momento la clasificación actual de los elementos de la muestra.
+Adicionalmente utilizaremos k-means para reducir la cantidad de colores de una imagen, lo cual es otra posible aplicación de este algoritmo.
 
 En la segunda parte del ejercicio libre utilizaremos los algoritmos de clasificación jerárquica aglomerativo y divisivo.
 En el algoritmo aglomerativo partimos de que cada elemento de la muestra es una clases.
@@ -36,6 +37,8 @@ library("factoextra")
 library("gridExtra")
 library("purrr")
 library("dendextend")
+library("jpeg")
+library("RCurl")
 plot_kmeans <- function (clusters, centers, main="", xlab="", ylab="") {
   maxx <- max(clusters[[1]][,1])
   maxy <- max(clusters[[1]][,2])
@@ -493,6 +496,33 @@ c(k2$tot.withinss, k3$tot.withinss, k4$tot.withinss, k5$tot.withinss)
 @
 
 \newpage
+\subsection{Kmeans sobre una imagen}
+Vamos a clusterizar una imagen utilizando el algoritmo kmeans, primero obtenemod la imagen de internet.
+Posteriormente mostramos la imagen original.
+\begin{center}
+<<image, fig=TRUE>>=
+url <- "https://raw.githubusercontent.com/mages/diesunddas/master/Blog/LloydsBuilding.jpg"
+readImage <- readJPEG(getURLContent(url, binary=TRUE))
+dm <- dim(readImage)
+rgbImage <- data.frame( x=rep(1:dm[2], each=dm[1]),y=rep(dm[1]:1, dm[2]),
+                        r.value=as.vector(readImage[,,1]),
+g.value=as.vector(readImage[,,2]),b.value=as.vector(readImage[,,3]))
+plot(y ~ x, data=rgbImage,col = rgb(rgbImage[c("r.value", "g.value", "b.value")]),
+            asp = 1, pch = ".",axes=FALSE,xlab="",ylab="")
+@
+\end{center}
+Realizamos la clusterización de la imagen en tan solo 4 colores distintos.
+Esto puede tener aplicaciones realacionadas con la segmentación de imágenes o con su compresión.
+\begin{center}
+<<image_kmeans, fig=TRUE>>=
+kMeans <- kmeans(rgbImage[, c("r.value", "g.value", "b.value")], centers = 4)
+clusterColour <- rgb(kMeans$centers[kMeans$cluster, ])
+plot(y ~ x, data=rgbImage,col = clusterColour, asp = 1, pch = ".",
+            axes=FALSE,xlab="",ylab="")
+@
+\end{center}
+
+\newpage
 \section{Clusterización jerárquica}
 Utilizaremos y compararemos los método de clusterización ascendente y descendente.
 Adicionalmente en la clusterización jerárquica ascendente compararemos distintas medidas de distancia por las que se juntan los clusters.
@@ -698,27 +728,6 @@ hc_complete <- agnes(data, method = "ward")
 hc_single <- as.dendrogram(hc_single)
 hc_complete <- as.dendrogram(hc_complete)
 tanglegram(hc_single,hc_complete)
-@
-\end{center}
-
-\section{Kmeans sobre una imagen}
-Vamos a clusterizar una imagen utilizando el algoritmo kmeans, primero mostramos la imagen original
-\begin{center}
-<<image, fig=TRUE>>=
-url <- "https://raw.githubusercontent.com/mages/diesunddas/master/Blog/LloydsBuilding.jpg"
-readImage <- readJPEG(getURLContent(url, binary=TRUE))
-dm <- dim(readImage)
-rgbImage <- data.frame(x=rep(1:dm[2], each=dm[1]),y=rep(dm[1]:1, dm[2]),r.value=as.vector(readImage[,,1]),
-g.value=as.vector(readImage[,,2]),b.value=as.vector(readImage[,,3]))
-plot(y ~ x, data=rgbImage, main="Lloyd’s building",col = rgb(rgbImage[c("r.value", "g.value", "b.value")]), asp = 1, pch = ".")
-@
-\end{center}
-Ahora mostramos la imagen clusterizada en 5 colores.
-\begin{center}
-<<image_kmeans, fig=TRUE>>=
-kMeans <- kmeans(rgbImage[, c("r.value", "g.value", "b.value")], centers = 5)
-clusterColour <- rgb(kMeans$centers[kMeans$cluster, ])
-plot(y ~ x, data=rgbImage, main="Lloyd’s building",col = clusterColour, asp = 1, pch = ".",axes=FALSE, ylab="", xlab="k-means cluster analysis of 5 colours")
 @
 \end{center}
 
