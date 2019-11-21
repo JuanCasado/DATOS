@@ -328,7 +328,15 @@ Utilizaremos estas medidas posteriormente para compararlas con la clasificación
 \end{Soutput}
 \end{Schunk}
 
-Mostramos la clasificación obtenida.
+\newpage
+\subsection{Visualización de los resultados}
+Tal y como hemos ver en el extrarcto de la muestra cada dato se compone de siete variables.
+No obstante solo podemos representar sin realizar alguna simplificación datos tridimensionales.
+Es por tanto que la representación no es completamente fiel a la estructura de los datos ya que esta es bidimensional.
+La función "fviz cluster" intenta representar los datos lo mejor que puede a partir de las distancias que hay entre los puntos en el espacio de siete dimensiones.
+Adicionalmente podremos comprobar más adelante como la función "plot" también se inventa una forma distinta para representar los datos.
+Debido a que con "fviz cluster" los datos se ven diferenciados cuanto más lo son los cluster que con "plot" hemos preferido esta primera función para representar los resultados.
+Aún así en nuestra implementación propia utilizamos la segunda para poder apreciar las diferencias entre ambos.
 \begin{center}
 \includegraphics{entrega-kmeans_show_resultse}
 \end{center}
@@ -337,8 +345,9 @@ Mostramos la clasificación obtenida.
 \subsection{Ejecución con implementación propia}
 Realizaremos la misma ejecución utilizando ahora la implementación de kmeans hecha por nosotros.
 Para realizar la ejecución tomaremos un vector aleatorio de tantos elementos como el número de clases multiplicado por la cantidad de variables asociadas a cada dato.
-Tras la ejecución podremos ver en las gráficas como los centroides logran clasificar los elementos en 5 iteraciones.
-Adicionalmente podemos comprobar que los centrides obtenidos con nuestra implementación y con la de R son los mismos.
+Tras la ejecución podremos ver en las gráficas como los centroides logran clasificarse en un número de iteraciones dependiente del vector aleatorio inicial.
+Hemos podido observar que el número de iteraciones oscila entre 6 y 9 iteraciones.
+Adicionalmente podemos comprobar que los centrides obtenidos con nuestra implementación y con la de R son muy similares.
 \begin{center}
 \begin{Schunk}
 \begin{Sinput}
@@ -372,6 +381,7 @@ Adicionalmente podemos comprobar que los centrides obtenidos con nuestra impleme
 \end{center}
 
 Comprobamos adicionalmente que ambas clasificaciones, la de R y la nuestara coinciden como método de validación de nuestro algoritmo.
+El porcentaje de similitud entre ambas clasificaciones oscila entre el 96\% y el 99\%.
 El resultado es positivo.
 \begin{Schunk}
 \begin{Sinput}
@@ -387,6 +397,10 @@ El resultado es positivo.
 [1] 0.9857143
 \end{Soutput}
 \end{Schunk}
+Para que esta comparativa tenga algo de fiabilidad buscamos la mayor de las coincidencias entre las combinaciones válidas de las clasificaciones proporcionados por ambos métodos.
+Debido a las componentes aleatorias de este algoritmo puede que a cada ejecución se produzcan resultados distintos.
+Estos resultados cambiarán la posición de los centroides obtenidos pudiendo ser el centroide que antes era el representante de unos datos ser el representate de otros.
+Por ello buscamos que combinación de asignaciones de centroides maximiza la similitud entre las clasificaciones.
 
 \newpage
 \subsection{Elección del número de clusters}
@@ -460,7 +474,7 @@ El mismo método está ya implementado en una única función.
 \includegraphics{entrega-optimal_number_of_clusters_4}
 \end{center}
 
-Podemos ver que 2 clases tiene la mayor pertenencia de los elementos clasificados a los clusters seguido de 4 clases.
+Podemos ver que 2 clases tiene la mayor pertenencia de los elementos clasificados a los clusters seguido de 3 clases.
 Estos valores coinciden con los obtenidos con el método anterior.
 
 \subsubsection{Gap Statistic Method}
@@ -480,7 +494,7 @@ Buscamos la combinación de un valor más alto en la gráfica con unos bigotes d
 
 Podemos ver que en este caso 3 sería el mejor número de cluster en los que realizar nuestra clasificación.
 
-Mostramos a continuación las distintas clasificciones que se obtienen cuando tenemos de 3 a 5 clases.
+Mostramos a continuación las distintas clasificciones que se obtienen cuando tenemos de 2 a 5 clases.
 \begin{center}
 \begin{Schunk}
 \begin{Sinput}
@@ -517,9 +531,15 @@ Es por tanto que la elección del número de cluster es una optimización de est
 
 \newpage
 \section{Clusterización jerárquica}
-Utilizaremos y compararemos el método de clusterización jerárquica dependiendo de la medida de distancia que utilicemos para ejecuatarlo.
+Utilizaremos y compararemos los método de clusterización ascendente y descendente.
+Adicionalmente en la clusterización jerárquica ascendente compararemos distintas medidas de distancia por las que se juntan los clusters.
+Adicionalmente compararemos los resultados obtenidos con los obtenidos en k-means.
+Para hacerlo utilizaremos 3 como número de clusters en los que clasificar ya que como vimos en apartados anteriores este era un número adecuado de clusters en los que dividir la muestra.
 Utilizaremos funciones de las siguiente librerías: "cluster", "purrr", "dendextend" y "factoextra".
 
+\subsection{Preparar los datos}
+Al igual que hicimos en el apartado anterior comenazaremos por preparar los datos eliminando los elementos nulos y escalándolos.
+El escalado deja los datos con media 0 y desviación estándar de 1.
 \begin{Schunk}
 \begin{Sinput}
 > data <- read.csv("Seed_Data.csv")
@@ -528,85 +548,242 @@ Utilizaremos funciones de las siguiente librerías: "cluster", "purrr", "dendext
 \end{Sinput}
 \end{Schunk}
 
+\subsection{Clusterización jerárquica ascendente}
+En esta clusterización partiremos de que cada dato de la muestra es su propio cluster de modo que los iremos agrupando según distintas métricas hasta formar un único cluster.
+Para clasificar por otro número de cluster solo deberemos descender en el árbol creado hasta el nivel de división adecuado.
+
+Para poder realizar la clusterización jerárquica ascendente necesitamos calcular las distancias entre los elementos.
+Dichas distancias serán utilizadas por el algoritmo de clusterización para realizar la clasificación no supervisada.
+Utilizaremos la distancia euclídea para calcular la distancia entre los puntos.
+Tal y como vivmos en clase solo es necesario calcular la distancia entre los puntos una sola vez,
+posteriormente dependiendo del método utilizado la matriz de distancias se actualizará con la distancia máxima, mínima o media de los clusters que se unan.
 \begin{Schunk}
 \begin{Sinput}
 > d <- dist(data, method = "euclidean")
-> hc1 <- hclust(d, method = "complete")
-> plot(hc1, cex = 0.6, hang = -1)
 \end{Sinput}
 \end{Schunk}
-\includegraphics{entrega-jerarquico_1}
 
+\subsubsection{Clusterización jerárquica ascendente complete-linkage}
+Mediante este método las actualizaciones de la matriz de distancias se realizarán con el operador max.
+Es decir, cuando unamos dos clusters entre si, la distancia del nuevo cluster al resto de puntos será la distancia máxima de cada uno de esos puntos a todos los del cluster.
+\begin{center}
 \begin{Schunk}
 \begin{Sinput}
-> hc2 <- agnes(data, method = "complete")
-> hc2$ac
+> jerarquica_acendente_completa <- hclust(d, method = "complete")
+> plot(jerarquica_acendente_completa, cex = 0.6, hang = -1)
+> rect.hclust(jerarquica_acendente_completa, k = 3, border = 2:10)
 \end{Sinput}
-\begin{Soutput}
-[1] 0.9231512
-\end{Soutput}
+\end{Schunk}
+\includegraphics{entrega-jerarquica_acendente_completa}
+Vemos que aproximadamente cada clase toma un tercio de los datos.
+Adicionalmete la proyección de la representación visual nos da a entender que los clusters separan de forma adecuada a la muestra.
+Esto que ahora solo podemos estimar de la visualización lo exploraremos numéricamente más adelante.
+\begin{Schunk}
 \begin{Sinput}
-> m <- c( "average", "single", "complete", "ward")
-> names(m) <- c( "average", "single", "complete", "ward")
-> ac <- function(x) {
-+   agnes(data, method = x)$ac
+> jerarquica_acendente_completa_clust <- cutree(jerarquica_acendente_completa, k = 3)
+> fviz_cluster(list(data = data, cluster = jerarquica_acendente_completa_clust))
+\end{Sinput}
+\end{Schunk}
+\includegraphics{entrega-jerarquica_acendente_completa_plot}
+\end{center}
+
+\subsubsection{Clusterización jerárquica ascendente average-linkage}
+Cuando unamos dos clusters actualizaremos la matriz de distancias con el operador media aritmética.
+La nueva distancia del cluster al resto de ellos será la distancia media de sus puntos a cada uno de los de cada otro cluster.
+\begin{center}
+Al igual que con complete-linkage podemos ver que cada clase tiene aproximadamente un tercio de los datos y que la clasificación separa adecuadamente a la muestra.
+\begin{Schunk}
+\begin{Sinput}
+> jerarquica_acendente_media <- hclust(d, method = "average")
+> plot(jerarquica_acendente_media, cex = 0.6, hang = -1)
+> rect.hclust(jerarquica_acendente_media, k = 3, border = 2:10)
+\end{Sinput}
+\end{Schunk}
+\includegraphics{entrega-jerarquica_acendente_media}
+\begin{Schunk}
+\begin{Sinput}
+> jerarquica_acendente_media_clust <- cutree(jerarquica_acendente_media, k = 3)
+> fviz_cluster(list(data = data, cluster = jerarquica_acendente_media_clust))
+\end{Sinput}
+\end{Schunk}
+\includegraphics{entrega-jerarquica_acendente_media_plot}
+\end{center}
+
+\subsubsection{Clusterización jerárquica ascendente single-linkage}
+La actualización de la matriz de distancias mediante este método se raliza mediante el operador mínimo.
+Cuando dos cluster se unan la matriz se actualizará con la distancia mínima de los puntos del nuevo cluster a los puntos de cada uno de los otros clusters.
+\begin{center}
+\begin{Schunk}
+\begin{Sinput}
+> jerarquica_acendente_single <- hclust(d, method = "single")
+> plot(jerarquica_acendente_single, cex = 0.6, hang = -1)
+> rect.hclust(jerarquica_acendente_single, k = 3, border = 2:10)
+\end{Sinput}
+\end{Schunk}
+\includegraphics{entrega-jerarquica_acendente_single}
+En este caso vemos como una única clase está asociada a la mayoría de los datos siendo las otras dos muy pequeñas.
+Puede que esto se deba a que este método de clusterización jerárquica ascendente no deba ser utilizado así.
+También puede que se deba por la estructura de los datos que haga que este método no sea adecuado para ellos.
+\begin{Schunk}
+\begin{Sinput}
+> jerarquica_acendente_single_clust <- cutree(jerarquica_acendente_single, k = 3)
+> fviz_cluster(list(data = data, cluster = jerarquica_acendente_single_clust))
+\end{Sinput}
+\end{Schunk}
+\includegraphics{entrega-jerarquica_acendente_single_plot}
+\end{center}
+
+\subsubsection{Clusterización jerárquica ascendente ward-linkage}
+Este método es el más diferente comparado con los otros tres.
+En este caso nos se juntarán dos cluster por que la distancia entre ellos sea la menor distancia de la matriz de distancias si no
+porque su unión es la unión que produce una pérdida de información mínima.
+\begin{center}
+\begin{Schunk}
+\begin{Sinput}
+> jerarquica_acendente_ward <- hclust(d, method = "ward.D")
+> plot(jerarquica_acendente_ward, cex = 0.6, hang = -1)
+> rect.hclust(jerarquica_acendente_ward, k = 3, border = 2:10)
+\end{Sinput}
+\end{Schunk}
+\includegraphics{entrega-jerarquica_acendente_ward}
+Con este método las clases vuelven a ser de un tamaño próximo al tercio de la muestra y los clusters vuelven a parecer bastante separados.
+\begin{Schunk}
+\begin{Sinput}
+> jerarquica_acendente_ward_clust <- cutree(jerarquica_acendente_ward, k = 3)
+> fviz_cluster(list(data = data, cluster = jerarquica_acendente_ward_clust))
+\end{Sinput}
+\end{Schunk}
+\includegraphics{entrega-jerarquica_acendente_ward_plot}
+\end{center}
+
+\subsubsection{Coeficiente aglomerativo}
+Otra función con la que realizar la clasificación jerárquica ascendente es "agnes".
+Los resultados obtendidos son los mismos que los que se obtienen con "cutree" ya que realizan las mismas operaciones.
+Adicionalmente para dibujarlos se pueden seguir utilizando las mismas funciones.
+La principal diferencia entre "agnes" y "cutree" es que la primera nos proporciona el coeficiente aglomerativo de los clusters generados.
+
+Dicho coeficiente nos informa sobre lo buena o mala que a sido la clasificación a partir de indicarnos cómo de densos son los clusters generados.
+Los valores de coeficiente aglomerativo próximos a 1 nos indican que la homogeneidad entre los elementos de los cluster es elevada.
+
+Calcularemos dicho coeficiente para cada una de las medidas de agrupación de datos.
+Deseamos que este número sea los más alto posible de modo que los clusters sean homogéneos dentro de ellos y heterogéneos entre si.
+Como vemos los resultados de calcular el coeficiente no coincide con el análisis realizado sobre las gráficas y los dendogramas.
+
+Ward obtiene el mayor coeficiente aglomerativo debido a que minimiza la pérdida de información con la cual este se relaciona.
+Single sorprendentemente obtiene un buen coeficienter aglomerativo mientras que average no lo hace.
+\begin{Schunk}
+\begin{Sinput}
+> methods <- c( "average", "single", "complete", "ward")
+> names(methods) <- c("complete", "average", "single", "ward")
+> aglomerative_coeficient <- function(method) {
++   agnes(data, method = method)$ac
 + }
-> map_dbl(m, ac)
+> map_dbl(methods, aglomerative_coeficient)
 \end{Sinput}
 \begin{Soutput}
-  average    single  complete      ward 
+ complete   average    single      ward 
 0.8649547 0.6055379 0.9231512 0.9846264 
 \end{Soutput}
-\begin{Sinput}
-> hc3 <- agnes(data, method = "ward")
-> pltree(hc3, cex = 0.6, hang = -1, main = "Dendrogram of agnes")
-\end{Sinput}
 \end{Schunk}
-\includegraphics{entrega-jerarquico_2}
 
+\subsubsection{Comparación con kmeans}
+Calculamos a continución el porcentaje de datos que fueron clasificados en las mismas clases que lo fueron en k-means.
+Para ello utilizamos la misma función que ya utilizamos para comparar los resultados de nuestro k-menas con los del k-means implementado por R.
+Podemos ver que complete-linkage y avergae-linkage producen las clasificaciones más similares a las de k-means.
+Por el contrario en el caso de single está claro que este valor no iba a poder ser dmasiado elevado.
+Sorprende que con ward el valor sea elevado ya que en la representación los cluster eran similares a los de k-means con k=3,
+no obstante tal y como ya explicamos esa representación no es demasido fiable ya que pone en solo 2 dimensiones datos de 7 dimensiones.
 \begin{Schunk}
 \begin{Sinput}
-> hc4 <- diana(data)
-> hc4$dc
+> clusters_jerarquico_ascendente <- list( jerarquica_acendente_completa_clust,
++                                      jerarquica_acendente_media_clust, 
++                                      jerarquica_acendente_single_clust, 
++                                      jerarquica_acendente_ward_clust)
+> names(clusters_jerarquico_ascendente) <- c("complete", "average", "single", "ward")
+> kmeans_compare <- function(cluster) {
++   compare_clusters(clusters_kmeans, split_clusters(cluster))
++ }
+> map_dbl(clusters_jerarquico_ascendente, kmeans_compare)
+\end{Sinput}
+\begin{Soutput}
+ complete   average    single      ward 
+0.8809524 0.8952381 0.3380952 0.3761905 
+\end{Soutput}
+\end{Schunk}
+
+\newpage
+\subsection{Clusterización jerárquica descendente}
+La clasificación jerárquica descendente se realiza partiendo de un único cluster que comprende a todos los datos.
+Poco a poco iremos descomponiendo este cluster en otros más pequeños hasta acabar con que cada dato esté en su propio cluster.
+Para evaluar un número de cluster concreto actuaremos de forma similar a la clusterización jerárquica ascendente utilizando el árbol que se generados.
+
+Clasificaremos la muestra con la función "diana".
+\begin{center}
+\begin{Schunk}
+\begin{Sinput}
+> jerarquico_descendente <- diana(data)
+> pltree(jerarquico_descendente, cex = 0.6, hang = -1)
+> rect.hclust(jerarquico_descendente, k = 3, border = 2:10)
+\end{Sinput}
+\end{Schunk}
+\includegraphics{entrega-jerarquico_descendente}
+\end{center}
+Podemos ver que cada clase contiene cerca de un tercio de los datos y que los cluster parecen separados entre si.
+\begin{center}
+\begin{Schunk}
+\begin{Sinput}
+> jerarquico_descendente_clust <- cutree(jerarquico_descendente, k = 3)
+> fviz_cluster(list(data = data, cluster = jerarquico_descendente_clust))
+\end{Sinput}
+\end{Schunk}
+\includegraphics{entrega-jerarquico_descendente_plot}
+\end{center}
+
+\subsubsection{Coeficiente divisivo}
+En este caso podremos medir la buena clasificación del algoritmo con el coeficiente divisivo que deseamos sea próximo a 1.
+Este valor mide lo heterogéneos que son los cluster generados entre sí.
+\begin{Schunk}
+\begin{Sinput}
+> jerarquico_descendente$dc
 \end{Sinput}
 \begin{Soutput}
 [1] 0.918148
 \end{Soutput}
-\begin{Sinput}
-> pltree(hc4, cex = 0.6, hang = -1, main = "Dendrogram of diana")
-\end{Sinput}
 \end{Schunk}
-\includegraphics{entrega-jerarquico_3}
 
+\subsubsection{Comparación con kmeans}
+Este método produce una clasificación muy similar a la de k-means, el 90\% de los valores han sido calsificados del mismo modo.
 \begin{Schunk}
 \begin{Sinput}
-> clust <- cutree(hc4, k = 5)
-> fviz_cluster(list(data = data, cluster = clust))
+> compare_clusters(clusters_kmeans, split_clusters(jerarquico_descendente_clust))
 \end{Sinput}
+\begin{Soutput}
+[1] 0.9
+\end{Soutput}
 \end{Schunk}
-\includegraphics{entrega-jerarquico_4}
 
+\newpage
+\subsection{Comparación de dendogramas}
+Finalmente mostraremos el uso de la función "tanglegram" que toma como entrada dos dendogramas.
+Como 
+\begin{center}
 \begin{Schunk}
 \begin{Sinput}
-> pltree(hc4, hang=-1, cex = 0.6)
-> rect.hclust(hc4, k = 9, border = 2:10)
-\end{Sinput}
-\end{Schunk}
-\includegraphics{entrega-jerarquico_5}
-\begin{Schunk}
-\begin{Sinput}
-> hc_single <- agnes(data, method = "single")
-> hc_complete <- agnes(data, method = "complete")
+> hc_single <- agnes(data, method = "average")
+> hc_complete <- agnes(data, method = "ward")
 > hc_single <- as.dendrogram(hc_single)
 > hc_complete <- as.dendrogram(hc_complete)
 > tanglegram(hc_single,hc_complete)
 \end{Sinput}
 \end{Schunk}
-\includegraphics{entrega-jerarquico_6}
+\includegraphics{entrega-jerarquico_comparacion_dendogramas}
+\end{center}
 
 \newpage
 \section{Funciones implementadas}
 Las funcines creadas son las que implementan k-means así como una función adicional para crear las gráficas con los resultados.
+\subsection{distance}
+Nos da la distancia euclídea entre dos puntos.
 \begin{Schunk}
 \begin{Sinput}
 > distance
@@ -620,8 +797,12 @@ function (point1, point2) {
   }
   acc^(1/2)
 }
-<bytecode: 0x7ff9c3d663f8>
+<bytecode: 0x7fbf9adba230>
 \end{Soutput}
+\end{Schunk}
+\subsection{kmeans cluster}
+Indica la pertenencia de los elementos de la muestra a las clases marcadas por los centroides.
+\begin{Schunk}
 \begin{Sinput}
 > kmeans_cluster
 \end{Sinput}
@@ -647,8 +828,12 @@ function (data, centroids) {
   rownames(classification) <- rownames(data)
   classification
 }
-<bytecode: 0x7ff9ca8805b8>
+<bytecode: 0x7fbf9bb2dd08>
 \end{Soutput}
+\end{Schunk}
+\subsection{kmeans split}
+Crea una lista cuyos elementos son conjuntos de elemenyos del mismo cluster.
+\begin{Schunk}
 \begin{Sinput}
 > kmeans_split
 \end{Sinput}
@@ -661,8 +846,12 @@ function (data, cluster) {
   cluster2=cluster2[,-1]
   list(cluster1, cluster2)
 }
-<bytecode: 0x7ff9c4417c90>
+<bytecode: 0x7fbf9ea503a0>
 \end{Soutput}
+\end{Schunk}
+\subsection{kmeans new centroids}
+Crea nuevos centroides a partir de la distancia media de cada uno de ellos a los elementos de su clase.
+\begin{Schunk}
 \begin{Sinput}
 > kmeans_new_centroids
 \end{Sinput}
@@ -680,8 +869,12 @@ function(split){
   }
   t(matrix(centroids,length(split[[1]]),length(split)))
 }
-<bytecode: 0x7ff9c6a2a188>
+<bytecode: 0x7fbfa0271a28>
 \end{Soutput}
+\end{Schunk}
+\subsection{same centroids}
+Compara dos centroides para saber si son iguales.
+\begin{Schunk}
 \begin{Sinput}
 > same_centroids
 \end{Sinput}
@@ -696,8 +889,12 @@ function(c1, c2){
   }
   ans
 }
-<bytecode: 0x7ff9c24f5988>
+<bytecode: 0x7fbfa0187d08>
 \end{Soutput}
+\end{Schunk}
+\subsection{plot kmeans}
+Dibuja el resultado de una clasificación.
+\begin{Schunk}
 \begin{Sinput}
 > plot_kmeans
 \end{Sinput}
@@ -724,8 +921,12 @@ function (clusters, centers, main="", xlab="", ylab="") {
   plot( centers[,1], centers[,2], type="p", col="green",
         xlim=c(minx, maxx), ylim=c(miny, maxy), xlab=xlab, ylab=ylab)
 }
-<bytecode: 0x7ff9cc756400>
+<bytecode: 0x7fbf9fcd2708>
 \end{Soutput}
+\end{Schunk}
+\subsection{compare clusters}
+Calcula el porcentaje de elementos comunes en dos clasificaciones distintas.
+\begin{Schunk}
 \begin{Sinput}
 > compare_clusters
 \end{Sinput}
@@ -733,22 +934,30 @@ function (clusters, centers, main="", xlab="", ylab="") {
 function(c1, c2) {
   len <- length(c1)
   number_of_elements <- 0
-  for (i in 1:len){
+  for (i in 1:len) {
     number_of_elements <- number_of_elements + nrow(c1[[i]])
   }
   same <- 0
   for (j in 1:len){
-    current_same = 0
+    current_same <- 0
     for (i in 1:len){
-      r_results = clusters[[i]]
-      our_results = split[[((i+j)%%len)+1]]
-      if (nrow(r_results) < nrow(our_results)){
-        temp <- r_results
-        r_results <- our_results
-        our_results <- temp
+      r1 <- c1[[i]]
+      r2 <- c2[[((i+j)%%len)+1]]
+      r1_names <- rownames(r1)
+      if (length(r1_names)<1){
+        r1_names <- names(r1)
       }
-      for (name in rownames(r_results)){
-        if (name %in% rownames(our_results)){
+      r2_names <- rownames(r2)
+      if (length(r2_names)<1){
+        r2_names <- names(r2)
+      }
+      if (length(r1_names) < length(r2_names)){
+        temp <- r1_names
+        r1_names <- r2_names
+        r2_names <- temp
+      }
+      for (name in r1_names){
+        if (name %in% r2_names){
           current_same <- current_same+1
         }
       }
@@ -757,9 +966,8 @@ function(c1, c2) {
   }
   same/number_of_elements
 }
-<bytecode: 0x7ff9cac9a278>
+<bytecode: 0x7fbf9bb68910>
 \end{Soutput}
 \end{Schunk}
-
 
 \end{document}

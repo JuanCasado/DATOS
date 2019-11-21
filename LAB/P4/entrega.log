@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.10.8)  19 NOV 2019 09:04
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.10.8)  21 NOV 2019 20:36
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -377,26 +377,26 @@ File: entrega-kmeans_distances.pdf Graphic file (type pdf)
 <use entrega-kmeans_distances.pdf>
 Package pdftex.def Info: entrega-kmeans_distances.pdf  used on input line 283.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
- [8 <./entrega-kmeans_distances.pdf>]
-<entrega-kmeans_show_resultse.pdf, id=59, 433.62pt x 433.62pt>
+ [8 <./entrega-kmeans_distances.pdf>] [9]
+<entrega-kmeans_show_resultse.pdf, id=62, 433.62pt x 433.62pt>
 File: entrega-kmeans_show_resultse.pdf Graphic file (type pdf)
 <use entrega-kmeans_show_resultse.pdf>
 Package pdftex.def Info: entrega-kmeans_show_resultse.pdf  used on input line 3
-33.
+41.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
- [9] [10 <./entrega-kmeans_show_resultse.pdf>]
+ [10 <./entrega-kmeans_show_resultse.pdf>]
 <entrega-kmeans_our_implementation.pdf, id=75, 433.62pt x 433.62pt>
 File: entrega-kmeans_our_implementation.pdf Graphic file (type pdf)
 <use entrega-kmeans_our_implementation.pdf>
 Package pdftex.def Info: entrega-kmeans_our_implementation.pdf  used on input l
-ine 371.
+ine 380.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
  [11] [12 <./entrega-kmeans_our_implementation.pdf>]
 <entrega-optimal_number_of_clusters_1.pdf, id=89, 433.62pt x 433.62pt>
 File: entrega-optimal_number_of_clusters_1.pdf Graphic file (type pdf)
 <use entrega-optimal_number_of_clusters_1.pdf>
 Package pdftex.def Info: entrega-optimal_number_of_clusters_1.pdf  used on inpu
-t line 417.
+t line 431.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
 
 [13 <./entrega-optimal_number_of_clusters_1.pdf>]
@@ -404,20 +404,20 @@ t line 417.
 File: entrega-optimal_number_of_clusters_2.pdf Graphic file (type pdf)
 <use entrega-optimal_number_of_clusters_2.pdf>
 Package pdftex.def Info: entrega-optimal_number_of_clusters_2.pdf  used on inpu
-t line 426.
+t line 440.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
 <entrega-optimal_number_of_clusters_3.pdf, id=101, 433.62pt x 433.62pt>
 File: entrega-optimal_number_of_clusters_3.pdf Graphic file (type pdf)
 <use entrega-optimal_number_of_clusters_3.pdf>
 Package pdftex.def Info: entrega-optimal_number_of_clusters_3.pdf  used on inpu
-t line 451.
+t line 465.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
  [14 <./entrega-optimal_number_of_clusters_2.pdf>]
 <entrega-optimal_number_of_clusters_4.pdf, id=111, 433.62pt x 433.62pt>
 File: entrega-optimal_number_of_clusters_4.pdf Graphic file (type pdf)
 <use entrega-optimal_number_of_clusters_4.pdf>
 Package pdftex.def Info: entrega-optimal_number_of_clusters_4.pdf  used on inpu
-t line 460.
+t line 474.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
  [15 <./entrega-optimal_number_of_clusters_3.pdf> <./entrega-optimal_number_of_
 clusters_4.pdf>]
@@ -425,73 +425,117 @@ clusters_4.pdf>]
 File: entrega-optimal_number_of_clusters_5.pdf Graphic file (type pdf)
 <use entrega-optimal_number_of_clusters_5.pdf>
 Package pdftex.def Info: entrega-optimal_number_of_clusters_5.pdf  used on inpu
-t line 478.
+t line 492.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
 <entrega-kmeans_different_number_of_clusters.pdf, id=128, 433.62pt x 433.62pt>
 File: entrega-kmeans_different_number_of_clusters.pdf Graphic file (type pdf)
 <use entrega-kmeans_different_number_of_clusters.pdf>
 Package pdftex.def Info: entrega-kmeans_different_number_of_clusters.pdf  used 
-on input line 497.
+on input line 511.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
  [16 <./entrega-optimal_number_of_clusters_5.pdf>] [17 <./entrega-kmeans_differ
 ent_number_of_clusters.pdf>]
-<entrega-jerarquico_1.pdf, id=150, 433.62pt x 433.62pt>
-File: entrega-jerarquico_1.pdf Graphic file (type pdf)
-<use entrega-jerarquico_1.pdf>
-Package pdftex.def Info: entrega-jerarquico_1.pdf  used on input line 538.
+<entrega-jerarquica_acendente_completa.pdf, id=150, 433.62pt x 433.62pt>
+File: entrega-jerarquica_acendente_completa.pdf Graphic file (type pdf)
+<use entrega-jerarquica_acendente_completa.pdf>
+Package pdftex.def Info: entrega-jerarquica_acendente_completa.pdf  used on inp
+ut line 577.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
- [18 <./entrega-jerarquico_1.pdf>]
-<entrega-jerarquico_2.pdf, id=161, 433.62pt x 433.62pt>
-File: entrega-jerarquico_2.pdf Graphic file (type pdf)
-<use entrega-jerarquico_2.pdf>
-Package pdftex.def Info: entrega-jerarquico_2.pdf  used on input line 565.
+ [18]
+<entrega-jerarquica_acendente_completa_plot.pdf, id=154, 433.62pt x 433.62pt>
+File: entrega-jerarquica_acendente_completa_plot.pdf Graphic file (type pdf)
+<use entrega-jerarquica_acendente_completa_plot.pdf>
+Package pdftex.def Info: entrega-jerarquica_acendente_completa_plot.pdf  used o
+n input line 587.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
-<entrega-jerarquico_3.pdf, id=162, 433.62pt x 433.62pt>
-File: entrega-jerarquico_3.pdf Graphic file (type pdf)
-<use entrega-jerarquico_3.pdf>
-Package pdftex.def Info: entrega-jerarquico_3.pdf  used on input line 579.
+ [19 <./entrega-jerarquica_acendente_completa.pdf>]
+<entrega-jerarquica_acendente_media.pdf, id=166, 433.62pt x 433.62pt>
+File: entrega-jerarquica_acendente_media.pdf Graphic file (type pdf)
+<use entrega-jerarquica_acendente_media.pdf>
+Package pdftex.def Info: entrega-jerarquica_acendente_media.pdf  used on input 
+line 602.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
- [19 <./entrega-jerarquico_2.pdf>]
-<entrega-jerarquico_4.pdf, id=173, 433.62pt x 433.62pt>
-File: entrega-jerarquico_4.pdf Graphic file (type pdf)
-<use entrega-jerarquico_4.pdf>
-Package pdftex.def Info: entrega-jerarquico_4.pdf  used on input line 587.
+ [20 <./entrega-jerarquica_acendente_completa_plot.pdf>]
+<entrega-jerarquica_acendente_media_plot.pdf, id=179, 433.62pt x 433.62pt>
+File: entrega-jerarquica_acendente_media_plot.pdf Graphic file (type pdf)
+<use entrega-jerarquica_acendente_media_plot.pdf>
+Package pdftex.def Info: entrega-jerarquica_acendente_media_plot.pdf  used on i
+nput line 609.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
- [20 <./entrega-jerarquico_3.pdf> <./entrega-jerarquico_4.pdf>]
-<entrega-jerarquico_5.pdf, id=192, 433.62pt x 433.62pt>
-File: entrega-jerarquico_5.pdf Graphic file (type pdf)
-<use entrega-jerarquico_5.pdf>
-Package pdftex.def Info: entrega-jerarquico_5.pdf  used on input line 595.
+ [21 <./entrega-jerarquica_acendente_media.pdf> <./entrega-jerarquica_acendente
+_media_plot.pdf>]
+<entrega-jerarquica_acendente_single.pdf, id=198, 433.62pt x 433.62pt>
+File: entrega-jerarquica_acendente_single.pdf Graphic file (type pdf)
+<use entrega-jerarquica_acendente_single.pdf>
+Package pdftex.def Info: entrega-jerarquica_acendente_single.pdf  used on input
+ line 623.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
-<entrega-jerarquico_6.pdf, id=193, 433.62pt x 433.62pt>
-File: entrega-jerarquico_6.pdf Graphic file (type pdf)
-<use entrega-jerarquico_6.pdf>
-Package pdftex.def Info: entrega-jerarquico_6.pdf  used on input line 605.
+<entrega-jerarquica_acendente_single_plot.pdf, id=199, 433.62pt x 433.62pt>
+File: entrega-jerarquica_acendente_single_plot.pdf Graphic file (type pdf)
+<use entrega-jerarquica_acendente_single_plot.pdf>
+Package pdftex.def Info: entrega-jerarquica_acendente_single_plot.pdf  used on 
+input line 633.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
- [21 <./entrega-jerarquico_5.pdf>]
-[22 <./entrega-jerarquico_6.pdf>] [23] [24] [25] (./entrega.aux) ) 
+ [22 <./entrega-jerarquica_acendente_single.pdf>]
+<entrega-jerarquica_acendente_ward.pdf, id=209, 433.62pt x 433.62pt>
+File: entrega-jerarquica_acendente_ward.pdf Graphic file (type pdf)
+<use entrega-jerarquica_acendente_ward.pdf>
+Package pdftex.def Info: entrega-jerarquica_acendente_ward.pdf  used on input l
+ine 648.
+(pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
+ [23 <./entrega-jerarquica_acendente_single_plot.pdf>]
+<entrega-jerarquica_acendente_ward_plot.pdf, id=222, 433.62pt x 433.62pt>
+File: entrega-jerarquica_acendente_ward_plot.pdf Graphic file (type pdf)
+<use entrega-jerarquica_acendente_ward_plot.pdf>
+Package pdftex.def Info: entrega-jerarquica_acendente_ward_plot.pdf  used on in
+put line 656.
+(pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
+ [24 <./entrega-jerarquica_acendente_ward.pdf>] [25 <./entrega-jerarquica_acend
+ente_ward_plot.pdf>] [26]
+<entrega-jerarquico_descendente.pdf, id=248, 433.62pt x 433.62pt>
+File: entrega-jerarquico_descendente.pdf Graphic file (type pdf)
+<use entrega-jerarquico_descendente.pdf>
+Package pdftex.def Info: entrega-jerarquico_descendente.pdf  used on input line
+ 729.
+(pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
+<entrega-jerarquico_descendente_plot.pdf, id=249, 433.62pt x 433.62pt>
+File: entrega-jerarquico_descendente_plot.pdf Graphic file (type pdf)
+<use entrega-jerarquico_descendente_plot.pdf>
+Package pdftex.def Info: entrega-jerarquico_descendente_plot.pdf  used on input
+ line 739.
+(pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
+ [27 <./entrega-jerarquico_descendente.pdf>] [28 <./entrega-jerarquico_descende
+nte_plot.pdf>]
+<entrega-jerarquico_comparacion_dendogramas.pdf, id=271, 433.62pt x 433.62pt>
+File: entrega-jerarquico_comparacion_dendogramas.pdf Graphic file (type pdf)
+<use entrega-jerarquico_comparacion_dendogramas.pdf>
+Package pdftex.def Info: entrega-jerarquico_comparacion_dendogramas.pdf  used o
+n input line 779.
+(pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
+ [29 <./entrega-jerarquico_comparacion_dendogramas.pdf>]
+[30] [31] [32] [33] (./entrega.aux) ) 
 Here is how much of TeX's memory you used:
- 2838 strings out of 492609
- 42580 string characters out of 6129048
- 97541 words of memory out of 5000000
- 6662 multiletter control sequences out of 15000+600000
+ 2863 strings out of 492609
+ 44320 string characters out of 6129048
+ 100541 words of memory out of 5000000
+ 6682 multiletter control sequences out of 15000+600000
  32927 words of font info for 72 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,6n,25p,296b,331s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/local/t
-exlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/te
-xlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/tex
-live/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/local/texli
-ve/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive
-/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2
-019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/201
-9/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2019/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmsltt10.pfb></usr/local/texlive/2019/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on entrega.pdf (25 pages, 610953 bytes).
+</usr/local/texlive/2019/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2019/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2019/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmbx9.pfb></usr/local/texlive/2019/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmr17.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmr9.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmsltt10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public
+/amsfonts/cm/cmtt10.pfb>
+Output written on entrega.pdf (33 pages, 676154 bytes).
 PDF statistics:
- 251 PDF objects out of 1000 (max. 8388607)
- 178 compressed objects within 2 object streams
+ 324 PDF objects out of 1000 (max. 8388607)
+ 232 compressed objects within 3 object streams
  0 named destinations out of 1000 (max. 500000)
- 86 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 111 words of extra memory for PDF output out of 10000 (max. 10000000)
 

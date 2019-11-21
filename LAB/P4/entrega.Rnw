@@ -127,22 +127,30 @@ same_centroids <- function(c1, c2){
 compare_clusters <- function(c1, c2) {
   len <- length(c1)
   number_of_elements <- 0
-  for (i in 1:len){
+  for (i in 1:len) {
     number_of_elements <- number_of_elements + nrow(c1[[i]])
   }
   same <- 0
   for (j in 1:len){
-    current_same = 0
+    current_same <- 0
     for (i in 1:len){
-      r_results = clusters[[i]]
-      our_results = split[[((i+j)%%len)+1]]
-      if (nrow(r_results) < nrow(our_results)){
-        temp <- r_results
-        r_results <- our_results
-        our_results <- temp
+      r1 <- c1[[i]]
+      r2 <- c2[[((i+j)%%len)+1]]
+      r1_names <- rownames(r1)
+      if (length(r1_names)<1){
+        r1_names <- names(r1)
       }
-      for (name in rownames(r_results)){
-        if (name %in% rownames(our_results)){
+      r2_names <- rownames(r2)
+      if (length(r2_names)<1){
+        r2_names <- names(r2)
+      }
+      if (length(r1_names) < length(r2_names)){
+        temp <- r1_names
+        r1_names <- r2_names
+        r2_names <- temp
+      }
+      for (name in r1_names){
+        if (name %in% r2_names){
           current_same <- current_same+1
         }
       }
@@ -325,7 +333,15 @@ k2$withinss
 k2$betweenss
 @
 
-Mostramos la clasificación obtenida.
+\newpage
+\subsection{Visualización de los resultados}
+Tal y como hemos ver en el extrarcto de la muestra cada dato se compone de siete variables.
+No obstante solo podemos representar sin realizar alguna simplificación datos tridimensionales.
+Es por tanto que la representación no es completamente fiel a la estructura de los datos ya que esta es bidimensional.
+La función "fviz cluster" intenta representar los datos lo mejor que puede a partir de las distancias que hay entre los puntos en el espacio de siete dimensiones.
+Adicionalmente podremos comprobar más adelante como la función "plot" también se inventa una forma distinta para representar los datos.
+Debido a que con "fviz cluster" los datos se ven diferenciados cuanto más lo son los cluster que con "plot" hemos preferido esta primera función para representar los resultados.
+Aún así en nuestra implementación propia utilizamos la segunda para poder apreciar las diferencias entre ambos.
 \begin{center}
 <<kmeans_show_resultse, fig=TRUE, echo=FALSE>>=
 fviz_cluster(k2, data = df)
@@ -361,7 +377,7 @@ current_centroides
 \end{center}
 
 Comprobamos adicionalmente que ambas clasificaciones, la de R y la nuestara coinciden como método de validación de nuestro algoritmo.
-El porcentaje de similitud entre ambas clasificaciones oscila entre el 96% y el 99%.
+El porcentaje de similitud entre ambas clasificaciones oscila entre el 96\% y el 99\%.
 El resultado es positivo.
 <<comparar_resultados>>=
 clusters <- cbind(k2$cluster,datos)
@@ -372,6 +388,10 @@ cluster2 <- cluster2[,-1]
 clusters <- list(cluster1, cluster2)
 compare_clusters(clusters, split)
 @
+Para que esta comparativa tenga algo de fiabilidad buscamos la mayor de las coincidencias entre las combinaciones válidas de las clasificaciones proporcionados por ambos métodos.
+Debido a las componentes aleatorias de este algoritmo puede que a cada ejecución se produzcan resultados distintos.
+Estos resultados cambiarán la posición de los centroides obtenidos pudiendo ser el centroide que antes era el representante de unos datos ser el representate de otros.
+Por ello buscamos que combinación de asignaciones de centroides maximiza la similitud entre las clasificaciones.
 
 \newpage
 \subsection{Elección del número de clusters}
@@ -474,57 +494,212 @@ c(k2$tot.withinss, k3$tot.withinss, k4$tot.withinss, k5$tot.withinss)
 
 \newpage
 \section{Clusterización jerárquica}
-Utilizaremos y compararemos el método de clusterización jerárquica dependiendo de la medida de distancia que utilicemos para ejecuatarlo.
+Utilizaremos y compararemos los método de clusterización ascendente y descendente.
+Adicionalmente en la clusterización jerárquica ascendente compararemos distintas medidas de distancia por las que se juntan los clusters.
+Adicionalmente compararemos los resultados obtenidos con los obtenidos en k-means.
+Para hacerlo utilizaremos 3 como número de clusters en los que clasificar ya que como vimos en apartados anteriores este era un número adecuado de clusters en los que dividir la muestra.
 Utilizaremos funciones de las siguiente librerías: "cluster", "purrr", "dendextend" y "factoextra".
 
+\subsection{Preparar los datos}
+Al igual que hicimos en el apartado anterior comenazaremos por preparar los datos eliminando los elementos nulos y escalándolos.
+El escalado deja los datos con media 0 y desviación estándar de 1.
 <<jerarquico_cargar_datos>>=
 data <- read.csv("Seed_Data.csv")
 data <- na.omit(data)
 data <- scale(data)
 @
-library(jpeg)
 
-<<jerarquico_1, fig=TRUE>>=
+\subsection{Clusterización jerárquica ascendente}
+En esta clusterización partiremos de que cada dato de la muestra es su propio cluster de modo que los iremos agrupando según distintas métricas hasta formar un único cluster.
+Para clasificar por otro número de cluster solo deberemos descender en el árbol creado hasta el nivel de división adecuado.
+
+Para poder realizar la clusterización jerárquica ascendente necesitamos calcular las distancias entre los elementos.
+Dichas distancias serán utilizadas por el algoritmo de clusterización para realizar la clasificación no supervisada.
+Utilizaremos la distancia euclídea para calcular la distancia entre los puntos.
+Tal y como vivmos en clase solo es necesario calcular la distancia entre los puntos una sola vez,
+posteriormente dependiendo del método utilizado la matriz de distancias se actualizará con la distancia máxima, mínima o media de los clusters que se unan.
+<<calcular_distancias>>=
 d <- dist(data, method = "euclidean")
-hc1 <- hclust(d, method = "complete")
-plot(hc1, cex = 0.6, hang = -1)
 @
 
-<<jerarquico_2, fig=TRUE>>=
-hc2 <- agnes(data, method = "complete")
-hc2$ac
-m <- c( "average", "single", "complete", "ward")
-names(m) <- c( "average", "single", "complete", "ward")
-ac <- function(x) {
-  agnes(data, method = x)$ac
+\subsubsection{Clusterización jerárquica ascendente complete-linkage}
+Mediante este método las actualizaciones de la matriz de distancias se realizarán con el operador max.
+Es decir, cuando unamos dos clusters entre si, la distancia del nuevo cluster al resto de puntos será la distancia máxima de cada uno de esos puntos a todos los del cluster.
+\begin{center}
+<<jerarquica_acendente_completa, fig=TRUE>>=
+jerarquica_acendente_completa <- hclust(d, method = "complete")
+plot(jerarquica_acendente_completa, cex = 0.6, hang = -1)
+rect.hclust(jerarquica_acendente_completa, k = 3, border = 2:10)
+@
+Vemos que aproximadamente cada clase toma un tercio de los datos.
+Adicionalmete la proyección de la representación visual nos da a entender que los clusters separan de forma adecuada a la muestra.
+Esto que ahora solo podemos estimar de la visualización lo exploraremos numéricamente más adelante.
+<<jerarquica_acendente_completa_plot, fig=TRUE>>=
+jerarquica_acendente_completa_clust <- cutree(jerarquica_acendente_completa, k = 3)
+fviz_cluster(list(data = data, cluster = jerarquica_acendente_completa_clust))
+@
+\end{center}
+
+\subsubsection{Clusterización jerárquica ascendente average-linkage}
+Cuando unamos dos clusters actualizaremos la matriz de distancias con el operador media aritmética.
+La nueva distancia del cluster al resto de ellos será la distancia media de sus puntos a cada uno de los de cada otro cluster.
+\begin{center}
+Al igual que con complete-linkage podemos ver que cada clase tiene aproximadamente un tercio de los datos y que la clasificación separa adecuadamente a la muestra.
+<<jerarquica_acendente_media, fig=TRUE>>=
+jerarquica_acendente_media <- hclust(d, method = "average")
+plot(jerarquica_acendente_media, cex = 0.6, hang = -1)
+rect.hclust(jerarquica_acendente_media, k = 3, border = 2:10)
+@
+<<jerarquica_acendente_media_plot, fig=TRUE>>=
+jerarquica_acendente_media_clust <- cutree(jerarquica_acendente_media, k = 3)
+fviz_cluster(list(data = data, cluster = jerarquica_acendente_media_clust))
+@
+\end{center}
+
+\subsubsection{Clusterización jerárquica ascendente single-linkage}
+La actualización de la matriz de distancias mediante este método se raliza mediante el operador mínimo.
+Cuando dos cluster se unan la matriz se actualizará con la distancia mínima de los puntos del nuevo cluster a los puntos de cada uno de los otros clusters.
+\begin{center}
+<<jerarquica_acendente_single, fig=TRUE>>=
+jerarquica_acendente_single <- hclust(d, method = "single")
+plot(jerarquica_acendente_single, cex = 0.6, hang = -1)
+rect.hclust(jerarquica_acendente_single, k = 3, border = 2:10)
+@
+En este caso vemos como una única clase está asociada a la mayoría de los datos siendo las otras dos muy pequeñas.
+Puede que esto se deba a que este método de clusterización jerárquica ascendente no deba ser utilizado así.
+También puede que se deba por la estructura de los datos que haga que este método no sea adecuado para ellos.
+<<jerarquica_acendente_single_plot, fig=TRUE>>=
+jerarquica_acendente_single_clust <- cutree(jerarquica_acendente_single, k = 3)
+fviz_cluster(list(data = data, cluster = jerarquica_acendente_single_clust))
+@
+\end{center}
+
+\subsubsection{Clusterización jerárquica ascendente ward-linkage}
+Este método es el más diferente comparado con los otros tres.
+En este caso nos se juntarán dos cluster por que la distancia entre ellos sea la menor distancia de la matriz de distancias si no
+porque su unión es la unión que produce una pérdida de información mínima.
+\begin{center}
+<<jerarquica_acendente_ward, fig=TRUE>>=
+jerarquica_acendente_ward <- hclust(d, method = "ward.D")
+plot(jerarquica_acendente_ward, cex = 0.6, hang = -1)
+rect.hclust(jerarquica_acendente_ward, k = 3, border = 2:10)
+@
+Con este método las clases vuelven a ser de un tamaño próximo al tercio de la muestra y los clusters vuelven a parecer bastante separados.
+<<jerarquica_acendente_ward_plot, fig=TRUE>>=
+jerarquica_acendente_ward_clust <- cutree(jerarquica_acendente_ward, k = 3)
+fviz_cluster(list(data = data, cluster = jerarquica_acendente_ward_clust))
+@
+\end{center}
+
+\subsubsection{Coeficiente aglomerativo}
+Otra función con la que realizar la clasificación jerárquica ascendente es "agnes".
+Los resultados obtendidos son los mismos que los que se obtienen con "cutree" ya que realizan las mismas operaciones.
+Adicionalmente para dibujarlos se pueden seguir utilizando las mismas funciones.
+La principal diferencia entre "agnes" y "cutree" es que la primera nos proporciona el coeficiente aglomerativo de los clusters generados.
+
+Dicho coeficiente nos informa sobre lo buena o mala que a sido la clasificación a partir de indicarnos cómo de densos son los clusters generados.
+Los valores de coeficiente aglomerativo próximos a 1 nos indican que la homogeneidad entre los elementos de los cluster es elevada.
+
+Calcularemos dicho coeficiente para cada una de las medidas de agrupación de datos.
+Deseamos que este número sea los más alto posible de modo que los clusters sean homogéneos dentro de ellos y heterogéneos entre si.
+Como vemos los resultados de calcular el coeficiente no coincide con el análisis realizado sobre las gráficas y los dendogramas.
+
+Ward obtiene el mayor coeficiente aglomerativo debido a que minimiza la pérdida de información con la cual este se relaciona.
+Single sorprendentemente obtiene un buen coeficienter aglomerativo mientras que average no lo hace.
+<<jerarquico_ascendente_coeficientes_aglomerativos>>=
+methods <- c( "average", "single", "complete", "ward")
+names(methods) <- c("complete", "average", "single", "ward")
+aglomerative_coeficient <- function(method) {
+  agnes(data, method = method)$ac
 }
-map_dbl(m, ac)
-hc3 <- agnes(data, method = "ward")
-pltree(hc3, cex = 0.6, hang = -1, main = "Dendrogram of agnes")
+map_dbl(methods, aglomerative_coeficient)
 @
 
-<<jerarquico_3, fig=TRUE>>=
-hc4 <- diana(data)
-hc4$dc
-pltree(hc4, cex = 0.6, hang = -1, main = "Dendrogram of diana")
+\subsubsection{Comparación con kmeans}
+<<jerarquica_compare_kmeans_prep, echo=FALSE>>=
+clusters_kmeans <- cbind(k3$cluster,datos)
+cluster1_kmeans <- subset(clusters_kmeans,clusters_kmeans[,1]==1)
+cluster2_kmeans <- subset(clusters_kmeans,clusters_kmeans[,1]==2)
+cluster3_kmeans <- subset(clusters_kmeans,clusters_kmeans[,1]==3)
+cluster1_kmeans <- cluster1_kmeans[,-1]
+cluster2_kmeans <- cluster2_kmeans[,-1]
+cluster3_kmeans <- cluster3_kmeans[,-1]
+clusters_kmeans <- list(cluster1_kmeans, cluster2_kmeans, cluster3_kmeans)
+split_clusters <- function(cluster){
+  cluster1 <- subset(cluster,cluster==1)
+  cluster2 <- subset(cluster,cluster==2)
+  cluster3 <- subset(cluster,cluster==3)
+  list(cluster1, cluster2, cluster3)
+}
+@
+Calculamos a continución el porcentaje de datos que fueron clasificados en las mismas clases que lo fueron en k-means.
+Para ello utilizamos la misma función que ya utilizamos para comparar los resultados de nuestro k-menas con los del k-means implementado por R.
+Podemos ver que complete-linkage y avergae-linkage producen las clasificaciones más similares a las de k-means.
+Por el contrario en el caso de single está claro que este valor no iba a poder ser dmasiado elevado.
+Sorprende que con ward el valor sea elevado ya que en la representación los cluster eran similares a los de k-means con k=3,
+no obstante tal y como ya explicamos esa representación no es demasido fiable ya que pone en solo 2 dimensiones datos de 7 dimensiones.
+<<jerarquica_acendente_compare_kmeans>>=
+clusters_jerarquico_ascendente <- list( jerarquica_acendente_completa_clust,
+                                     jerarquica_acendente_media_clust, 
+                                     jerarquica_acendente_single_clust, 
+                                     jerarquica_acendente_ward_clust)
+names(clusters_jerarquico_ascendente) <- c("complete", "average", "single", "ward")
+kmeans_compare <- function(cluster) {
+  compare_clusters(clusters_kmeans, split_clusters(cluster))
+}
+map_dbl(clusters_jerarquico_ascendente, kmeans_compare)
 @
 
-<<jerarquico_4, fig=TRUE>>=
-clust <- cutree(hc4, k = 5)
-fviz_cluster(list(data = data, cluster = clust))
+\newpage
+\subsection{Clusterización jerárquica descendente}
+La clasificación jerárquica descendente se realiza partiendo de un único cluster que comprende a todos los datos.
+Poco a poco iremos descomponiendo este cluster en otros más pequeños hasta acabar con que cada dato esté en su propio cluster.
+Para evaluar un número de cluster concreto actuaremos de forma similar a la clusterización jerárquica ascendente utilizando el árbol que se generados.
+
+Clasificaremos la muestra con la función "diana".
+\begin{center}
+<<jerarquico_descendente, fig=TRUE>>=
+jerarquico_descendente <- diana(data)
+pltree(jerarquico_descendente, cex = 0.6, hang = -1)
+rect.hclust(jerarquico_descendente, k = 3, border = 2:10)
+@
+\end{center}
+Podemos ver que cada clase contiene cerca de un tercio de los datos y que los cluster parecen separados entre si.
+\begin{center}
+<<jerarquico_descendente_plot, fig=TRUE>>=
+jerarquico_descendente_clust <- cutree(jerarquico_descendente, k = 3)
+fviz_cluster(list(data = data, cluster = jerarquico_descendente_clust))
+@
+\end{center}
+
+\subsubsection{Coeficiente divisivo}
+En este caso podremos medir la buena clasificación del algoritmo con el coeficiente divisivo que deseamos sea próximo a 1.
+Este valor mide lo heterogéneos que son los cluster generados entre sí.
+<<jerarquico_descendente_coeficiente_divisivo>>=
+jerarquico_descendente$dc
 @
 
-<<jerarquico_5, fig=TRUE>>=
-pltree(hc4, hang=-1, cex = 0.6)
-rect.hclust(hc4, k = 9, border = 2:10)
+\subsubsection{Comparación con kmeans}
+Este método produce una clasificación muy similar a la de k-means, el 90\% de los valores han sido calsificados del mismo modo.
+<<jerarquico_descendente_kmeans>>=
+compare_clusters(clusters_kmeans, split_clusters(jerarquico_descendente_clust))
 @
-<<jerarquico_6, fig=TRUE>>=
-hc_single <- agnes(data, method = "single")
-hc_complete <- agnes(data, method = "complete")
+
+\newpage
+\subsection{Comparación de dendogramas}
+Finalmente mostraremos el uso de la función "tanglegram" que toma como entrada dos dendogramas.
+Como resultado nos devuelve una gráfica en la que los valores iguales en ambos dendogramas aprencen unidos mediante una línea.
+Si las líneas se cruzan de forma aleatoria será indicio de que las clasificaciones están poco relacionadas.
+Por el contrario si sucede como en este caso que paquetes de líneas van a regiones próximas es que hay una relación mayor entre ambas.
+\begin{center}
+<<jerarquico_comparacion_dendogramas, fig=TRUE>>=
+hc_single <- agnes(data, method = "average")
+hc_complete <- agnes(data, method = "ward")
 hc_single <- as.dendrogram(hc_single)
 hc_complete <- as.dendrogram(hc_complete)
 tanglegram(hc_single,hc_complete)
 @
+\end{center}
 
 \section{Kmeans sobre una imagen}
 Vamos a clusterizar una imagen utilizando el algoritmo kmeans, primero mostramos la imagen original
@@ -550,15 +725,40 @@ plot(y ~ x, data=rgbImage, main="Lloyd’s building",col = clusterColour, asp = 
 \newpage
 \section{Funciones implementadas}
 Las funcines creadas son las que implementan k-means así como una función adicional para crear las gráficas con los resultados.
-<<lista_funciones_implementadas>>=
+\subsection{distance}
+Nos da la distancia euclídea entre dos puntos.
+<<function_distance>>=
 distance
+@
+\subsection{kmeans cluster}
+Indica la pertenencia de los elementos de la muestra a las clases marcadas por los centroides.
+<<function_kmeans_cluster>>=
 kmeans_cluster
+@
+\subsection{kmeans split}
+Crea una lista cuyos elementos son conjuntos de elemenyos del mismo cluster.
+<<function_kmeans_split>>=
 kmeans_split
+@
+\subsection{kmeans new centroids}
+Crea nuevos centroides a partir de la distancia media de cada uno de ellos a los elementos de su clase.
+<<function_kmeans_new_centroids>>=
 kmeans_new_centroids
+@
+\subsection{same centroids}
+Compara dos centroides para saber si son iguales.
+<<function_same_centroids>>=
 same_centroids
+@
+\subsection{plot kmeans}
+Dibuja el resultado de una clasificación.
+<<function_plot_kmeans>>=
 plot_kmeans
+@
+\subsection{compare clusters}
+Calcula el porcentaje de elementos comunes en dos clasificaciones distintas.
+<<function_compare_clusters>>=
 compare_clusters
 @
-
 
 \end{document}
