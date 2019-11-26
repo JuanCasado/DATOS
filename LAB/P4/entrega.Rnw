@@ -522,6 +522,15 @@ plot(y ~ x, data=rgbImage,col = clusterColour, asp = 1, pch = ".",
 @
 \end{center}
 
+\subsection{Algoritmo optimizado para k-means}
+Vamos a utilizar el algoritmo knor que busca utilizar optimizar k-means mediante un mejor aprovechamiento del hardware de nuestros equipos.
+Calcukatremos los tiempos de ejecución de este algoritmo y los compararemos con los del k-means original.
+<<knor_load data>>=
+knor_data <- read.csv("test.csv")
+knor_data <- na.omit(knor_data)
+knor_data <- scale(knor_data)
+@
+
 \newpage
 \section{Clusterización jerárquica}
 Utilizaremos y compararemos los método de clusterización ascendente y descendente.
