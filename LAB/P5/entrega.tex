@@ -277,7 +277,13 @@ Posteriormente, obtenemos los residuos calculados a partir de la recta de regres
 \end{Schunk}
 Para finalizar, calculamos el error estándar de los residuos, y a partir de él comparamos cada
 uno para comprobar si algún residuo es 2 veces mayor que el error estándar. Si se da el caso, 
-podemos considerar ese punto como un outlier. 
+podemos considerar ese punto como un outlier.
+\begin{Schunk}
+\begin{Sinput}
+> regPlot(datos2$Resistencia, datos2$Densidad, dFr, 2*sr, "Resistencia", "Densidad")
+\end{Sinput}
+\end{Schunk}
+\includegraphics{entrega-regresion_plot}
 \begin{Schunk}
 \begin{Sinput}
 > sr=sqrt(sum(res^2)/length(res))

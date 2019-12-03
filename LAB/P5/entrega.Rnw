@@ -65,6 +65,16 @@ varianza <- function(data){
 desviacionTipica <- function (data) {
   varianza(data)^(1/2)
 }
+regPlot <- function (x, y, regresion, limit, xlabel="", ylabel="") {
+  plot(x, y, xlab=xlabel, ylab=ylabel)
+  regUpLimit <- regresion
+  regUpLimit$coefficients[1] = regUpLimit$coefficients[1] + limit
+  regDownLimit <- regresion
+  regDownLimit$coefficients[1] = regDownLimit$coefficients[1] - limit
+  abline(regUpLimit, "gray", lty=2, lwd=2)
+  abline(regresion, "black", lty=1, lwd=3)
+  abline(regDownLimit, "gray", lty=2, lwd=2)
+}
 @
 
 \newpage
@@ -231,7 +241,10 @@ res=summary(dFr)$residuals
 @
 Para finalizar, calculamos el error estándar de los residuos, y a partir de él comparamos cada
 uno para comprobar si algún residuo es 2 veces mayor que el error estándar. Si se da el caso, 
-podemos considerar ese punto como un outlier. 
+podemos considerar ese punto como un outlier.
+<<regresion_plot, fig=TRUE>>=
+regPlot(datos2$Resistencia, datos2$Densidad, dFr, 2*sr, "Resistencia", "Densidad")
+@
 <<residuooutlier>>=
 sr=sqrt(sum(res^2)/length(res))
 outliers_regresion = list()
