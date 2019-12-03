@@ -78,15 +78,43 @@ regPlot <- function (x, y, regresion, limit, xlabel="", ylabel="") {
 @
 
 \newpage
+\section{Analisis de los datos}
+
+En esta parte hablaremos de los datos que vamos a tratar durante la elaboracion de este documento.
+Los datos que tenemos son dos tablas de datos que usaremos en la primera parte del documento. 
+
+<<cargar_datos1>>=
+datos1 <- read.table("datos1.txt")
+datos1 <- data.frame(datos1)
+datos1
+
+plot(datos1,main="Tabla 1")
+@
+
+Estos datos representan la nota de laboratorio y de teorias de unos posibles alumnos. Observaremos si
+los datos tienen relacion entre ellos y si existe un posible outlier. 
+
+<<cargar_datos2>>=
+datos2 <- read.table("datos2.txt")
+datos2 <- data.frame(datos2)
+datos2
+
+plot(datos2,main="Tabla 2")
+@
+
+Estos datos representan la densidad y la resistencia de unos materiales. Usaremos tecnicas para ver 
+si todos los materiales estan relacionados cercanos unos a otros.
+
+
+@
+
+\newpage
 \section{K-vecinos sobre la muestra proporcionada para obtener outliers}
 
 Aplicaremos el algoritmo k-vecinos sobre la muestra que tenemos.
 Este algoritmo identificará de forma supervisada en la muestra datos anómalos, para poder obtener los outliers.
 En primer lugar deberemos cargar esta desde un archivo .txt.
-<<cargar_datos_kvecinos>>=
-datos1 <- read.table("datos1.txt")
-datos1
-@
+
 
 En segundo lugar calculamos las distancias euclídeas entre todos los puntos
 <<distancias>>=
@@ -119,13 +147,9 @@ outliers_kvecinos
 
 \section{Deteccion de datos anómalos sobre la resistencia }
 
-<<cargar_datos>>=
-datos2 <- read.table("datos2.txt")
-datos2 <- data.frame(datos2)
-datos2
-@
 
-Cargamos los datos de la densidad y la resistencia de un txt
+
+
 
 \begin{center}
 <<plot_caja_bigotes, fig=TRUE>>=
