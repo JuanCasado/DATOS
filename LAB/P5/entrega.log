@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.10.8)  3 DEC 2019 12:28
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.10.8)  3 DEC 2019 12:49
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -240,8 +240,8 @@ I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 
-Overfull \hbox (90.30397pt too wide) in paragraph at lines 86--93
-\OT1/cmr/m/n/10 <<distancias$[]\OML/cmm/m/it/10 rdenar >>\OT1/cmr/m/n/10 = \OML/cmm/m/it/10 for\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 iin\OT1/cmr/m/n/10 1 : 5)[]\OML/cmm/m/it/10 distanciasordenadas <
+Overfull \hbox (228.36925pt too wide) in paragraph at lines 86--93
+\OT1/cmr/m/n/10 <<distancias$[]\OML/cmm/m/it/10 rdenar >>\OT1/cmr/m/n/10 = \OML/cmm/m/it/10 for\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 iin\OT1/cmr/m/n/10 1 : \OML/cmm/m/it/10 length\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 distanciasordenadas\OT1/cmr/m/n/10 [\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 1]))[]\OML/cmm/m/it/10 distanciasordenadas <
  []
 
 /Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:98: Missing $ inserted.
@@ -261,8 +261,8 @@ I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 
-Overfull \hbox (309.22845pt too wide) in paragraph at lines 94--106
-\OT1/cmr/m/n/10 outliers$[]\OML/cmm/m/it/10 means \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 list\OT1/cmr/m/n/10 ()\OML/cmm/m/it/10 for\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 iin\OT1/cmr/m/n/10 1 : 5)[]\OML/cmm/m/it/10 outliers[]means\OT1/cmr/m/n/10 @$ 
+Overfull \hbox (447.29373pt too wide) in paragraph at lines 94--106
+\OT1/cmr/m/n/10 outliers$[]\OML/cmm/m/it/10 means \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 list\OT1/cmr/m/n/10 ()\OML/cmm/m/it/10 for\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 iin\OT1/cmr/m/n/10 1 : \OML/cmm/m/it/10 length\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 distanciasordenadas\OT1/cmr/m/n/10 [\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 1]))[]\OML/cmm/m/it/10 outliers[]means\OT1/cmr/m/n/10 @$ 
  []
 
 /Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:111: Missing $ inserted.
@@ -327,17 +327,116 @@ you left one out. Proceed, with fingers crossed.
 <inserted text> 
                 $
 l.137 <<desviacion_
-                   tipica_densidad, fig=TRUE>>=
+                   tipica_densidad_plot, fig=TRUE>>=
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
-/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:143: Missing $ inserted.
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:141: Missing $ inserted.
 <inserted text> 
                 $
-l.143 <<desviacion_
-                   tipica_resistencia, fig=TRUE>>=
+l.141 <<desviacion_
+                   tipica_densidad>>=
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:146: Missing $ inserted.
+<inserted text> 
+                $
+l.146     outliers_
+                   desviacion[[length(outliers_desviacion)+1]] <- t(matrix(c...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:149: Missing $ inserted.
+<inserted text> 
+                $
+l.149 outliers_
+               desviacion
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:151: Missing $ inserted.
+<inserted text> 
+                $
+l.151 
+      
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+Overfull \hbox (250.41763pt too wide) in paragraph at lines 141--151
+\OT1/cmr/m/n/10 - 2*desviacionTipica(datos2$\OML/cmm/m/it/10 Densidad\OT1/cmr/m/n/10 )\OML/cmm/m/it/10 ; mediaAritmetica\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 datos\OT1/cmr/m/n/10 2$Densidad) + 2*desviacionTipica(datos2$\OML/cmm/m/it/10 Densidad\OT1/cmr/m/n/10 ))\OML/cmm/m/it/10 outliers[]esviacion \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (95.97609pt too wide) in paragraph at lines 141--151
+\OML/cmm/m/it/10 list\OT1/cmr/m/n/10 ()\OML/cmm/m/it/10 for\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 iin\OT1/cmr/m/n/10 1 : \OML/cmm/m/it/10 length\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 datos\OT1/cmr/m/n/10 2$Densidad))  if ((datos2$\OML/cmm/m/it/10 Densidad\OT1/cmr/m/n/10 [\OML/cmm/m/it/10 i\OT1/cmr/m/n/10 ] \OML/cmm/m/it/10 < int\OT1/cmr/m/n/10 [1])\OMS/cmsy/m/n/10 jj\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 datos\OT1/cmr/m/n/10 2$Densidad[i]>int[2]))
+ []
+
+
+Overfull \hbox (44.83992pt too wide) in paragraph at lines 141--151
+\OT1/cmr/m/n/10 outliers$[]\OML/cmm/m/it/10 esviacion\OT1/cmr/m/n/10 [[\OML/cmm/m/it/10 length\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 outliers[]esviacion\OT1/cmr/m/n/10 ) + 1]] \OML/cmm/m/it/10 < \OMS/cmsy/m/n/10 ^^@\OML/cmm/m/it/10 t\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 matrix\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 c\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 i; datos\OT1/cmr/m/n/10 2[\OML/cmm/m/it/10 i; \OT1/cmr/m/n/10 ]$Densidad),
+ []
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:153: Missing $ inserted.
+<inserted text> 
+                $
+l.153 <<desviacion_
+                   tipica_resistencia_plot, fig=TRUE>>=
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:157: Missing $ inserted.
+<inserted text> 
+                $
+l.157 <<desviacion_
+                   tipica_resistencia>>=
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:162: Missing $ inserted.
+<inserted text> 
+                $
+l.162     outliers_
+                   desviacion[[length(outliers_desviacion)+1]] <- t(matrix(c...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:165: Missing $ inserted.
+<inserted text> 
+                $
+l.165 outliers_
+               desviacion
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:167: Missing $ inserted.
+<inserted text> 
+                $
+l.167 
+      
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+Overfull \hbox (12.71892pt too wide) in paragraph at lines 157--167
+\OT1/cmr/m/n/10 <<desviacion$[]\OML/cmm/m/it/10 ipica[]esistencia >>\OT1/cmr/m/n/10 = \OML/cmm/m/it/10 int < \OMS/cmsy/m/n/10 ^^@\OML/cmm/m/it/10 c\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 mediaAritmetica\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 datos\OT1/cmr/m/n/10 2$Resistencia)
+ []
+
+
+Overfull \hbox (0.57518pt too wide) in paragraph at lines 157--167
+\OT1/cmr/m/n/10 + 2*desviacionTipica(datos2$\OML/cmm/m/it/10 Resistencia\OT1/cmr/m/n/10 ))\OML/cmm/m/it/10 outliers[]esviacion \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 list\OT1/cmr/m/n/10 ()\OML/cmm/m/it/10 for\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 iin\OT1/cmr/m/n/10 1 :
+ []
+
+
+Overfull \hbox (53.2036pt too wide) in paragraph at lines 157--167
+\OML/cmm/m/it/10 length\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 datos\OT1/cmr/m/n/10 2$Resistencia))  if ((datos2$\OML/cmm/m/it/10 Resistencia\OT1/cmr/m/n/10 [\OML/cmm/m/it/10 i\OT1/cmr/m/n/10 ] \OML/cmm/m/it/10 < int\OT1/cmr/m/n/10 [1])\OMS/cmsy/m/n/10 jj\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 datos\OT1/cmr/m/n/10 2$Resistencia[i]>int[2]))
+ []
+
+
+Overfull \hbox (52.951pt too wide) in paragraph at lines 157--167
+\OT1/cmr/m/n/10 outliers$[]\OML/cmm/m/it/10 esviacion\OT1/cmr/m/n/10 [[\OML/cmm/m/it/10 length\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 outliers[]esviacion\OT1/cmr/m/n/10 ) + 1]] \OML/cmm/m/it/10 < \OMS/cmsy/m/n/10 ^^@\OML/cmm/m/it/10 t\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 matrix\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 c\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 i; datos\OT1/cmr/m/n/10 2[\OML/cmm/m/it/10 i; \OT1/cmr/m/n/10 ]$Resistencia),
+ []
 
 [4] (/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.aux) )
 (\end occurred inside a group at level 1)
@@ -353,7 +452,7 @@ Here is how much of TeX's memory you used:
  1141 hyphenation exceptions out of 8191
  23i,7n,18p,256b,198s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
-Output written on /Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.pdf (4 pages, 121908 bytes).
+Output written on /Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.pdf (4 pages, 123638 bytes).
 PDF statistics:
  61 PDF objects out of 1000 (max. 8388607)
  43 compressed objects within 1 object stream

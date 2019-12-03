@@ -51,7 +51,7 @@ En segundo lugar calculamos las distancias euclídeas entre todos los puntos
 Posteriormente, ordenamos las distancias de cada punto a todos los demás.
 \begin{Schunk}
 \begin{Sinput}
-> for(i in 1:5){
+> for(i in 1:length(distanciasordenadas[,1])){
 +   distancias[,i] <- sort(distancias[,i])
 + }
 > distanciasordenadas <- distancias
@@ -64,7 +64,7 @@ vecino, que es el valor k que hemos usado en nuestro análisis para poder identi
 \begin{Schunk}
 \begin{Sinput}
 > outliers_kmeans = list()
-> for(i in 1:5){
+> for(i in 1:length(distanciasordenadas[,1])){
 +   if(distanciasordenadas[4,i]>2.5){
 +     outliers_kmeans[[length(outliers_kmeans)+1]] <- datos1[i,]
 +   }
@@ -103,7 +103,7 @@ vecino, que es el valor k que hemos usado en nuestro análisis para poder identi
 \begin{center}
 \begin{Schunk}
 \begin{Sinput}
-> boxplot(datos2$Resistencia, range=1.5, border ="red",horizontal = TRUE)
+> boxplot(datos2$Resistencia, range=1.5, horizontal = TRUE)
 \end{Sinput}
 \end{Schunk}
 \includegraphics{entrega-plot_caja_bigotes}
@@ -112,7 +112,7 @@ vecino, que es el valor k que hemos usado en nuestro análisis para poder identi
 \begin{center}
 \begin{Schunk}
 \begin{Sinput}
-> boxplot(datos2$Densidad, range=1.5, border ="red",horizontal = TRUE)
+> boxplot(datos2$Densidad, range=1.5, horizontal = TRUE)
 \end{Sinput}
 \end{Schunk}
 \includegraphics{entrega-plot_caja_bigotes}
@@ -133,8 +133,24 @@ vecino, que es el valor k que hemos usado en nuestro análisis para poder identi
 > plotFrecuencyData(datos2$Densidad)
 \end{Sinput}
 \end{Schunk}
-\includegraphics{entrega-desviacion_tipica_densidad}
+\includegraphics{entrega-desviacion_tipica_densidad_plot}
 \end{center}
+\begin{Schunk}
+\begin{Sinput}
+> int <- c(mediaAritmetica(datos2$Densidad) - 2*desviacionTipica(datos2$Densidad), mediaAritmetica(datos2$Densidad) + 2*desviacionTipica(datos2$Densidad))
+> outliers_desviacion = list()
+> for(i in 1:length(datos2$Densidad)) {
++   if ((datos2$Densidad[i]<int[1]) || (datos2$Densidad[i]>int[2])) {
++     outliers_desviacion[[length(outliers_desviacion)+1]] <- datos2[i,]$Densidad
++   }
++ }
+> outliers_desviacion
+\end{Sinput}
+\begin{Soutput}
+[[1]]
+[1] 12
+\end{Soutput}
+\end{Schunk}
 
 \begin{center}
 \begin{Schunk}
@@ -142,7 +158,24 @@ vecino, que es el valor k que hemos usado en nuestro análisis para poder identi
 > plotFrecuencyData(datos2$Resistencia)
 \end{Sinput}
 \end{Schunk}
-\includegraphics{entrega-desviacion_tipica_resistencia}
+\includegraphics{entrega-desviacion_tipica_resistencia_plot}
 \end{center}
+\begin{Schunk}
+\begin{Sinput}
+> int <- c(mediaAritmetica(datos2$Resistencia) - 2*desviacionTipica(datos2$Resistencia), mediaAritmetica(datos2$Resistencia) + 2*desviacionTipica(datos2$Resistencia))
+> outliers_desviacion = list()
+> for(i in 1:length(datos2$Resistencia)) {
++   if ((datos2$Resistencia[i]<int[1]) || (datos2$Resistencia[i]>int[2])) {
++     outliers_desviacion[[length(outliers_desviacion)+1]] <- t(matrix(c(i, datos2[i,]$Resistencia), dimnames=list(c("Indice","Resistencia"))))
++   }
++ }
+> outliers_desviacion
+\end{Sinput}
+\begin{Soutput}
+[[1]]
+     Indice Resistencia
+[1,]      7          14
+\end{Soutput}
+\end{Schunk}
 
 \end{document}
