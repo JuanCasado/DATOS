@@ -1,0 +1,59 @@
+plot(data3$Visibility, data3$Humidity)
+
+dFr=lm(data3$Visibility~data3$Humidity)
+
+plot(data3$Visibility, data3$Humidity, xlab='Visibility', ylab='humidity')
+abline(dFr)
+
+
+prueba = data3[,c("Visibility","Humidity")]
+
+dFr=lm(prueba$Visibility~prueba$Humidity)
+
+plot(prueba$Visibility, prueba$Humidity, xlab='Visibility', ylab='humidity')
+abline(dFr)
+
+
+outliers_kvecinos = list()
+for(i in 1:length(distanciasordenadas[,1])){
+    if(distanciasordenadas[4,i]>15){
+        outliers_kvecinos[[length(outliers_kvecinos)+1]] <- prueba[i,]
+    }
+}
+outliers_kvecinos
+
+prueba2 = prueba[-c(3,17,23,26,34,44,50,52,61,64,124,176,190,194),]
+
+dFr2=lm(prueba2$Visibility~prueba2$Humidity)
+
+plot(prueba2$Visibility, prueba2$Humidity, xlab='Visibility', ylab='humidity')
+abline(dFr2)
+
+plot(prueba$Visibility, prueba$Humidity, xlab='Visibility', ylab='humidity')
+abline(dFr)
+
+
+outliers_kvecinos = list()
+for(i in 1:length(distanciasordenadas[,1])){
+    if(distanciasordenadas[4,i]>10){
+        outliers_kvecinos[[length(outliers_kvecinos)+1]] <- prueba[i,]
+    }
+}
+outliers_kvecinos
+
+prueba2 = prueba[-c(1,3,6,7,17,23,24,26,34,39,44,45,50,52,61,64,72,74,83,87,93,109,124,146,153,155,157,159,160,168,173,175,176,177,179,188,189,190,194,201,202),]
+
+plot(prueba2$Visibility, prueba2$Humidity, xlab='Visibility', ylab='humidity')
+abline(dFr2)
+
+plot(prueba$Visibility, prueba$Humidity, xlab='Visibility', ylab='humidity')
+abline(dFr)
+
+
+outliers_kvecinos = list()
+for(i in 1:length(distanciasordenadas[,1])){
+    if(distanciasordenadas[7,i]>15){
+        outliers_kvecinos[[length(outliers_kvecinos)+1]] <- prueba[i,]
+    }
+}
+outliers_kvecinos
