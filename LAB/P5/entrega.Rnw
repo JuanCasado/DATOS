@@ -16,3 +16,10 @@ aqui van las funciones
 
 \newpage
 \section{K-vecinos sobre la muestra proporcionada para obtener outliers}
+Aplicaremos el algoritmo k-vecinos sobre la muestra que tenemos.
+Este algoritmo identificará de forma supervisada en la muestra datos anómalos, para poder obtener los outliers.
+En primer lugar deberemos cargar esta desde un archivo .txt.
+<<cargar_datos>>=
+datos1 <- read.table("datos1.txt")
+datos1
+@
