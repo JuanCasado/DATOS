@@ -116,17 +116,50 @@ datos2 <- data.frame(datos2)
 datos2
 @
 
+Cargamos los datos de la densidad y la resistencia de un txt
+
 \begin{center}
 <<plot_caja_bigotes, fig=TRUE>>=
 boxplot(datos2$Resistencia, range=1.5, horizontal = TRUE)
 @
 \end{center}
 
+
+Usamos la funcion para ver los datos en una caja de bigotes. 
+
+\end{center}
+<<outlier_bigotes_resistencia>>=
+cuart1_res<-quantile(datos2$Resistencia,0.25)
+cuart3_res<-quantile(datos2$Resistencia,0.75)
+int=c(cuart1_res-1.5*(cuart3_res-cuart1_res), cuart3_res+1.5*(cuart3_res-cuart1_res))
+
+for(i in 1:length(datos2$Resistencia)){if(datos2$Resistencia[i]<int[1]||datos2$Resistencia[i]>int[2]){print("el suceso de la resistencia de ");print(datos2$Resistencia[i]);print(" es un suceso outlier")}}
+\end{center}
+
+Mediante el calculo de los primer cuartil y del tercero aplicamos la formula para ver si existe algun outlier en la muestra.
+ Esto nos da un rango todo los valores fuera de este rango son outlier. Luego comprobamos todo los valores de los datos para 
+ comprobar si existe, y por lo tanto mostramos. 
+
+ Como vemos el valor 12 es un outlier de los datos
+
 \begin{center}
 <<plot_caja_bigotes, fig=TRUE>>=
 boxplot(datos2$Densidad, range=1.5, horizontal = TRUE)
 @
 \end{center}
+
+
+ \end{center}
+<<outlier_bigotes_densidad>>=
+cuart1_den<-quantile(datos2$Densidad,0.25)
+cuart3_den<-quantile(datos2$Densidad,0.75)
+int=c(cuart1_den-1.5*(cuart3_den-cuart1_den), cuart3_den+1.5*(cuart3_den-cuart1_den))
+
+for(i in 1:length(datos2$Densidad)){if(datos2$Densidad[i]<int[1]||datos2$Densidad[i]>int[2]){print("el suceso de la densidad de ");print(datos2$Densidad[i]);print(" es un suceso outlier")}}
+\end{center}
+
+Realizamos, vemos que esta vez hay dos outlier uno es el 2 y el otro 12 de la densidad 
+
 
 \newpage
 \section{Dispersión sobre la densidad, desviación típica}

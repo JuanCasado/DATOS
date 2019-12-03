@@ -244,6 +244,21 @@ cluster2 <- cluster2[,-1]
 clusters <- list(cluster1, cluster2)
 @
 
+
+
+\end{center}
+
+
+<<outlier_bigotes_resistencia>>=
+(cuart1<-quantile(datos2$Resistencia,0.25))
+
+(cuart3<-quantile(datos2$Resistencia,0.75))
+
+(int=c(cuart1-1.5*(cuart3-cuart1), cuart3+1.5*(cuart3-cuart1)))
+
+for(i in 1:length(datos2$Resistencia)){if(datos2$Resistencia[i]<int[1]||datos2$Resistencia[i]>int[2]){print("el suceso ");print(i);print(datos2$Resistencia[i]);print(" es un suceso outlier")}}
+\end{center}
+
 Como podemos ver la clasificación se ha realizado correctamente.
 \begin{center}
 <<representacion_del_resultado, echo=FALSE, fig=TRUE>>=
