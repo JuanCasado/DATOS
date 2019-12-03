@@ -11,17 +11,15 @@ Pendiente
 
 \newpage
 <<functions, echo=False>>=
-frecuenciaAbsolutaAcumulada <-function(data){
-    frecuencia <- frecuenciaAbsoluta(data)
-    uniquedata<-unique(data)
-    uniquedata<- sort(uniquedata)
-    newdata <- vector(mode="numeric", length=0)
-    acc <- 0
-    for (value in 1:length(frecuencia)) {
-        acc <- frecuencia[value]+acc
-        newdata <- c(newdata, acc)
-    }
-    setNames(newdata, uniquedata)
+frecuenciaAbsoluta <- function(data){
+  uniquedata<-unique(data)
+  uniquedata<- sort(uniquedata)
+  newdata<- vector(mode="numeric", length=0)
+  for (value in uniquedata) {
+    ammount<-length(data[data==value])
+    newdata<-c(newdata, ammount)
+  }
+  setNames(newdata, uniquedata)
 }
 frecuenciaRelativa <- function(data){
   frecuencia <-frecuenciaAbsoluta(data)
@@ -78,22 +76,32 @@ En primer lugar deberemos cargar esta desde un archivo .txt.
 datos1 <- read.table("datos1.txt")
 datos1
 @
+
 En segundo lugar calculamos las distancias euclídeas entre todos los puntos
-<<distanciascalc>>=
-distancias=as.matrix(dist(datos1))
+<<distancias>>=
+distancias <- as.matrix(dist(datos1))
 distancias
 @
+
 Posteriormente, ordenamos las distancias de cada punto a todos los demás.
-<<distancias orden>>=
-for(i in 1:5){distancias[,i]=sort(distancias[,i])};
-(distanciasordenadas=distancias)
+<<distancias_ordenar>>=
+for(i in 1:5){
+  distancias[,i] <- sort(distancias[,i])
+}
+distanciasordenadas <- distancias
 @
+
 Como último paso, reordenamos la matriz para organizarla en función de la distancia
 de cada punto a su vecino número 1,2,3...etc. Tras haber organizado la matriz, buscamos en el tercer
 vecino, que es el valor k que hemos usado en nuestro análisis para poder identificar los outliers.
 <<ordenacionfinalconoutlier>>=
-for(i in 1:5){if(distanciasordenadas[4,i]>2.5){print(i);
-print("es un suceso anomalo o outlier")}}
+outliers_kmeans = c()
+for(i in 1:5){
+  if(distanciasordenadas[4,i]>2.5){
+    outliers_kmeans <- c(outliers_kmeans, datos1[i,])
+  }
+}
+outliers_kmeans
 @
 
 
@@ -102,13 +110,19 @@ print("es un suceso anomalo o outlier")}}
 
 <<cargar_datos>>=
 datos2 <- read.table("datos2.txt")
-datos2=data.frame(datos2)
+datos2 <- data.frame(datos2)
 datos2
 @
 
 \begin{center}
-<<plot_caja_bigotes>>=
-(boxplot(datos2$Resistencia, range=15, border ="red",horizontal = TRUE))
+<<plot_caja_bigotes, fig=TRUE>>=
+boxplot(datos2$Resistencia, range=15, border ="red",horizontal = TRUE)
+@
+\end{center}
+
+\begin{center}
+<<plot_caja_bigotes, fig=TRUE>>=
+boxplot(datos2$Densidad, range=15, border ="red",horizontal = TRUE)
 @
 \end{center}
 
@@ -116,5 +130,19 @@ datos2
 \section{Dispersión sobre la densidad, desviación típica}
 
 <<desviacion_tipica>>=
-
+datos2 <- read.table("datos2.txt")
 @
+
+\begin{center}
+<<desviacion_tipica_densidad, fig=TRUE>>=
+plotFrecuencyData(datos2$Densidad)
+@
+\end{center}
+
+\begin{center}
+<<desviacion_tipica_resistencia, fig=TRUE>>=
+plotFrecuencyData(datos2$Resistencia)
+@
+\end{center}
+
+\end{document}
