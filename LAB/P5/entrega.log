@@ -1,0 +1,362 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.10.8)  3 DEC 2019 12:28
+entering extended mode
+ restricted \write18 enabled.
+ file:line:error style messages enabled.
+ %&-line parsing enabled.
+**/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw
+(/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw
+LaTeX2e <2018-12-01>
+(/usr/local/texlive/2019/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2018/09/03 v1.4i Standard LaTeX document class
+(/usr/local/texlive/2019/texmf-dist/tex/latex/base/size10.clo
+File: size10.clo 2018/09/03 v1.4i Standard LaTeX file (size option)
+)
+\c@part=\count80
+\c@section=\count81
+\c@subsection=\count82
+\c@subsubsection=\count83
+\c@paragraph=\count84
+\c@subparagraph=\count85
+\c@figure=\count86
+\c@table=\count87
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+) (/usr/local/texlive/2019/texmf-dist/tex/latex/base/inputenc.sty
+Package: inputenc 2018/08/11 v1.3c Input encoding file
+\inpenc@prehook=\toks14
+\inpenc@posthook=\toks15
+) (/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.aux)
+\openout1 = `entrega.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 6.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 6.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 6.
+
+Overfull \hbox (30.93376pt too wide) in paragraph at lines 6--6
+ [][] 
+ []
+
+[1
+
+{/usr/local/texlive/2019/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:36: Missing $ inserted.
+<inserted text> 
+                $
+l.36   frecuencia_
+                  relativa <- as.table(frecuenciaRelativa(data))
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 36.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 36.
+
+LaTeX Warning: Command \' invalid in math mode on input line 47.
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:47: Please use \mathaccent for accents in math mode.
+\add@accent ...@spacefactor \spacefactor }\accent 
+                                                  #1 #2\egroup \spacefactor ...
+l.47 ...topright", legend=c("media", "2*desviació
+                                                  n típica"),
+I'm changing \accent to \mathaccent here; wish me luck.
+(Accents are not the same in formulas as they are in text.)
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:47: You can't use `\spacefactor' in math mode.
+\add@accent ...}\accent #1 #2\egroup \spacefactor 
+                                                  \accent@spacefactor 
+l.47 ...topright", legend=c("media", "2*desviació
+                                                  n típica"),
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+
+LaTeX Warning: Command \' invalid in math mode on input line 47.
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:47: Please use \mathaccent for accents in math mode.
+\add@accent ...@spacefactor \spacefactor }\accent 
+                                                  #1 #2\egroup \spacefactor ...
+l.47 ...ght", legend=c("media", "2*desviación tí
+                                                  pica"),
+I'm changing \accent to \mathaccent here; wish me luck.
+(Accents are not the same in formulas as they are in text.)
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:47: Missing { inserted.
+<to be read again> 
+                   \begingroup 
+l.47 ...ght", legend=c("media", "2*desviación tí
+                                                  pica"),
+A left brace was mandatory here, so I've put one in.
+You might want to delete and/or insert some corrections
+so that I will find a matching right brace soon.
+(If you're confused by all this, try typing `I}' now.)
+
+
+LaTeX Warning: Command \i invalid in math mode on input line 47.
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:47: You can't use `\spacefactor' in math mode.
+\add@accent ...}\accent #1 #2\egroup \spacefactor 
+                                                  \accent@spacefactor 
+l.47 ...ght", legend=c("media", "2*desviación tí
+                                                  pica"),
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:69: Missing $ inserted.
+<inserted text> 
+                $
+l.69 
+     
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+Missing character: There is no � in font cmex10!
+Missing character: There is no � in font cmex10!
+
+Overfull \hbox (2.22292pt too wide) in paragraph at lines 13--69
+[]\OT1/cmr/m/n/10 <<functions, echo=False>>= fre-cuen-ci-aAb-so-luta <- func-tion(data) uniquedata<-
+ []
+
+
+Overfull \hbox (0.41742pt too wide) in paragraph at lines 13--69
+\OT1/cmr/m/n/10 unique(data) uniquedata<- sort(uniquedata) newdata<- vec-tor(mode="numeric",
+ []
+
+
+Overfull \hbox (21.41754pt too wide) in paragraph at lines 13--69
+\OT1/cmr/m/n/10 length=0) for (value in unique-data)  ammount<-length(data[data==value]) newdata<-
+ []
+
+
+Overfull \hbox (40.5564pt too wide) in paragraph at lines 13--69
+\OT1/cmr/m/n/10 for (value in 1:length(uniquedata))  new-data <- c(newdata, fre-cuen-cia[value]/length(data))
+ []
+
+
+Overfull \hbox (4.47299pt too wide) in paragraph at lines 13--69
+\OT1/cmr/m/n/10 set-Names(newdata, unique-data)  plot-Fre-cuen-cy-Data <- func-tion(data, xla-bel="")
+ []
+
+
+Overfull \hbox (66.33109pt too wide) in paragraph at lines 13--69
+\OT1/cmr/m/n/10 uniquedata<-unique(data) frecuencia$[]\OML/cmm/m/it/10 elativa < \OMS/cmsy/m/n/10 ^^@\OML/cmm/m/it/10 as:table\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 frecuenciaRelativa\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 data\OT1/cmr/m/n/10 ))\OML/cmm/m/it/10 media[] \OMS/cmsy/m/n/10 ^^@
+ []
+
+
+Overfull \hbox (23.82372pt too wide) in paragraph at lines 13--69
+\OML/cmm/m/it/10 mediaAritmetica\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 data\OT1/cmr/m/n/10 )\OML/cmm/m/it/10 desviacion[]ipica[] \OMS/cmsy/m/n/10 ^^@ \OML/cmm/m/it/10 desviacionTipica\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 data\OT1/cmr/m/n/10 )\OML/cmm/m/it/10 tchebychev[]in <
+ []
+
+
+Overfull \hbox (35.45958pt too wide) in paragraph at lines 13--69
+\OMS/cmsy/m/n/10 ^^@\OML/cmm/m/it/10 media[]\OT1/cmr/m/n/10 2 \OMS/cmsy/m/n/10 ^^C \OML/cmm/m/it/10 desviacion[]ipica[]chebychev[]ax < \OMS/cmsy/m/n/10 ^^@\OML/cmm/m/it/10 media[]\OT1/cmr/m/n/10 2 \OMS/cmsy/m/n/10 ^^C \OML/cmm/m/it/10 desviacion[]ipica[]in[]ange \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (196.6583pt too wide) in paragraph at lines 13--69
+\OML/cmm/m/it/10 min\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 tchebychev[]in; min\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 uniquedata\OT1/cmr/m/n/10 ))\OML/cmm/m/it/10 max[]ange \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 max\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 tchebychev[]in; max\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 uniquedata\OT1/cmr/m/n/10 ))\OML/cmm/m/it/10 plot\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 frecuencia[]elativa; type \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (135.75966pt too wide) in paragraph at lines 13--69
+\OT1/cmr/m/n/10 "\OML/cmm/m/it/10 h\OT1/cmr/m/n/10 "\OML/cmm/m/it/10 ; xlab \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 xlabel; xlim \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 c\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 min[]ange; max[]ange\OT1/cmr/m/n/10 ))\OML/cmm/m/it/10 abline\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 v \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 c\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 media[]tchebychev[]in; tchebychev[]ax\OT1/cmr/m/n/10 )\OML/cmm/m/it/10 ; col \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (64.62697pt too wide) in paragraph at lines 13--69
+\OML/cmm/m/it/10 c\OT1/cmr/m/n/10 ("\OML/cmm/m/it/10 blue\OT1/cmr/m/n/10 "\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 "\OML/cmm/m/it/10 gray\OT1/cmr/m/n/10 "\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 "\OML/cmm/m/it/10 gray\OT1/cmr/m/n/10 ")\OML/cmm/m/it/10 ; lty \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 c\OT1/cmr/m/n/10 (2\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 2\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 2\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 3\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 3)\OML/cmm/m/it/10 ; lwd \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 c\OT1/cmr/m/n/10 (2\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 2\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 2\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 1\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 1))\OML/cmm/m/it/10 legend\OT1/cmr/m/n/10 ("\OML/cmm/m/it/10 topright\OT1/cmr/m/n/10 "\OML/cmm/m/it/10 ; legend \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (0.20161pt too wide) in paragraph at lines 13--69
+\OML/cmm/m/it/10 c\OT1/cmr/m/n/10 ("\OML/cmm/m/it/10 media\OT1/cmr/m/n/10 "\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 "2 \OMS/cmsy/m/n/10 ^^C \OML/cmm/m/it/10 desviaci[]nt[]mediaAritmetica <
+ []
+
+
+Overfull \hbox (56.86494pt too wide) in paragraph at lines 13--69
+\OMS/cmsy/m/n/10 ^^@\OML/cmm/m/it/10 function\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 data\OT1/cmr/m/n/10 )[]\OML/cmm/m/it/10 varianza <
+ []
+
+
+Overfull \hbox (296.22949pt too wide) in paragraph at lines 13--69
+\OMS/cmsy/m/n/10 ^^@\OML/cmm/m/it/10 function\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 data\OT1/cmr/m/n/10 )[]\OML/cmm/m/it/10 desviacionTipica <
+ []
+
+[2]
+Overfull \hbox (5.36133pt too wide) in paragraph at lines 71--71
+[]\OT1/cmr/bx/n/14.4 K-vecinos so-bre la mues-tra pro-por-cionada para
+ []
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:75: Missing $ inserted.
+<inserted text> 
+                $
+l.75 <<cargar_
+              datos>>=
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:79: Missing $ inserted.
+<inserted text> 
+                $
+l.79 
+     
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:87: Missing $ inserted.
+<inserted text> 
+                $
+l.87 <<distancias_
+                  ordenar>>=
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:93: Missing $ inserted.
+<inserted text> 
+                $
+l.93 
+     
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+Overfull \hbox (90.30397pt too wide) in paragraph at lines 86--93
+\OT1/cmr/m/n/10 <<distancias$[]\OML/cmm/m/it/10 rdenar >>\OT1/cmr/m/n/10 = \OML/cmm/m/it/10 for\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 iin\OT1/cmr/m/n/10 1 : 5)[]\OML/cmm/m/it/10 distanciasordenadas <
+ []
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:98: Missing $ inserted.
+<inserted text> 
+                $
+l.98 outliers_
+              kmeans = list()
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:106: Missing $ inserted.
+<inserted text> 
+                $
+l.106 
+      
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+Overfull \hbox (309.22845pt too wide) in paragraph at lines 94--106
+\OT1/cmr/m/n/10 outliers$[]\OML/cmm/m/it/10 means \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 list\OT1/cmr/m/n/10 ()\OML/cmm/m/it/10 for\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 iin\OT1/cmr/m/n/10 1 : 5)[]\OML/cmm/m/it/10 outliers[]means\OT1/cmr/m/n/10 @$ 
+ []
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:111: Missing $ inserted.
+<inserted text> 
+                $
+l.111 <<cargar_
+               datos>>=
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:116: Missing $ inserted.
+<inserted text> 
+                $
+l.116 
+      
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+Overfull \hbox (69.65979pt too wide) in paragraph at lines 111--116
+\OT1/cmr/m/n/10 <<cargar$[]\OML/cmm/m/it/10 atos >>\OT1/cmr/m/n/10 = \OML/cmm/m/it/10 datos\OT1/cmr/m/n/10 2 \OML/cmm/m/it/10 < \OMS/cmsy/m/n/10 ^^@\OML/cmm/m/it/10 read:table\OT1/cmr/m/n/10 ("\OML/cmm/m/it/10 datos\OT1/cmr/m/n/10 2\OML/cmm/m/it/10 :txt\OT1/cmr/m/n/10 ")\OML/cmm/m/it/10 datos\OT1/cmr/m/n/10 2 \OML/cmm/m/it/10 < \OMS/cmsy/m/n/10 ^^@\OML/cmm/m/it/10 data:frame\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 datos\OT1/cmr/m/n/10 2)\OML/cmm/m/it/10 datos\OT1/cmr/m/n/10 2@$ 
+ []
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:118: Missing $ inserted.
+<inserted text> 
+                $
+l.118 <<plot_
+             caja_bigotes, fig=TRUE>>=
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:124: Missing $ inserted.
+<inserted text> 
+                $
+l.124 <<plot_
+             caja_bigotes, fig=TRUE>>=
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+[3]
+Overfull \hbox (0.82632pt too wide) in paragraph at lines 130--130
+[]\OT1/cmr/bx/n/14.4 Dispersi^^Son so-bre la den-si-dad, desviaci^^Son t^^S^^Ppica 
+ []
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:132: Missing $ inserted.
+<inserted text> 
+                $
+l.132 <<desviacion_
+                   tipica>>=
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:135: Missing $ inserted.
+<inserted text> 
+                $
+l.135 
+      
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:137: Missing $ inserted.
+<inserted text> 
+                $
+l.137 <<desviacion_
+                   tipica_densidad, fig=TRUE>>=
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:143: Missing $ inserted.
+<inserted text> 
+                $
+l.143 <<desviacion_
+                   tipica_resistencia, fig=TRUE>>=
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+[4] (/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.aux) )
+(\end occurred inside a group at level 1)
+
+### simple group (level 1) entered at line 34 ({)
+### bottom level 
+Here is how much of TeX's memory you used:
+ 258 strings out of 492609
+ 3443 string characters out of 6129048
+ 64138 words of memory out of 5000000
+ 4247 multiletter control sequences out of 15000+600000
+ 7887 words of font info for 28 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 23i,7n,18p,256b,198s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
+Output written on /Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.pdf (4 pages, 121908 bytes).
+PDF statistics:
+ 61 PDF objects out of 1000 (max. 8388607)
+ 43 compressed objects within 1 object stream
+ 0 named destinations out of 1000 (max. 500000)
+ 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+

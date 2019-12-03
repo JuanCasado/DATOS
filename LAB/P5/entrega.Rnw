@@ -11,7 +11,60 @@ Pendiente
 
 \newpage
 <<functions, echo=False>>=
-aqui van las funciones
+frecuenciaAbsoluta <- function(data){
+  uniquedata<-unique(data)
+  uniquedata<- sort(uniquedata)
+  newdata<- vector(mode="numeric", length=0)
+  for (value in uniquedata) {
+    ammount<-length(data[data==value])
+    newdata<-c(newdata, ammount)
+  }
+  setNames(newdata, uniquedata)
+}
+frecuenciaRelativa <- function(data){
+  frecuencia <-frecuenciaAbsoluta(data)
+  uniquedata<-unique(data)
+  uniquedata<- sort(uniquedata)
+  newdata <- vector(mode="numeric", length=0)
+  for (value in 1:length(uniquedata)) {
+    newdata <- c(newdata, frecuencia[value]/length(data))
+  }
+  setNames(newdata, uniquedata)
+}
+plotFrecuencyData <- function(data, xlabel="") {
+  uniquedata<-unique(data)
+  frecuencia_relativa <- as.table(frecuenciaRelativa(data))
+  media_ <- mediaAritmetica(data)
+  desviacion_tipica_ <- desviacionTipica(data)
+  tchebychev_min <- media_-2*desviacion_tipica_
+  tchebychev_max <- media_+2*desviacion_tipica_
+  min_range = min(tchebychev_min, min(uniquedata))
+  max_range = max(tchebychev_min, max(uniquedata))
+  plot(frecuencia_relativa, type="h", xlab=xlabel, xlim=c(min_range,max_range))
+  abline (v=c(media_, tchebychev_min, tchebychev_max), 
+          col=c("blue", "gray", "gray"), lty=c(2,2,2,3,3),
+          lwd=c(2,2,2,1,1))
+  legend ("topright", legend=c("media", "2*desviación típica"),
+          fill=c("blue","gray"))
+}
+mediaAritmetica <- function(data){
+  acc <- 0
+  for (value in data) {
+    acc <- acc + value
+  }
+  acc / length(data)
+}
+varianza <- function(data){
+  v_media <- mediaAritmetica(data)
+  acc = 0
+  for (value in data){
+    acc <- acc + (value - v_media)^2
+  }
+  acc/length(data)
+}
+desviacionTipica <- function (data) {
+  varianza(data)^(1/2)
+}
 @
 
 \newpage
@@ -24,22 +77,32 @@ En primer lugar deberemos cargar esta desde un archivo .txt.
 datos1 <- read.table("datos1.txt")
 datos1
 @
+
 En segundo lugar calculamos las distancias euclídeas entre todos los puntos
-<<distanciascalc>>=
-distancias=as.matrix(dist(datos1))
+<<distancias>>=
+distancias <- as.matrix(dist(datos1))
 distancias
 @
+
 Posteriormente, ordenamos las distancias de cada punto a todos los demás.
-<<distancias orden>>=
-for(i in 1:5){distancias[,i]=sort(distancias[,i])};
-(distanciasordenadas=distancias)
+<<distancias_ordenar>>=
+for(i in 1:5){
+  distancias[,i] <- sort(distancias[,i])
+}
+distanciasordenadas <- distancias
 @
+
 Como último paso, reordenamos la matriz para organizarla en función de la distancia
 de cada punto a su vecino número 1,2,3...etc. Tras haber organizado la matriz, buscamos en el tercer
 vecino, que es el valor k que hemos usado en nuestro análisis para poder identificar los outliers.
 <<ordenacionfinalconoutlier>>=
-for(i in 1:5){if(distanciasordenadas[4,i]>2.5){print(i);
-print("es un suceso anomalo o outlier")}}
+outliers_kmeans = list()
+for(i in 1:5){
+  if(distanciasordenadas[4,i]>2.5){
+    outliers_kmeans[[length(outliers_kmeans)+1]] <- datos1[i,]
+  }
+}
+outliers_kmeans
 @
 
 
@@ -48,15 +111,38 @@ print("es un suceso anomalo o outlier")}}
 
 <<cargar_datos>>=
 datos2 <- read.table("datos2.txt")
-datos2=data.frame(datos2)
+datos2 <- data.frame(datos2)
 datos2
 @
 
 \begin{center}
-<<plot_caja_bigotes>>=
-(boxplot(datos2$Resistencia, range=15, border ="red",horizontal = TRUE))
+<<plot_caja_bigotes, fig=TRUE>>=
+boxplot(datos2$Resistencia, range=1.5, horizontal = TRUE)
 @
 \end{center}
+
+
+
+\newpage
+\section{Dispersión sobre la densidad, desviación típica}
+
+<<desviacion_tipica>>=
+datos2 <- read.table("datos2.txt")
+@
+
+\begin{center}
+<<desviacion_tipica_densidad, fig=TRUE>>=
+plotFrecuencyData(datos2$Densidad)
+@
+\end{center}
+
+\begin{center}
+<<desviacion_tipica_resistencia, fig=TRUE>>=
+plotFrecuencyData(datos2$Resistencia)
+@
+\end{center}
+
+\end{document}
 
 
 \section{detección de datos anómalos sobre la regresión de la densidad en función de la resistencia}
@@ -82,3 +168,8 @@ podemos considerar ese punto como un outlier.
 (sr=sqrt(sum(res^2)/7))
 for(i in 1:7){if(abs(res[i])>2*sr){print(i);print("es un suceso anomalo o outlier")}}
 @
+\begin{center}
+<<plot_caja_bigotes, fig=TRUE>>=
+boxplot(datos2$Densidad, range=1.5, horizontal = TRUE)
+@
+\end{center}
