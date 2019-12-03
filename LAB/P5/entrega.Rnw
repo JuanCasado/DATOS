@@ -96,13 +96,13 @@ Como último paso, reordenamos la matriz para organizarla en función de la dist
 de cada punto a su vecino número 1,2,3...etc. Tras haber organizado la matriz, buscamos en el tercer
 vecino, que es el valor k que hemos usado en nuestro análisis para poder identificar los outliers.
 <<ordenacionfinalconoutlier>>=
-outliers_kmeans = list()
+outliers_kvecinos = list()
 for(i in 1:5){
   if(distanciasordenadas[4,i]>2.5){
-    outliers_kmeans[[length(outliers_kmeans)+1]] <- datos1[i,]
+    outliers_kvecinos[[length(outliers_kvecinos)+1]] <- datos1[i,]
   }
 }
-outliers_kmeans
+outliers_kvecinos
 @
 
 
@@ -166,8 +166,17 @@ uno para comprobar si algún residuo es 2 veces mayor que el error estándar. Si
 podemos considerar ese punto como un outlier. 
 <<residuooutlier>>=
 (sr=sqrt(sum(res^2)/7))
-for(i in 1:7){if(abs(res[i])>2*sr){print(i);print("es un suceso anomalo o outlier")}}
+outliers_regresion = list()
+for(i in 1:7){
+  if(abs(res[i])>2*sr){
+    outliers_kmeans[[length(outliers_kmeans)+1]] <- datos2[i,]
+  }
+}
+outliers_kmeans
 @
+
+
+
 \begin{center}
 <<plot_caja_bigotes, fig=TRUE>>=
 boxplot(datos2$Densidad, range=1.5, horizontal = TRUE)
