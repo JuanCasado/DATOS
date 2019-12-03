@@ -14,6 +14,7 @@ Pendiente
 
 \newpage
 \section{K-vecinos sobre la muestra proporcionada para obtener outliers}
+
 Aplicaremos el algoritmo k-vecinos sobre la muestra que tenemos.
 Este algoritmo identificará de forma supervisada en la muestra datos anómalos, para poder obtener los outliers.
 En primer lugar deberemos cargar esta desde un archivo .txt.
@@ -63,13 +64,13 @@ de cada punto a su vecino número 1,2,3...etc. Tras haber organizado la matriz, 
 vecino, que es el valor k que hemos usado en nuestro análisis para poder identificar los outliers.
 \begin{Schunk}
 \begin{Sinput}
-> outliers_kmeans = list()
+> outliers_kvecinos = list()
 > for(i in 1:length(distanciasordenadas[,1])){
 +   if(distanciasordenadas[4,i]>2.5){
-+     outliers_kmeans[[length(outliers_kmeans)+1]] <- datos1[i,]
++     outliers_kvecinos[[length(outliers_kvecinos)+1]] <- datos1[i,]
 +   }
 + }
-> outliers_kmeans
+> outliers_kvecinos
 \end{Sinput}
 \begin{Soutput}
 [[1]]
@@ -100,6 +101,8 @@ vecino, que es el valor k que hemos usado en nuestro análisis para poder identi
 \end{Soutput}
 \end{Schunk}
 
+Cargamos los datos de la densidad y la resistencia de un txt
+
 \begin{center}
 \begin{Schunk}
 \begin{Sinput}
@@ -109,6 +112,37 @@ vecino, que es el valor k que hemos usado en nuestro análisis para poder identi
 \includegraphics{entrega-plot_caja_bigotes}
 \end{center}
 
+
+Usamos la funcion para ver los datos en una caja de bigotes. 
+
+\begin{center}
+\begin{Schunk}
+\begin{Sinput}
+> cuart1_res<-quantile(datos2$Resistencia,0.25)
+> cuart3_res<-quantile(datos2$Resistencia,0.75)
+> int=c(cuart1_res-1.5*(cuart3_res-cuart1_res), cuart3_res+1.5*(cuart3_res-cuart1_res))
+> outliers_cuartiles_resistencia = list()
+> for(i in 1:length(datos2$Resistencia)){
++   if(datos2$Resistencia[i]<int[1]||datos2$Resistencia[i]>int[2]){
++     outliers_cuartiles_resistencia[[length(outliers_cuartiles_resistencia)+1]] <- t(matrix(c(i, datos2[i,]$Resistencia), dimnames=list(c("Indice","Resistencia"))))
++   }
++ }
+> outliers_cuartiles_resistencia
+\end{Sinput}
+\begin{Soutput}
+[[1]]
+     Indice Resistencia
+[1,]      7          14
+\end{Soutput}
+\end{Schunk}
+\end{center}
+
+Mediante el calculo de los primer cuartil y del tercero aplicamos la formula para ver si existe algun outlier en la muestra.
+ Esto nos da un rango todo los valores fuera de este rango son outlier. Luego comprobamos todo los valores de los datos para 
+ comprobar si existe, y por lo tanto mostramos. 
+
+ Como vemos el valor 12 es un outlier de los datos
+
 \begin{center}
 \begin{Schunk}
 \begin{Sinput}
@@ -117,6 +151,36 @@ vecino, que es el valor k que hemos usado en nuestro análisis para poder identi
 \end{Schunk}
 \includegraphics{entrega-plot_caja_bigotes}
 \end{center}
+
+
+\begin{center}
+\begin{Schunk}
+\begin{Sinput}
+> cuart1_den<-quantile(datos2$Densidad,0.25)
+> cuart3_den<-quantile(datos2$Densidad,0.75)
+> int=c(cuart1_den-1.5*(cuart3_den-cuart1_den), cuart3_den+1.5*(cuart3_den-cuart1_den))
+> outliers_cuartiles_densidad <- list()
+> for(i in 1:length(datos2$Densidad)){
++   if(datos2$Densidad[i]<int[1]||datos2$Densidad[i]>int[2]){
++     outliers_cuartiles_densidad[[length(outliers_cuartiles_densidad)+1]] <- t(matrix(c(i, datos2[i,]$Densidad), dimnames=list(c("Indice","Densidad"))))
++   }
++ }
+> outliers_cuartiles_densidad
+\end{Sinput}
+\begin{Soutput}
+[[1]]
+     Indice Densidad
+[1,]      1        2
+
+[[2]]
+     Indice Densidad
+[1,]      2       12
+\end{Soutput}
+\end{Schunk}
+\end{center}
+
+Realizamos, vemos que esta vez hay dos outlier uno es el 2 y el otro 12 de la densidad 
+
 
 \newpage
 \section{Dispersión sobre la densidad, desviación típica}
@@ -141,14 +205,15 @@ vecino, que es el valor k que hemos usado en nuestro análisis para poder identi
 > outliers_desviacion = list()
 > for(i in 1:length(datos2$Densidad)) {
 +   if ((datos2$Densidad[i]<int[1]) || (datos2$Densidad[i]>int[2])) {
-+     outliers_desviacion[[length(outliers_desviacion)+1]] <- datos2[i,]$Densidad
++     outliers_desviacion[[length(outliers_desviacion)+1]] <- t(matrix(c(i, datos2[i,]$Densidad), dimnames=list(c("Indice","Densidad"))))
 +   }
 + }
 > outliers_desviacion
 \end{Sinput}
 \begin{Soutput}
 [[1]]
-[1] 12
+     Indice Densidad
+[1,]      2       12
 \end{Soutput}
 \end{Schunk}
 
@@ -175,6 +240,59 @@ vecino, que es el valor k que hemos usado en nuestro análisis para poder identi
 [[1]]
      Indice Resistencia
 [1,]      7          14
+\end{Soutput}
+\end{Schunk}
+
+\section{detección de datos anómalos sobre la regresión de la densidad en función de la resistencia}
+
+En este análisis detectamos los outliers utilizando la recta de regresión y
+el error estándar de los residuos. Como primer paso leemos la tabla de los datos.
+\begin{Schunk}
+\begin{Sinput}
+> datos2 <- read.table("datos2.txt")
+> datos2
+\end{Sinput}
+\begin{Soutput}
+  Resistencia Densidad
+1         3.0      2.0
+2         3.5     12.0
+3         4.7      4.1
+4         5.2      4.9
+5         7.1      6.1
+6         6.2      5.2
+7        14.0      5.3
+\end{Soutput}
+\end{Schunk}
+Seguidamente calculamos la recta de regresión sobre los datos.
+\begin{Schunk}
+\begin{Sinput}
+> dFr=lm(datos2$Densidad~datos2$Resistencia)
+\end{Sinput}
+\end{Schunk}
+Posteriormente, obtenemos los residuos calculados a partir de la recta de regresión.
+\begin{Schunk}
+\begin{Sinput}
+> res=summary(dFr)$residuals
+\end{Sinput}
+\end{Schunk}
+Para finalizar, calculamos el error estándar de los residuos, y a partir de él comparamos cada
+uno para comprobar si algún residuo es 2 veces mayor que el error estándar. Si se da el caso, 
+podemos considerar ese punto como un outlier. 
+\begin{Schunk}
+\begin{Sinput}
+> sr=sqrt(sum(res^2)/length(res))
+> outliers_regresion = list()
+> for(i in 1:length(res)){
++   if(abs(res[i])>2*sr){
++     outliers_regresion[[length(outliers_regresion)+1]] <- datos2[i,]
++   }
++ }
+> outliers_regresion
+\end{Sinput}
+\begin{Soutput}
+[[1]]
+  Resistencia Densidad
+2         3.5       12
 \end{Soutput}
 \end{Schunk}
 

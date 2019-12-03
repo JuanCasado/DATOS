@@ -98,7 +98,6 @@ vecino, que es el valor k que hemos usado en nuestro análisis para poder identi
 <<ordenacionfinalconoutlier>>=
 outliers_kvecinos = list()
 for(i in 1:length(distanciasordenadas[,1])){
-outliers_kvecinos = list()
   if(distanciasordenadas[4,i]>2.5){
     outliers_kvecinos[[length(outliers_kvecinos)+1]] <- datos1[i,]
   }
@@ -127,13 +126,20 @@ boxplot(datos2$Resistencia, range=1.5, horizontal = TRUE)
 
 Usamos la funcion para ver los datos en una caja de bigotes. 
 
-\end{center}
+\begin{center}
 <<outlier_bigotes_resistencia>>=
 cuart1_res<-quantile(datos2$Resistencia,0.25)
 cuart3_res<-quantile(datos2$Resistencia,0.75)
 int=c(cuart1_res-1.5*(cuart3_res-cuart1_res), cuart3_res+1.5*(cuart3_res-cuart1_res))
 
-for(i in 1:length(datos2$Resistencia)){if(datos2$Resistencia[i]<int[1]||datos2$Resistencia[i]>int[2]){print("el suceso de la resistencia de ");print(datos2$Resistencia[i]);print(" es un suceso outlier")}}
+outliers_cuartiles_resistencia = list()
+for(i in 1:length(datos2$Resistencia)){
+  if(datos2$Resistencia[i]<int[1]||datos2$Resistencia[i]>int[2]){
+    outliers_cuartiles_resistencia[[length(outliers_cuartiles_resistencia)+1]] <- t(matrix(c(i, datos2[i,]$Resistencia), dimnames=list(c("Indice","Resistencia"))))
+  }
+}
+outliers_cuartiles_resistencia
+@
 \end{center}
 
 Mediante el calculo de los primer cuartil y del tercero aplicamos la formula para ver si existe algun outlier en la muestra.
@@ -149,13 +155,20 @@ boxplot(datos2$Densidad, range=1.5, horizontal = TRUE)
 \end{center}
 
 
- \end{center}
+\begin{center}
 <<outlier_bigotes_densidad>>=
 cuart1_den<-quantile(datos2$Densidad,0.25)
 cuart3_den<-quantile(datos2$Densidad,0.75)
 int=c(cuart1_den-1.5*(cuart3_den-cuart1_den), cuart3_den+1.5*(cuart3_den-cuart1_den))
 
-for(i in 1:length(datos2$Densidad)){if(datos2$Densidad[i]<int[1]||datos2$Densidad[i]>int[2]){print("el suceso de la densidad de ");print(datos2$Densidad[i]);print(" es un suceso outlier")}}
+outliers_cuartiles_densidad <- list()
+for(i in 1:length(datos2$Densidad)){
+  if(datos2$Densidad[i]<int[1]||datos2$Densidad[i]>int[2]){
+    outliers_cuartiles_densidad[[length(outliers_cuartiles_densidad)+1]] <- t(matrix(c(i, datos2[i,]$Densidad), dimnames=list(c("Indice","Densidad"))))
+  }
+}
+outliers_cuartiles_densidad
+@
 \end{center}
 
 Realizamos, vemos que esta vez hay dos outlier uno es el 2 y el otro 12 de la densidad 
@@ -200,9 +213,6 @@ for(i in 1:length(datos2$Resistencia)) {
 outliers_desviacion
 @
 
-\end{document}
-
-
 \section{detección de datos anómalos sobre la regresión de la densidad en función de la resistencia}
 
 En este análisis detectamos los outliers utilizando la recta de regresión y
@@ -213,22 +223,24 @@ datos2
 @
 Seguidamente calculamos la recta de regresión sobre los datos.
 <<rectaregresion>>=
-(dFr=lm(datos2$Densidad~datos2$Resistencia))
+dFr=lm(datos2$Densidad~datos2$Resistencia)
 @
 Posteriormente, obtenemos los residuos calculados a partir de la recta de regresión.
 <<residuos>>=
-(res=summary(dFr)$residuals)
+res=summary(dFr)$residuals
 @
 Para finalizar, calculamos el error estándar de los residuos, y a partir de él comparamos cada
 uno para comprobar si algún residuo es 2 veces mayor que el error estándar. Si se da el caso, 
 podemos considerar ese punto como un outlier. 
 <<residuooutlier>>=
-(sr=sqrt(sum(res^2)/7))
+sr=sqrt(sum(res^2)/length(res))
 outliers_regresion = list()
-for(i in 1:7){
+for(i in 1:length(res)){
   if(abs(res[i])>2*sr){
-    outliers_kmeans[[length(outliers_kmeans)+1]] <- datos2[i,]
+    outliers_regresion[[length(outliers_regresion)+1]] <- datos2[i,]
   }
 }
-outliers_kmeans
+outliers_regresion
 @
+
+\end{document}
