@@ -40,3 +40,19 @@ vecino, que es el valor k que hemos usado en nuestro análisis para poder identi
 for(i in 1:5){if(distanciasordenadas[4,i]>2.5){print(i);
 print("es un suceso anomalo o outlier")}}
 @
+
+
+
+\section{Deteccion de datos anómalos sobre la resistencia }
+
+<<cargar_datos>>=
+datos2 <- read.table("datos2.txt")
+datos2=data.frame(datos2)
+datos2
+@
+
+\begin{center}
+<<plot_caja_bigotes>>=
+(boxplot(datos2$Resistencia, range=15, border ="red",horizontal = TRUE))
+@
+\end{center}
