@@ -1,0 +1,18 @@
+\documentclass [a4paper] {article}
+\usepackage[utf8]{inputenc}
+\title{Ciencia de datos, práctica 5}
+\author{Juan Casado Ballesteros, Samuel García Gonzalez, Iván Anaya Martín}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Pendiente
+\end{abstract}
+
+\newpage
+<<functions, echo=False>>=
+aqui van las funciones
+@
+
+\newpage
+\section{K-vecinos sobre la muestra proporcionada para obtener outliers}
