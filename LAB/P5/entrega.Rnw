@@ -114,6 +114,9 @@ for(i in 1:length(distanciasordenadas[,1])){
 }
 outliers_kvecinos
 @
+Como podemos visualizar la siguiente gráfica, los resultados obtenidos son totalmente coherentes con el problema.
+Representamos en la gráfica los puntos rodeados por un radio de 2,5, y podemos observar que todos poseen a su tercer vecino
+dentro de su radio menos el punto(1,1)
 
 
 
