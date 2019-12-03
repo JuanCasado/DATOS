@@ -63,20 +63,18 @@ de cada punto a su vecino número 1,2,3...etc. Tras haber organizado la matriz, 
 vecino, que es el valor k que hemos usado en nuestro análisis para poder identificar los outliers.
 \begin{Schunk}
 \begin{Sinput}
-> outliers_kmeans = c()
+> outliers_kmeans = list()
 > for(i in 1:5){
 +   if(distanciasordenadas[4,i]>2.5){
-+     outliers_kmeans <- c(outliers_kmeans, datos1[i,])
++     outliers_kmeans[[length(outliers_kmeans)+1]] <- datos1[i,]
 +   }
 + }
 > outliers_kmeans
 \end{Sinput}
 \begin{Soutput}
-$Teoria
-[1] 1
-
-$Laboratorio
-[1] 1
+[[1]]
+  Teoria Laboratorio
+4      1           1
 \end{Soutput}
 \end{Schunk}
 
@@ -105,7 +103,16 @@ $Laboratorio
 \begin{center}
 \begin{Schunk}
 \begin{Sinput}
-> boxplot(datos2$Resistencia, range=15, border ="red",horizontal = TRUE)
+> boxplot(datos2$Resistencia, range=1.5, border ="red",horizontal = TRUE)
+\end{Sinput}
+\end{Schunk}
+\includegraphics{entrega-plot_caja_bigotes}
+\end{center}
+
+\begin{center}
+\begin{Schunk}
+\begin{Sinput}
+> boxplot(datos2$Densidad, range=1.5, border ="red",horizontal = TRUE)
 \end{Sinput}
 \end{Schunk}
 \includegraphics{entrega-plot_caja_bigotes}

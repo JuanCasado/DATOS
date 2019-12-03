@@ -95,10 +95,10 @@ Como último paso, reordenamos la matriz para organizarla en función de la dist
 de cada punto a su vecino número 1,2,3...etc. Tras haber organizado la matriz, buscamos en el tercer
 vecino, que es el valor k que hemos usado en nuestro análisis para poder identificar los outliers.
 <<ordenacionfinalconoutlier>>=
-outliers_kmeans = c()
+outliers_kmeans = list()
 for(i in 1:5){
   if(distanciasordenadas[4,i]>2.5){
-    outliers_kmeans <- c(outliers_kmeans, datos1[i,])
+    outliers_kmeans[[length(outliers_kmeans)+1]] <- datos1[i,]
   }
 }
 outliers_kmeans
@@ -116,13 +116,13 @@ datos2
 
 \begin{center}
 <<plot_caja_bigotes, fig=TRUE>>=
-boxplot(datos2$Resistencia, range=15, border ="red",horizontal = TRUE)
+boxplot(datos2$Resistencia, range=1.5, horizontal = TRUE)
 @
 \end{center}
 
 \begin{center}
 <<plot_caja_bigotes, fig=TRUE>>=
-boxplot(datos2$Densidad, range=15, border ="red",horizontal = TRUE)
+boxplot(datos2$Densidad, range=1.5, horizontal = TRUE)
 @
 \end{center}
 
