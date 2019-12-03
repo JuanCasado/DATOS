@@ -23,3 +23,19 @@ En primer lugar deberemos cargar esta desde un archivo .txt.
 datos1 <- read.table("datos1.txt")
 datos1
 @
+
+
+
+\section{Deteccion de datos anómalos sobre la resistencia }
+
+<<cargar_datos>>=
+datos2 <- read.table("datos2.txt")
+datos2=data.frame(datos2)
+datos2
+@
+
+\begin{center}
+<<plot_caja_bigotes>>=
+(boxplot(datos2$Resistencia, range=15, border ="red",horizontal = TRUE))
+@
+\end{center}
