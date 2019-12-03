@@ -1,0 +1,452 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.10.8)  3 DEC 2019 11:52
+entering extended mode
+ restricted \write18 enabled.
+ file:line:error style messages enabled.
+ %&-line parsing enabled.
+**/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw
+(/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw
+LaTeX2e <2018-12-01>
+(/usr/local/texlive/2019/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2018/09/03 v1.4i Standard LaTeX document class
+(/usr/local/texlive/2019/texmf-dist/tex/latex/base/size10.clo
+File: size10.clo 2018/09/03 v1.4i Standard LaTeX file (size option)
+)
+\c@part=\count80
+\c@section=\count81
+\c@subsection=\count82
+\c@subsubsection=\count83
+\c@paragraph=\count84
+\c@subparagraph=\count85
+\c@figure=\count86
+\c@table=\count87
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+) (/usr/local/texlive/2019/texmf-dist/tex/latex/base/inputenc.sty
+Package: inputenc 2018/08/11 v1.3c Input encoding file
+\inpenc@prehook=\toks14
+\inpenc@posthook=\toks15
+) (/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.aux)
+\openout1 = `entrega.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 6.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 6.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 6.
+
+Overfull \hbox (30.93376pt too wide) in paragraph at lines 6--6
+ [][] 
+ []
+
+[1
+
+{/usr/local/texlive/2019/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:38: Missing $ inserted.
+<inserted text> 
+                $
+l.38   frecuencia_
+                  relativa <- as.table(frecuenciaRelativa(data))
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 38.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 38.
+
+LaTeX Warning: Command \' invalid in math mode on input line 49.
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:49: Please use \mathaccent for accents in math mode.
+\add@accent ...@spacefactor \spacefactor }\accent 
+                                                  #1 #2\egroup \spacefactor ...
+l.49 ...topright", legend=c("media", "2*desviació
+                                                  n típica"),
+I'm changing \accent to \mathaccent here; wish me luck.
+(Accents are not the same in formulas as they are in text.)
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:49: You can't use `\spacefactor' in math mode.
+\add@accent ...}\accent #1 #2\egroup \spacefactor 
+                                                  \accent@spacefactor 
+l.49 ...topright", legend=c("media", "2*desviació
+                                                  n típica"),
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+
+LaTeX Warning: Command \' invalid in math mode on input line 49.
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:49: Please use \mathaccent for accents in math mode.
+\add@accent ...@spacefactor \spacefactor }\accent 
+                                                  #1 #2\egroup \spacefactor ...
+l.49 ...ght", legend=c("media", "2*desviación tí
+                                                  pica"),
+I'm changing \accent to \mathaccent here; wish me luck.
+(Accents are not the same in formulas as they are in text.)
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:49: Missing { inserted.
+<to be read again> 
+                   \begingroup 
+l.49 ...ght", legend=c("media", "2*desviación tí
+                                                  pica"),
+A left brace was mandatory here, so I've put one in.
+You might want to delete and/or insert some corrections
+so that I will find a matching right brace soon.
+(If you're confused by all this, try typing `I}' now.)
+
+
+LaTeX Warning: Command \i invalid in math mode on input line 49.
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:49: You can't use `\spacefactor' in math mode.
+\add@accent ...}\accent #1 #2\egroup \spacefactor 
+                                                  \accent@spacefactor 
+l.49 ...ght", legend=c("media", "2*desviación tí
+                                                  pica"),
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:71: Missing $ inserted.
+<inserted text> 
+                $
+l.71 
+     
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+Missing character: There is no � in font cmex10!
+Missing character: There is no � in font cmex10!
+
+Overfull \hbox (3.94505pt too wide) in paragraph at lines 13--71
+\OT1/cmr/m/n/10 (value in 1:length(frecuencia))  acc <- fre-cuen-cia[value]+acc new-data <- c(newdata,
+ []
+
+
+Overfull \hbox (51.27864pt too wide) in paragraph at lines 13--71
+\OT1/cmr/m/n/10 cuen-cia <-frecuenciaAbsoluta(data) uniquedata<-unique(data) uniquedata<- sort(uniquedata)
+ []
+
+
+Overfull \hbox (8.91745pt too wide) in paragraph at lines 13--71
+\OT1/cmr/m/n/10 new-data <- vec-tor(mode="numeric", length=0) for (value in 1:length(uniquedata))
+ []
+
+
+Overfull \hbox (11.69514pt too wide) in paragraph at lines 13--71
+\OT1/cmr/m/n/10 new-data <- c(newdata, fre-cuen-cia[value]/length(data))  set-Names(newdata, unique-
+ []
+
+
+Overfull \hbox (3.58414pt too wide) in paragraph at lines 13--71
+\OT1/cmr/m/n/10 data)  plot-Fre-cuen-cy-Data <- func-tion(data, xla-bel="")  uniquedata<-unique(data)
+ []
+
+
+Overfull \hbox (143.67859pt too wide) in paragraph at lines 13--71
+\OT1/cmr/m/n/10 frecuencia$[]\OML/cmm/m/it/10 elativa < \OMS/cmsy/m/n/10 ^^@\OML/cmm/m/it/10 as:table\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 frecuenciaRelativa\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 data\OT1/cmr/m/n/10 ))\OML/cmm/m/it/10 media[] \OMS/cmsy/m/n/10 ^^@ \OML/cmm/m/it/10 mediaAritmetica\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 data\OT1/cmr/m/n/10 )\OML/cmm/m/it/10 desviacion[]ipica[] \OMS/cmsy/m/n/10 ^^@
+ []
+
+
+Overfull \hbox (36.5491pt too wide) in paragraph at lines 13--71
+\OML/cmm/m/it/10 desviacionTipica\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 data\OT1/cmr/m/n/10 )\OML/cmm/m/it/10 tchebychev[]in < \OMS/cmsy/m/n/10 ^^@\OML/cmm/m/it/10 media[]\OT1/cmr/m/n/10 2 \OMS/cmsy/m/n/10 ^^C \OML/cmm/m/it/10 desviacion[]ipica[]chebychev[]ax <
+ []
+
+
+Overfull \hbox (61.43364pt too wide) in paragraph at lines 13--71
+\OMS/cmsy/m/n/10 ^^@\OML/cmm/m/it/10 media[]\OT1/cmr/m/n/10 2 \OMS/cmsy/m/n/10 ^^C \OML/cmm/m/it/10 desviacion[]ipica[]in[]ange \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 min\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 tchebychev[]in; min\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 uniquedata\OT1/cmr/m/n/10 ))\OML/cmm/m/it/10 max[]ange \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (19.29037pt too wide) in paragraph at lines 13--71
+\OML/cmm/m/it/10 max\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 tchebychev[]in; max\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 uniquedata\OT1/cmr/m/n/10 ))\OML/cmm/m/it/10 plot\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 frecuencia[]elativa; type \OT1/cmr/m/n/10 = "\OML/cmm/m/it/10 h\OT1/cmr/m/n/10 "\OML/cmm/m/it/10 ; xlab \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (83.74702pt too wide) in paragraph at lines 13--71
+\OML/cmm/m/it/10 xlabel; xlim \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 c\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 min[]ange; max[]ange\OT1/cmr/m/n/10 ))\OML/cmm/m/it/10 abline\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 v \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 c\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 media[]tchebychev[]in; tchebychev[]ax\OT1/cmr/m/n/10 )\OML/cmm/m/it/10 ; col \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (64.62697pt too wide) in paragraph at lines 13--71
+\OML/cmm/m/it/10 c\OT1/cmr/m/n/10 ("\OML/cmm/m/it/10 blue\OT1/cmr/m/n/10 "\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 "\OML/cmm/m/it/10 gray\OT1/cmr/m/n/10 "\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 "\OML/cmm/m/it/10 gray\OT1/cmr/m/n/10 ")\OML/cmm/m/it/10 ; lty \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 c\OT1/cmr/m/n/10 (2\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 2\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 2\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 3\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 3)\OML/cmm/m/it/10 ; lwd \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 c\OT1/cmr/m/n/10 (2\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 2\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 2\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 1\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 1))\OML/cmm/m/it/10 legend\OT1/cmr/m/n/10 ("\OML/cmm/m/it/10 topright\OT1/cmr/m/n/10 "\OML/cmm/m/it/10 ; legend \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (0.20161pt too wide) in paragraph at lines 13--71
+\OML/cmm/m/it/10 c\OT1/cmr/m/n/10 ("\OML/cmm/m/it/10 media\OT1/cmr/m/n/10 "\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 "2 \OMS/cmsy/m/n/10 ^^C \OML/cmm/m/it/10 desviaci[]nt[]mediaAritmetica <
+ []
+
+
+Overfull \hbox (56.86494pt too wide) in paragraph at lines 13--71
+\OMS/cmsy/m/n/10 ^^@\OML/cmm/m/it/10 function\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 data\OT1/cmr/m/n/10 )[]\OML/cmm/m/it/10 varianza <
+ []
+
+
+Overfull \hbox (296.22949pt too wide) in paragraph at lines 13--71
+\OMS/cmsy/m/n/10 ^^@\OML/cmm/m/it/10 function\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 data\OT1/cmr/m/n/10 )[]\OML/cmm/m/it/10 desviacionTipica <
+ []
+
+[2]
+Overfull \hbox (5.36133pt too wide) in paragraph at lines 73--73
+[]\OT1/cmr/bx/n/14.4 K-vecinos so-bre la mues-tra pro-por-cionada para
+ []
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:77: Missing $ inserted.
+<inserted text> 
+                $
+l.77 <<cargar_
+              datos>>=
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+LaTeX Warning: Command \' invalid in math mode on input line 81.
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:81: Please use \mathaccent for accents in math mode.
+\add@accent ...@spacefactor \spacefactor }\accent 
+                                                  #1 #2\egroup \spacefactor ...
+l.81 ...ndo lugar calculamos las distancias euclí
+                                                  deas entre todos los puntos
+I'm changing \accent to \mathaccent here; wish me luck.
+(Accents are not the same in formulas as they are in text.)
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:81: Missing { inserted.
+<to be read again> 
+                   \begingroup 
+l.81 ...ndo lugar calculamos las distancias euclí
+                                                  deas entre todos los puntos
+A left brace was mandatory here, so I've put one in.
+You might want to delete and/or insert some corrections
+so that I will find a matching right brace soon.
+(If you're confused by all this, try typing `I}' now.)
+
+
+LaTeX Warning: Command \i invalid in math mode on input line 81.
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:81: You can't use `\spacefactor' in math mode.
+\add@accent ...}\accent #1 #2\egroup \spacefactor 
+                                                  \accent@spacefactor 
+l.81 ...ndo lugar calculamos las distancias euclí
+                                                  deas entre todos los puntos
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+
+LaTeX Warning: Command \' invalid in math mode on input line 86.
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:86: Please use \mathaccent for accents in math mode.
+\add@accent ...@spacefactor \spacefactor }\accent 
+                                                  #1 #2\egroup \spacefactor ...
+l.86 ...distancias de cada punto a todos los demá
+                                                  s.
+I'm changing \accent to \mathaccent here; wish me luck.
+(Accents are not the same in formulas as they are in text.)
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:86: You can't use `\spacefactor' in math mode.
+\add@accent ...}\accent #1 #2\egroup \spacefactor 
+                                                  \accent@spacefactor 
+l.86 ...distancias de cada punto a todos los demá
+                                                  s.
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+
+LaTeX Warning: Command \' invalid in math mode on input line 91.
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:91: Please use \mathaccent for accents in math mode.
+\add@accent ...@spacefactor \spacefactor }\accent 
+                                                  #1 #2\egroup \spacefactor ...
+l.91 Como ú
+            ltimo paso, reordenamos la matriz para organizarla en función d...
+I'm changing \accent to \mathaccent here; wish me luck.
+(Accents are not the same in formulas as they are in text.)
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:91: You can't use `\spacefactor' in math mode.
+\add@accent ...}\accent #1 #2\egroup \spacefactor 
+                                                  \accent@spacefactor 
+l.91 Como ú
+            ltimo paso, reordenamos la matriz para organizarla en función d...
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+
+LaTeX Warning: Command \' invalid in math mode on input line 91.
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:91: Please use \mathaccent for accents in math mode.
+\add@accent ...@spacefactor \spacefactor }\accent 
+                                                  #1 #2\egroup \spacefactor ...
+l.91 ...amos la matriz para organizarla en funció
+                                                  n de la distancia
+I'm changing \accent to \mathaccent here; wish me luck.
+(Accents are not the same in formulas as they are in text.)
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:91: You can't use `\spacefactor' in math mode.
+\add@accent ...}\accent #1 #2\egroup \spacefactor 
+                                                  \accent@spacefactor 
+l.91 ...amos la matriz para organizarla en funció
+                                                  n de la distancia
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+
+LaTeX Warning: Command \' invalid in math mode on input line 92.
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:92: Please use \mathaccent for accents in math mode.
+\add@accent ...@spacefactor \spacefactor }\accent 
+                                                  #1 #2\egroup \spacefactor ...
+l.92 de cada punto a su vecino nú
+                                  mero 1,2,3...etc. Tras haber organizado la...
+I'm changing \accent to \mathaccent here; wish me luck.
+(Accents are not the same in formulas as they are in text.)
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:92: You can't use `\spacefactor' in math mode.
+\add@accent ...}\accent #1 #2\egroup \spacefactor 
+                                                  \accent@spacefactor 
+l.92 de cada punto a su vecino nú
+                                  mero 1,2,3...etc. Tras haber organizado la...
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+
+LaTeX Warning: Command \' invalid in math mode on input line 93.
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:93: Please use \mathaccent for accents in math mode.
+\add@accent ...@spacefactor \spacefactor }\accent 
+                                                  #1 #2\egroup \spacefactor ...
+l.93 ...el valor k que hemos usado en nuestro aná
+                                                  lisis para poder identific...
+I'm changing \accent to \mathaccent here; wish me luck.
+(Accents are not the same in formulas as they are in text.)
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:93: You can't use `\spacefactor' in math mode.
+\add@accent ...}\accent #1 #2\egroup \spacefactor 
+                                                  \accent@spacefactor 
+l.93 ...el valor k que hemos usado en nuestro aná
+                                                  lisis para poder identific...
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:98: Missing $ inserted.
+<inserted text> 
+                $
+l.98 
+     
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:98: Missing } inserted.
+<inserted text> 
+                }
+l.98 
+     
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+Missing character: There is no � in font cmex10!
+Missing character: There is no � in font cmex10!
+Missing character: There is no � in font cmex10!
+Missing character: There is no � in font cmex10!
+Missing character: There is no � in font cmex10!
+Missing character: There is no � in font cmex10!
+
+Overfull \hbox (3196.31406pt too wide) in paragraph at lines 74--98
+\OT1/cmr/m/n/10 archivo .txt. <<cargar$[]\OML/cmm/m/it/10 atos >>\OT1/cmr/m/n/10 = \OML/cmm/m/it/10 datos\OT1/cmr/m/n/10 1 \OML/cmm/m/it/10 < \OMS/cmsy/m/n/10 ^^@\OML/cmm/m/it/10 read:table\OT1/cmr/m/n/10 ("\OML/cmm/m/it/10 datos\OT1/cmr/m/n/10 1\OML/cmm/m/it/10 :txt\OT1/cmr/m/n/10 ")\OML/cmm/m/it/10 datos\OT1/cmr/m/n/10 1@\OML/cmm/m/it/10 Ensegundolugarcalculamoslasdistanciaseucl[]$ 
+ []
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:103: Missing $ inserted.
+<inserted text> 
+                $
+l.103 <<cargar_
+               datos>>=
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:108: Missing $ inserted.
+<inserted text> 
+                $
+l.108 
+      
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+Overfull \hbox (61.88199pt too wide) in paragraph at lines 103--108
+\OT1/cmr/m/n/10 <<cargar$[]\OML/cmm/m/it/10 atos >>\OT1/cmr/m/n/10 = \OML/cmm/m/it/10 datos\OT1/cmr/m/n/10 2 \OML/cmm/m/it/10 < \OMS/cmsy/m/n/10 ^^@\OML/cmm/m/it/10 read:table\OT1/cmr/m/n/10 ("\OML/cmm/m/it/10 datos\OT1/cmr/m/n/10 2\OML/cmm/m/it/10 :txt\OT1/cmr/m/n/10 ")\OML/cmm/m/it/10 datos\OT1/cmr/m/n/10 2 = \OML/cmm/m/it/10 data:frame\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 datos\OT1/cmr/m/n/10 2)\OML/cmm/m/it/10 datos\OT1/cmr/m/n/10 2@$ 
+ []
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:110: Missing $ inserted.
+<inserted text> 
+                $
+l.110 <<plot_
+             caja_bigotes>>=
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+[3]
+Overfull \hbox (0.82632pt too wide) in paragraph at lines 116--116
+[]\OT1/cmr/bx/n/14.4 Dispersi^^Son so-bre la den-si-dad, desviaci^^Son t^^S^^Ppica 
+ []
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:118: Missing $ inserted.
+<inserted text> 
+                $
+l.118 <<desviacion_
+                   tipica>>=
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw:119: Missing $ inserted.
+<inserted text> 
+                $
+l.119 
+      
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+)
+! Emergency stop.
+<*> ...ents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw
+                                                  
+*** (job aborted, no legal \end found)
+
+ 
+Here is how much of TeX's memory you used:
+ 256 strings out of 492609
+ 3303 string characters out of 6129048
+ 64138 words of memory out of 5000000
+ 4247 multiletter control sequences out of 15000+600000
+ 7887 words of font info for 28 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 23i,7n,18p,201b,198s stack positions out of 5000i,500n,10000p,200000b,80000s
+!  ==> Fatal error occurred, no output PDF file produced!

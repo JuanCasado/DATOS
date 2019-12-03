@@ -11,7 +11,62 @@ Pendiente
 
 \newpage
 <<functions, echo=False>>=
-aqui van las funciones
+frecuenciaAbsolutaAcumulada <-function(data){
+    frecuencia <- frecuenciaAbsoluta(data)
+    uniquedata<-unique(data)
+    uniquedata<- sort(uniquedata)
+    newdata <- vector(mode="numeric", length=0)
+    acc <- 0
+    for (value in 1:length(frecuencia)) {
+        acc <- frecuencia[value]+acc
+        newdata <- c(newdata, acc)
+    }
+    setNames(newdata, uniquedata)
+}
+frecuenciaRelativa <- function(data){
+  frecuencia <-frecuenciaAbsoluta(data)
+  uniquedata<-unique(data)
+  uniquedata<- sort(uniquedata)
+  newdata <- vector(mode="numeric", length=0)
+  for (value in 1:length(uniquedata)) {
+    newdata <- c(newdata, frecuencia[value]/length(data))
+  }
+  setNames(newdata, uniquedata)
+}
+plotFrecuencyData <- function(data, xlabel="") {
+  uniquedata<-unique(data)
+  frecuencia_relativa <- as.table(frecuenciaRelativa(data))
+  media_ <- mediaAritmetica(data)
+  desviacion_tipica_ <- desviacionTipica(data)
+  tchebychev_min <- media_-2*desviacion_tipica_
+  tchebychev_max <- media_+2*desviacion_tipica_
+  min_range = min(tchebychev_min, min(uniquedata))
+  max_range = max(tchebychev_min, max(uniquedata))
+  plot(frecuencia_relativa, type="h", xlab=xlabel, xlim=c(min_range,max_range))
+  abline (v=c(media_, tchebychev_min, tchebychev_max), 
+          col=c("blue", "gray", "gray"), lty=c(2,2,2,3,3),
+          lwd=c(2,2,2,1,1))
+  legend ("topright", legend=c("media", "2*desviación típica"),
+          fill=c("blue","gray"))
+}
+mediaAritmetica <- function(data){
+  acc <- 0
+  for (value in data) {
+    acc <- acc + value
+  }
+  acc / length(data)
+}
+varianza <- function(data){
+  v_media <- mediaAritmetica(data)
+  acc = 0
+  for (value in data){
+    acc <- acc + (value - v_media)^2
+  }
+  acc/length(data)
+}
+desviacionTipica <- function (data) {
+  varianza(data)^(1/2)
+}
 @
 
 \newpage
@@ -56,3 +111,10 @@ datos2
 (boxplot(datos2$Resistencia, range=15, border ="red",horizontal = TRUE))
 @
 \end{center}
+
+\newpage
+\section{Dispersión sobre la densidad, desviación típica}
+
+<<desviacion_tipica>>=
+
+@
