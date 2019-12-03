@@ -6,11 +6,16 @@
 \maketitle
 
 \begin{abstract}
-Pendiente
+Realizaremos análisis de outliers sobre las dos muestrar proporcionadas según lo indicado en la práctica.
+Para cada uno de los análisis realizados mostraremos los outliers obtenidos no solo de forma textual si no también con gráficos que nos ayuden a visualizar cada análisis.
+
+Posteriormente hemos buscado un dataset que contiene medidas realizadas sobre los niveles de ozono, de temperatura, de humedad y de velocidad del viento.
+Realizaremos el análisis de estos datos mediante regresión para lo cual primero realizaremos un análisis de outliers.
 \end{abstract}
 
 \newpage
 <<functions, echo=False>>=
+library("plotrix")
 frecuenciaAbsoluta <- function(data){
   uniquedata<-unique(data)
   uniquedata<- sort(uniquedata)
@@ -78,205 +83,268 @@ regPlot <- function (x, y, regresion, limit, xlabel="", ylabel="") {
 @
 
 \newpage
-\section{Analisis de los datos}
+\section{Conocer los datos}
+Cargamos y ostramos los datos que se nos han proporcionado para hacer la primera parte del ejercicio.
 
-En esta parte hablaremos de los datos que vamos a tratar durante la elaboracion de este documento.
-Los datos que tenemos son dos tablas de datos que usaremos en la primera parte del documento. 
-
+\subsection{Notas}
+Los primeros datos representan la nota de laboratorio y de teorias evaluadas de 1 a 5.
 <<cargar_datos1>>=
-datos1 <- read.table("datos1.txt")
-datos1 <- data.frame(datos1)
+datos1 <- data.frame(read.table("datos1.txt"))
 datos1
-
-plot(datos1,main="Tabla 1")
 @
+\begin{center}
+<<plot_datos1, fig=TRUE, echo=FALSE>>=
+plot(datos1,main="Datos 1")
+@
+\end{center}
 
-Estos datos representan la nota de laboratorio y de teorias de unos posibles alumnos. Observaremos si
-los datos tienen relacion entre ellos y si existe un posible outlier. 
-
+\newpage
+\subsection{Hormigón}
+Los segundos representan la densidad y la resistencia del hormigón.
 <<cargar_datos2>>=
-datos2 <- read.table("datos2.txt")
-datos2 <- data.frame(datos2)
+datos2 <- data.frame(read.table("datos2.txt"))
 datos2
-
-plot(datos2,main="Tabla 2")
 @
-
-Estos datos representan la densidad y la resistencia de unos materiales. Usaremos tecnicas para ver 
-si todos los materiales estan relacionados cercanos unos a otros.
-
-
+\begin{center}
+<<plot_datos2, fig=TRUE, echo=FALSE>>=
+plot(datos2,main="Datos 2")
 @
+\end{center}
 
 \newpage
 \section{K-vecinos sobre la muestra proporcionada para obtener outliers}
-
 Aplicaremos el algoritmo k-vecinos sobre la muestra que tenemos.
 Este algoritmo identificará de forma supervisada en la muestra datos anómalos, para poder obtener los outliers.
-En primer lugar deberemos cargar esta desde un archivo .txt.
 
-
-En segundo lugar calculamos las distancias euclídeas entre todos los puntos
+Calculamos las distancias euclídeas entre todos los puntos.
 <<distancias>>=
 distancias <- as.matrix(dist(datos1))
 distancias
 @
 
-Posteriormente, ordenamos las distancias de cada punto a todos los demás.
+Elegimos el grado a partir del cual consideraremos que un pounto es outlier.
+Todos los valores cuyo tercer vecino más cercano esté a una distancia superior a 2.5 los consideraremos outliers.
+<<k_vecinos_outlier>>=
+max_radio <- 2.5
+@
+
+Mostramos en torno a cada valor un círculo con el radio indicado.
+Si dentro del círculo dibujado no hay al menos otros tres datos dicho valor será considerado outlier.
+Podemos ver que solo hay un punto para el que se da esta condición.
+\begin{center}
+<<k_vecinos_plot, fig=TRUE, echo=FALSE>>=
+plot(datos1, xlab="Teoría", ylab="Laboratorio")
+for (i in 1:length(datos1[,1])){
+  draw.circle(datos1$Teoria[i],datos1$Laboratorio[i],r=max_radio, col="#0000000f")
+}
+@
+\end{center}
+
+Calcularemos numéricamente ese valor.
+
+Ordenamos las distancias de cada punto a todos los demás.
 <<distancias_ordenar>>=
-for(i in 1:length(distanciasordenadas[,1])){
+for(i in 1:length(distancias[,1])){
   distancias[,i] <- sort(distancias[,i])
 }
 distanciasordenadas <- distancias
 @
 
-Como último paso, reordenamos la matriz para organizarla en función de la distancia
-de cada punto a su vecino número 1,2,3...etc. Tras haber organizado la matriz, buscamos en el tercer
-vecino, que es el valor k que hemos usado en nuestro análisis para poder identificar los outliers.
+Reordenamos la matriz para organizarla en función de la distancia de cada punto a su vecino número 1,2,3...etc. 
+Tras haber organizado la matriz, buscamos en el tercer vecino, que es el valor k que hemos usado en nuestro análisis para poder identificar los outliers.
 <<ordenacionfinalconoutlier>>=
 outliers_kvecinos = list()
 for(i in 1:length(distanciasordenadas[,1])){
-  if(distanciasordenadas[4,i]>2.5){
+  if(distanciasordenadas[4,i]>max_radio){
     outliers_kvecinos[[length(outliers_kvecinos)+1]] <- datos1[i,]
   }
 }
 outliers_kvecinos
 @
-Como podemos visualizar la siguiente gráfica, los resultados obtenidos son totalmente coherentes con el problema.
-Representamos en la gráfica los puntos rodeados por un radio de 2,5, y podemos observar que todos poseen a su tercer vecino
-dentro de su radio menos el punto(1,1)
 
+\newpage
+\section{Deteccion de datos anómalos por cuartiles}
+Sobre el segundo set de datos eliminaremos utilizando el método de los cuartiles.
 
+Elegiremos el fator por el que multiplicar Q3-Q1.
+Todos los valores que se alegen esa distancia de Q1 hacia los negativo o de Q3 hacia los positevos serán considerados outliers.
+<<max_range>>=
+max_range = 1.5
+@
 
-\section{Deteccion de datos anómalos sobre la resistencia }
-
-
-
-
-
+\subsection{Resistencia del hormigón}
+Mostramos el diagrama de caja y bigotes de la resistencia.
 \begin{center}
-<<plot_caja_bigotes, fig=TRUE>>=
-boxplot(datos2$Resistencia, range=1.5, horizontal = TRUE)
+<<plot_caja_bigotes_resistencia, fig=TRUE, echo=FALSE>>=
+boxplot(datos2$Resistencia, range=max_range, horizontal = TRUE)
 @
 \end{center}
 
-
-Usamos la funcion para ver los datos en una caja de bigotes. 
-
+Calculamos ahora los valores que se salen del rango definido y que por tanto son outliers.
+Para hacer esto primero obtenemos el intercalo de valores válidos
 \begin{center}
-<<outlier_bigotes_resistencia>>=
+<<outlier_bigotes_resistencia_int>>=
 cuart1_res<-quantile(datos2$Resistencia,0.25)
 cuart3_res<-quantile(datos2$Resistencia,0.75)
-int=c(cuart1_res-1.5*(cuart3_res-cuart1_res), cuart3_res+1.5*(cuart3_res-cuart1_res))
-
+int_res=c(cuart1_res-max_range*(cuart3_res-cuart1_res),
+          cuart3_res+max_range*(cuart3_res-cuart1_res))
+int_res
+@
+Ahora obtendremos los valores que quedan fuera de dicho intervalo.
+<<outlier_bigotes_resistencia>>=
 outliers_cuartiles_resistencia = list()
 for(i in 1:length(datos2$Resistencia)){
   if(datos2$Resistencia[i]<int[1]||datos2$Resistencia[i]>int[2]){
-    outliers_cuartiles_resistencia[[length(outliers_cuartiles_resistencia)+1]] <- t(matrix(c(i, datos2[i,]$Resistencia), dimnames=list(c("Indice","Resistencia"))))
+    outliers_cuartiles_resistencia[[length(outliers_cuartiles_resistencia)+1]] <- 
+        t(matrix(c(i, datos2[i,]$Resistencia), dimnames=list(c("Indice","Resistencia"))))
   }
 }
 outliers_cuartiles_resistencia
 @
 \end{center}
+Como vemos el valor 12 es un outlier de la variable resistencia.
 
-Mediante el calculo de los primer cuartil y del tercero aplicamos la formula para ver si existe algun outlier en la muestra.
- Esto nos da un rango todo los valores fuera de este rango son outlier. Luego comprobamos todo los valores de los datos para 
- comprobar si existe, y por lo tanto mostramos. 
+\subsection{Densidad del hormigón}
+Repetimos este mismo análisis para la densidad.
 
- Como vemos el valor 12 es un outlier de los datos
-
+Primero mostramos el diagrama de caja y bigotes para esta variable.
 \begin{center}
-<<plot_caja_bigotes, fig=TRUE>>=
-boxplot(datos2$Densidad, range=1.5, horizontal = TRUE)
+<<plot_caja_bigotes, fig=TRUE, echo=FALSE>>=
+boxplot(datos2$Densidad, range=max_range, horizontal = TRUE)
 @
 \end{center}
 
-
-\begin{center}
-<<outlier_bigotes_densidad>>=
+Calculamos el intervalo a partir del que consideramos que los datos son outliers.
+<<outlier_bigotes_densidad_int>>=
 cuart1_den<-quantile(datos2$Densidad,0.25)
 cuart3_den<-quantile(datos2$Densidad,0.75)
-int=c(cuart1_den-1.5*(cuart3_den-cuart1_den), cuart3_den+1.5*(cuart3_den-cuart1_den))
+int=c(cuart1_den-max_range*(cuart3_den-cuart1_den), 
+      cuart3_den+max_range*(cuart3_den-cuart1_den))
+int
+@
 
+Obtenemos lo datos que quedan fuera del intervalo.
+<<outlier_bigotes_densidad>>=
 outliers_cuartiles_densidad <- list()
 for(i in 1:length(datos2$Densidad)){
   if(datos2$Densidad[i]<int[1]||datos2$Densidad[i]>int[2]){
-    outliers_cuartiles_densidad[[length(outliers_cuartiles_densidad)+1]] <- t(matrix(c(i, datos2[i,]$Densidad), dimnames=list(c("Indice","Densidad"))))
+    outliers_cuartiles_densidad[[length(outliers_cuartiles_densidad)+1]] <- 
+      t(matrix(c(i, datos2[i,]$Densidad), dimnames=list(c("Indice","Densidad"))))
   }
 }
 outliers_cuartiles_densidad
 @
-\end{center}
 
-Realizamos, vemos que esta vez hay dos outlier uno es el 2 y el otro 12 de la densidad 
+Esta vez hay dos valores outlier de densidad el 2 y el 12.
 
 
 \newpage
-\section{Dispersión sobre la densidad, desviación típica}
+\section{Outliers mediante la desviación típica}
+Calcularemos los valores para cada que son considerados outliers por el método de la desviación tipica.
+Dichos valores serán aquellos que se alejen demasidado de la media de la variable analizada.
 
-<<desviacion_tipica>>=
-datos2 <- read.table("datos2.txt")
+En primer lugar elegiremos el factor por el que multiplicar la desviación típica para generar el intervalo de valores no outliers entorno a la media.
+Metiante el teorema de tchebychev sabemos que para un valor de 2 al menos el 75\% de los datos estarán dentro del intervalo generado.
+<<max_deviation>>=
+max_deviation = 2
 @
 
+\subsection{Densidad del hormigón}
+Mostramos la frecuencia realativa de la densidad del hormigón con respecto a la media de esta magnitud en azul.
+En gris se muestra el intervalo a partir del cual los valores que queden fuera de él son considerados outliers.
 \begin{center}
 <<desviacion_tipica_densidad_plot, fig=TRUE>>=
 plotFrecuencyData(datos2$Densidad)
 @
 \end{center}
+
+Ahora calculamos dichos valores.
+Primero obtenemos el intervalo.
 <<desviacion_tipica_densidad>>=
-int <- c(mediaAritmetica(datos2$Densidad) - 2*desviacionTipica(datos2$Densidad), mediaAritmetica(datos2$Densidad) + 2*desviacionTipica(datos2$Densidad))
+int <- c(mediaAritmetica(datos2$Densidad) - 2*desviacionTipica(datos2$Densidad),
+         mediaAritmetica(datos2$Densidad) + 2*desviacionTipica(datos2$Densidad))
+int
+@
+Podemos ver que el intervalo contiene valores de densidad irreales, esta no podría ser negativa.
+En un anális de datos realista deberíamos corregir esto consultando con alguien que sea experto en los datos que estemos analizando.
+Y luego los valores que quedan fuera de él.
+<<desviacion_tipica_densidad>>=
 outliers_desviacion = list()
 for(i in 1:length(datos2$Densidad)) {
   if ((datos2$Densidad[i]<int[1]) || (datos2$Densidad[i]>int[2])) {
-    outliers_desviacion[[length(outliers_desviacion)+1]] <- t(matrix(c(i, datos2[i,]$Densidad), dimnames=list(c("Indice","Densidad"))))
+    outliers_desviacion[[length(outliers_desviacion)+1]] <- 
+      t(matrix(c(i, datos2[i,]$Densidad), dimnames=list(c("Indice","Densidad"))))
   }
 }
 outliers_desviacion
 @
 
+\subsection{Resistencia del hormigón}
+Mostramos la frecuencia realativa de la resistencia del hormigón con respecto a la media de esta magnitud en azul.
+En gris se muestra el intervalo a partir del cual los valores que queden fuera de él son considerados outliers.
 \begin{center}
 <<desviacion_tipica_resistencia_plot, fig=TRUE>>=
 plotFrecuencyData(datos2$Resistencia)
 @
 \end{center}
+Ahora calculamos dichos valores.
+Primero obtenemos el intervalo.
+<<desviacion_tipica_resistencia_int>>=
+int <- c(mediaAritmetica(datos2$Resistencia) - 2*desviacionTipica(datos2$Resistencia), 
+         mediaAritmetica(datos2$Resistencia) + 2*desviacionTipica(datos2$Resistencia))
+int
+@
+Podemos ver que el intervalo contiene valores de resistencia irreales, esta no podría ser negativa.
+En un anális de datos realista deberíamos corregir esto consultando con alguien que sea experto en los datos que estemos analizando.
+Y luego los valores que quedan fuera de él.
 <<desviacion_tipica_resistencia>>=
-int <- c(mediaAritmetica(datos2$Resistencia) - 2*desviacionTipica(datos2$Resistencia), mediaAritmetica(datos2$Resistencia) + 2*desviacionTipica(datos2$Resistencia))
 outliers_desviacion = list()
 for(i in 1:length(datos2$Resistencia)) {
   if ((datos2$Resistencia[i]<int[1]) || (datos2$Resistencia[i]>int[2])) {
-    outliers_desviacion[[length(outliers_desviacion)+1]] <- t(matrix(c(i, datos2[i,]$Resistencia), dimnames=list(c("Indice","Resistencia"))))
+    outliers_desviacion[[length(outliers_desviacion)+1]] <- 
+      t(matrix(c(i, datos2[i,]$Resistencia), dimnames=list(c("Indice","Resistencia"))))
   }
 }
 outliers_desviacion
 @
 
-\section{detección de datos anómalos sobre la regresión de la densidad en función de la resistencia}
+\newpage
+\section{Detección de datos anómalos sobre la regresión de la densidad en función de la resistencia}
 
-En este análisis detectamos los outliers utilizando la recta de regresión y
-el error estándar de los residuos. Como primer paso leemos la tabla de los datos.
-<<cargar_datos_regresion>>=
-datos2 <- read.table("datos2.txt")
-datos2
+En este análisis detectamos los outliers utilizando la recta de regresión y el error estándar de los residuos.
+Comenzaremos por determinar el factor por el que multiplicar el error estándar para considerar que los datos son outliers.
+<<sr_factor>>=
+sr_factor = 2
 @
-Seguidamente calculamos la recta de regresión sobre los datos.
+
+Comenzamos el análisis calculando la recta de regresión de los datos.
 <<rectaregresion>>=
 dFr=lm(datos2$Densidad~datos2$Resistencia)
 @
-Posteriormente, obtenemos los residuos calculados a partir de la recta de regresión.
+
+Posteriormente, obtenemos los residuos calculados a partir de la recta de regresión y el error estándar.
 <<residuos>>=
 res=summary(dFr)$residuals
-@
-Para finalizar, calculamos el error estándar de los residuos, y a partir de él comparamos cada
-uno para comprobar si algún residuo es 2 veces mayor que el error estándar. Si se da el caso, 
-podemos considerar ese punto como un outlier.
-<<regresion_plot, fig=TRUE>>=
-regPlot(datos2$Resistencia, datos2$Densidad, dFr, 2*sr, "Resistencia", "Densidad")
-@
-<<residuooutlier>>=
+res
 sr=sqrt(sum(res^2)/length(res))
+sr
+@
+
+A partir del error estándar y de la recta de regresión obtenida podremos mostrar los datos junto a su recta de regresión.
+Paralela a dicha recta mostramos otras dos que marcan la frontera a partir de la que los valores se considerarán outliers.
+En este caso solo se ve la recta paralela superior.
+\begin{center}
+<<regresion_plot, fig=TRUE, echo=FALSE>>=
+regPlot(datos2$Resistencia, datos2$Densidad, dFr,sr_factor*sr, "Resistencia", "Densidad")
+@
+\end{center}
+
+Con el error estándar de los residuos, comparamos cada uno para comprobar si es mayor que el error estándar multiplicado por el factor establecido.
+Si se da el caso, podemos considerar ese punto como un outlier.
+<<residuooutlier>>=
 outliers_regresion = list()
 for(i in 1:length(res)){
-  if(abs(res[i])>2*sr){
+  if(abs(res[i])>sr_factor*sr){
     outliers_regresion[[length(outliers_regresion)+1]] <- datos2[i,]
   }
 }

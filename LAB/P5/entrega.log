@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.10.8)  3 DEC 2019 13:48
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.10.8)  3 DEC 2019 17:12
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -345,74 +345,88 @@ Overfull \hbox (30.47675pt too wide) in paragraph at lines 7--7
 [1
 
 {/usr/local/texlive/2019/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-LaTeX Font Info:    Try loading font information for T1+aett on input line 22.
+LaTeX Font Info:    Try loading font information for T1+aett on input line 26.
 
 (/usr/local/texlive/2019/texmf-dist/tex/latex/ae/t1aett.fd
 File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
-) [2]
-Overfull \hbox (5.10327pt too wide) in paragraph at lines 70--70
+)
+<entrega-plot_datos1.pdf, id=11, 433.62pt x 433.62pt>
+File: entrega-plot_datos1.pdf Graphic file (type pdf)
+<use entrega-plot_datos1.pdf>
+Package pdftex.def Info: entrega-plot_datos1.pdf  used on input line 40.
+(pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
+ [2 <./entrega-plot_datos1.pdf>]
+<entrega-plot_datos2.pdf, id=25, 433.62pt x 433.62pt>
+File: entrega-plot_datos2.pdf Graphic file (type pdf)
+<use entrega-plot_datos2.pdf>
+Package pdftex.def Info: entrega-plot_datos2.pdf  used on input line 63.
+(pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
+ [3 <./entrega-plot_datos2.pdf>]
+Overfull \hbox (5.10327pt too wide) in paragraph at lines 67--67
 []\T1/aer/bx/n/14.4 K-vecinos so-bre la mues-tra pro-por-cionada para
  []
 
-<entrega-plot_caja_bigotes.pdf, id=17, 433.62pt x 433.62pt>
+<entrega-k_vecinos_plot.pdf, id=36, 433.62pt x 433.62pt>
+File: entrega-k_vecinos_plot.pdf Graphic file (type pdf)
+<use entrega-k_vecinos_plot.pdf>
+Package pdftex.def Info: entrega-k_vecinos_plot.pdf  used on input line 99.
+(pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
+[4 <./entrega-k_vecinos_plot.pdf>] [5]
+<entrega-plot_caja_bigotes_resistencia.pdf, id=51, 433.62pt x 433.62pt>
+File: entrega-plot_caja_bigotes_resistencia.pdf Graphic file (type pdf)
+<use entrega-plot_caja_bigotes_resistencia.pdf>
+Package pdftex.def Info: entrega-plot_caja_bigotes_resistencia.pdf  used on inp
+ut line 148.
+(pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
+ [6 <./entrega-plot_caja_bigotes_resistencia.pdf>]
+<entrega-plot_caja_bigotes.pdf, id=61, 433.62pt x 433.62pt>
 File: entrega-plot_caja_bigotes.pdf Graphic file (type pdf)
 <use entrega-plot_caja_bigotes.pdf>
-Package pdftex.def Info: entrega-plot_caja_bigotes.pdf  used on input line 140.
+Package pdftex.def Info: entrega-plot_caja_bigotes.pdf  used on input line 193.
 
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
-[3]
-File: entrega-plot_caja_bigotes.pdf Graphic file (type pdf)
-<use entrega-plot_caja_bigotes.pdf>
-Package pdftex.def Info: entrega-plot_caja_bigotes.pdf  used on input line 180.
-
-(pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
- [4 <./entrega-plot_caja_bigotes.pdf>] [5]
-Overfull \hbox (0.56712pt too wide) in paragraph at lines 214--214
-[]\T1/aer/bx/n/14.4 Dispersión so-bre la den-si-dad, desviación típica 
- []
-
-<entrega-desviacion_tipica_densidad_plot.pdf, id=33, 433.62pt x 433.62pt>
+ [7 <./entrega-plot_caja_bigotes.pdf>] [8]
+<entrega-desviacion_tipica_densidad_plot.pdf, id=75, 433.62pt x 433.62pt>
 File: entrega-desviacion_tipica_densidad_plot.pdf Graphic file (type pdf)
 <use entrega-desviacion_tipica_densidad_plot.pdf>
 Package pdftex.def Info: entrega-desviacion_tipica_densidad_plot.pdf  used on i
-nput line 228.
+nput line 259.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
-<entrega-desviacion_tipica_resistencia_plot.pdf, id=34, 433.62pt x 433.62pt>
+ [9 <./entrega-desviacion_tipica_densidad_plot.pdf>]
+<entrega-desviacion_tipica_resistencia_plot.pdf, id=84, 433.62pt x 433.62pt>
 File: entrega-desviacion_tipica_resistencia_plot.pdf Graphic file (type pdf)
 <use entrega-desviacion_tipica_resistencia_plot.pdf>
 Package pdftex.def Info: entrega-desviacion_tipica_resistencia_plot.pdf  used o
-n input line 254.
+n input line 304.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
-[6 <./entrega-desviacion_tipica_densidad_plot.pdf>] [7 <./entrega-desviacion_ti
-pica_resistencia_plot.pdf>]
-<entrega-regresion_plot.pdf, id=52, 433.62pt x 433.62pt>
+ [10 <./entrega-desviacion_tipica_resistencia_plot.pdf>] [11]
+<entrega-regresion_plot.pdf, id=96, 433.62pt x 433.62pt>
 File: entrega-regresion_plot.pdf Graphic file (type pdf)
 <use entrega-regresion_plot.pdf>
-Package pdftex.def Info: entrega-regresion_plot.pdf  used on input line 314.
+Package pdftex.def Info: entrega-regresion_plot.pdf  used on input line 380.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
- [8 <./entrega-regresion_plot.pdf>] [9]
-(./entrega.aux) ) 
+ [12] [13 <./entrega-regresion_plot.pdf>] (./entrega.aux) ) 
 Here is how much of TeX's memory you used:
- 2755 strings out of 492609
- 39817 string characters out of 6129048
- 97541 words of memory out of 5000000
- 6605 multiletter control sequences out of 15000+600000
- 26995 words of font info for 61 fonts, out of 8000000 for 9000
+ 2781 strings out of 492609
+ 40603 string characters out of 6129048
+ 95541 words of memory out of 5000000
+ 6622 multiletter control sequences out of 15000+600000
+ 30141 words of font info for 67 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,6n,25p,296b,280s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmbx12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmbx9.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmr10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmr12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cm
-r17.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9
-.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsltt1
-0.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10
-.pfb>
-Output written on entrega.pdf (9 pages, 125400 bytes).
+ 41i,6n,25p,296b,333s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local/texlive/
+2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2
+019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/local/texlive/201
+9/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2019/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2019/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2019/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2019/texmf-d
+ist/fonts/type1/public/amsfonts/cm/cmsltt10.pfb></usr/local/texlive/2019/texmf-
+dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on entrega.pdf (13 pages, 152462 bytes).
 PDF statistics:
- 92 PDF objects out of 1000 (max. 8388607)
- 64 compressed objects within 1 object stream
+ 137 PDF objects out of 1000 (max. 8388607)
+ 97 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 21 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 41 words of extra memory for PDF output out of 10000 (max. 10000000)
 
