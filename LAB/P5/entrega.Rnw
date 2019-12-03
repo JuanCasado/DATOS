@@ -351,4 +351,24 @@ for(i in 1:length(res)){
 outliers_regresion
 @
 
+<<outliers>>=
+outliers_ozone <- list()
+vectoroutliers<- vector(mode="numeric", length=0)
+for(m in 1:12){
+  mc1=subset(datos3,datos3[,1]==m)
+  cuar1_mc1<-quantile(mc1$ozone_reading,0.25)
+  cuar3_mc1<-quantile(mc1$ozone_reading,0.75)
+  (int=c(cuar1_mc1-1.5*(cuar3_mc1-cuar1_mc1), cuar3_mc1+1.5*(cuar3_mc1-cuar1_mc1)))
+  for(i in 1:length(mc1$ozone_reading)){
+    if(mc1$ozone_reading[i]<int[1]||mc1$ozone_reading[i]>int[2]){
+      outliers_ozone[[length(outliers_ozone)+1]] <- t(matrix(c(mc1[i,]$ozone_reading,m), dimnames=list(c("ozone_reading","Mes"))))
+      vectoroutliers<-c(vectoroutliers, 0)    
+    }else{  
+      vectoroutliers<-c(vectoroutliers, 1)  
+    }
+  }
+}
+outliers_ozone
+@
+
 \end{document}
