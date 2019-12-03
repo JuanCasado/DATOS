@@ -13,14 +13,15 @@ Pendiente
 \newpage
 
 \newpage
-\section{K-vecinos sobre la muestra proporcionada para obtener outliers}
+\section{Analisis de los datos}
 
-Aplicaremos el algoritmo k-vecinos sobre la muestra que tenemos.
-Este algoritmo identificará de forma supervisada en la muestra datos anómalos, para poder obtener los outliers.
-En primer lugar deberemos cargar esta desde un archivo .txt.
+En esta parte hablaremos de los datos que vamos a tratar durante la elaboracion de este documento.
+Los datos que tenemos son dos tablas de datos que usaremos en la primera parte del documento. 
+
 \begin{Schunk}
 \begin{Sinput}
 > datos1 <- read.table("datos1.txt")
+> datos1 <- data.frame(datos1)
 > datos1
 \end{Sinput}
 \begin{Soutput}
@@ -31,7 +32,47 @@ En primer lugar deberemos cargar esta desde un archivo .txt.
 4      1           1
 5      5           4
 \end{Soutput}
+\begin{Sinput}
+> plot(datos1,main="Tabla 1")
+\end{Sinput}
 \end{Schunk}
+
+Estos datos representan la nota de laboratorio y de teorias de unos posibles alumnos. Observaremos si
+los datos tienen relacion entre ellos y si existe un posible outlier. 
+
+\begin{Schunk}
+\begin{Sinput}
+> datos2 <- read.table("datos2.txt")
+> datos2 <- data.frame(datos2)
+> datos2
+\end{Sinput}
+\begin{Soutput}
+  Resistencia Densidad
+1         3.0      2.0
+2         3.5     12.0
+3         4.7      4.1
+4         5.2      4.9
+5         7.1      6.1
+6         6.2      5.2
+7        14.0      5.3
+\end{Soutput}
+\begin{Sinput}
+> plot(datos2,main="Tabla 2")
+\end{Sinput}
+\end{Schunk}
+
+Estos datos representan la densidad y la resistencia de unos materiales. Usaremos tecnicas para ver 
+si todos los materiales estan relacionados cercanos unos a otros.
+
+
+
+\newpage
+\section{K-vecinos sobre la muestra proporcionada para obtener outliers}
+
+Aplicaremos el algoritmo k-vecinos sobre la muestra que tenemos.
+Este algoritmo identificará de forma supervisada en la muestra datos anómalos, para poder obtener los outliers.
+En primer lugar deberemos cargar esta desde un archivo .txt.
+
 
 En segundo lugar calculamos las distancias euclídeas entre todos los puntos
 \begin{Schunk}
@@ -78,30 +119,17 @@ vecino, que es el valor k que hemos usado en nuestro análisis para poder identi
 4      1           1
 \end{Soutput}
 \end{Schunk}
+Como podemos visualizar la siguiente gráfica, los resultados obtenidos son totalmente coherentes con el problema.
+Representamos en la gráfica los puntos rodeados por un radio de 2,5, y podemos observar que todos poseen a su tercer vecino
+dentro de su radio menos el punto(1,1)
 
 
 
 \section{Deteccion de datos anómalos sobre la resistencia }
 
-\begin{Schunk}
-\begin{Sinput}
-> datos2 <- read.table("datos2.txt")
-> datos2 <- data.frame(datos2)
-> datos2
-\end{Sinput}
-\begin{Soutput}
-  Resistencia Densidad
-1         3.0      2.0
-2         3.5     12.0
-3         4.7      4.1
-4         5.2      4.9
-5         7.1      6.1
-6         6.2      5.2
-7        14.0      5.3
-\end{Soutput}
-\end{Schunk}
 
-Cargamos los datos de la densidad y la resistencia de un txt
+
+
 
 \begin{center}
 \begin{Schunk}
