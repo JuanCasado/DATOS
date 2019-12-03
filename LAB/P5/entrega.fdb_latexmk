@@ -1,7 +1,7 @@
 # Fdb version 3
-["pdflatex"] 1575373752 "/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw" "/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.pdf" "entrega" 1575373752
-  "/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw" 1575373751 5013 da09189bd1a922a9fd8a907d4355e4d6 ""
-  "/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.aux" 1575373752 8 a94a2480d3289e625eea47cd1b285758 ""
+["pdflatex"] 1575373799 "/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw" "/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.pdf" "entrega" 1575373799
+  "/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.Rnw" 1575373798 6186 890fad1535cac218d6891ec701aaa424 ""
+  "/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.aux" 1575373799 8 a94a2480d3289e625eea47cd1b285758 ""
   "/usr/local/texlive/2019/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
   "/usr/local/texlive/2019/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm" 1136768653 1324 c910af8c371558dc20f2d7822f66fe64 ""
   "/usr/local/texlive/2019/texmf-dist/fonts/tfm/public/cm/cmbx9.tfm" 1136768653 1328 5442e22a7072966dbaf88ca900acf3f0 ""
@@ -34,11 +34,11 @@
   "/usr/local/texlive/2019/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1561653966 4549464 e70ecd5fc6036afaca0d65061215f2ef ""
   "/usr/local/texlive/2019/texmf-var/web2c/pdftex/pdflatex.fmt" 1570544575 4264881 f9c0af29626a8332d94af55dd6f9105f ""
   "/usr/local/texlive/2019/texmf.cnf" 1557341546 577 d150fef99ac436ad1156e86b0892f6ef ""
-  "entrega.Rnw" 1575373751 5013 da09189bd1a922a9fd8a907d4355e4d6 ""
+  "entrega.Rnw" 1575373798 6186 890fad1535cac218d6891ec701aaa424 ""
   "entrega.aux" 0 -1 0 "pdflatex"
   (generated)
-  "entrega.pdf"
-  "entrega.aux"
-  "entrega.log"
   "/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.pdf"
+  "entrega.log"
+  "entrega.aux"
+  "entrega.pdf"
   "/Users/mrblissfulgrin/Documents/UAH_2019_2020/DATOS/LAB/P5/entrega.log"

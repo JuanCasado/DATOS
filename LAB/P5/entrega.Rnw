@@ -69,10 +69,11 @@ desviacionTipica <- function (data) {
 
 \newpage
 \section{K-vecinos sobre la muestra proporcionada para obtener outliers}
+
 Aplicaremos el algoritmo k-vecinos sobre la muestra que tenemos.
 Este algoritmo identificará de forma supervisada en la muestra datos anómalos, para poder obtener los outliers.
 En primer lugar deberemos cargar esta desde un archivo .txt.
-<<cargar_datos>>=
+<<cargar_datos_kvecinos>>=
 datos1 <- read.table("datos1.txt")
 datos1
 @
@@ -95,13 +96,14 @@ Como último paso, reordenamos la matriz para organizarla en función de la dist
 de cada punto a su vecino número 1,2,3...etc. Tras haber organizado la matriz, buscamos en el tercer
 vecino, que es el valor k que hemos usado en nuestro análisis para poder identificar los outliers.
 <<ordenacionfinalconoutlier>>=
-outliers_kmeans = list()
+outliers_kvecinos = list()
 for(i in 1:length(distanciasordenadas[,1])){
+outliers_kvecinos = list()
   if(distanciasordenadas[4,i]>2.5){
-    outliers_kmeans[[length(outliers_kmeans)+1]] <- datos1[i,]
+    outliers_kvecinos[[length(outliers_kvecinos)+1]] <- datos1[i,]
   }
 }
-outliers_kmeans
+outliers_kvecinos
 @
 
 
@@ -166,3 +168,34 @@ outliers_desviacion
 @
 
 \end{document}
+
+
+\section{detección de datos anómalos sobre la regresión de la densidad en función de la resistencia}
+
+En este análisis detectamos los outliers utilizando la recta de regresión y
+el error estándar de los residuos. Como primer paso leemos la tabla de los datos.
+<<cargar_datos_regresion>>=
+datos2 <- read.table("datos2.txt")
+datos2
+@
+Seguidamente calculamos la recta de regresión sobre los datos.
+<<rectaregresion>>=
+(dFr=lm(datos2$Densidad~datos2$Resistencia))
+@
+Posteriormente, obtenemos los residuos calculados a partir de la recta de regresión.
+<<residuos>>=
+(res=summary(dFr)$residuals)
+@
+Para finalizar, calculamos el error estándar de los residuos, y a partir de él comparamos cada
+uno para comprobar si algún residuo es 2 veces mayor que el error estándar. Si se da el caso, 
+podemos considerar ese punto como un outlier. 
+<<residuooutlier>>=
+(sr=sqrt(sum(res^2)/7))
+outliers_regresion = list()
+for(i in 1:7){
+  if(abs(res[i])>2*sr){
+    outliers_kmeans[[length(outliers_kmeans)+1]] <- datos2[i,]
+  }
+}
+outliers_kmeans
+@
