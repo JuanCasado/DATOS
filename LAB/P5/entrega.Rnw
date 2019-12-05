@@ -14,8 +14,13 @@ Realizaremos el análisis de estos datos mediante regresión para lo cual primer
 \end{abstract}
 
 \newpage
+\tableofcontents
+
 <<functions, echo=False>>=
 library("plotrix")
+library("class")
+library("scatterplot3d")
+library("Rlof")
 frecuenciaAbsoluta <- function(data){
   uniquedata<-unique(data)
   uniquedata<- sort(uniquedata)
@@ -83,10 +88,11 @@ regPlot <- function (x, y, regresion, limit, xlabel="", ylabel="") {
 @
 
 \newpage
-\section{Conocer los datos}
+\section{Ejercicios propuestos}
+\subsection{Conocer los datos}
 Cargamos y ostramos los datos que se nos han proporcionado para hacer la primera parte del ejercicio.
 
-\subsection{Notas}
+\subsubsection{Notas}
 Los primeros datos representan la nota de laboratorio y de teorias evaluadas de 1 a 5.
 <<cargar_datos1>>=
 datos1 <- data.frame(read.table("datos1.txt"))
@@ -99,7 +105,7 @@ plot(datos1,main="Datos 1")
 \end{center}
 
 \newpage
-\subsection{Hormigón}
+\subsubsection{Hormigón}
 Los segundos representan la densidad y la resistencia del hormigón.
 <<cargar_datos2>>=
 datos2 <- data.frame(read.table("datos2.txt"))
@@ -112,7 +118,7 @@ plot(datos2,main="Datos 2")
 \end{center}
 
 \newpage
-\section{K-vecinos sobre la muestra proporcionada para obtener outliers}
+\subsection{K-vecinos sobre las notas para obtener outliers}
 Aplicaremos el algoritmo k-vecinos sobre la muestra que tenemos.
 Este algoritmo identificará de forma supervisada en la muestra datos anómalos, para poder obtener los outliers.
 
@@ -163,7 +169,7 @@ outliers_kvecinos
 @
 
 \newpage
-\section{Deteccion de datos anómalos por cuartiles}
+\subsection{Deteccion de datos anómalos por cuartiles}
 Sobre el segundo set de datos eliminaremos utilizando el método de los cuartiles.
 
 Elegiremos el fator por el que multiplicar Q3-Q1.
@@ -172,7 +178,7 @@ Todos los valores que se alegen esa distancia de Q1 hacia los negativo o de Q3 h
 max_range = 1.5
 @
 
-\subsection{Resistencia del hormigón}
+\subsubsection{Resistencia del hormigón}
 Mostramos el diagrama de caja y bigotes de la resistencia.
 \begin{center}
 <<plot_caja_bigotes_resistencia, fig=TRUE, echo=FALSE>>=
@@ -194,7 +200,7 @@ Ahora obtendremos los valores que quedan fuera de dicho intervalo.
 <<outlier_bigotes_resistencia>>=
 outliers_cuartiles_resistencia = list()
 for(i in 1:length(datos2$Resistencia)){
-  if(datos2$Resistencia[i]<int[1]||datos2$Resistencia[i]>int[2]){
+  if(datos2$Resistencia[i]<int_res[1]||datos2$Resistencia[i]>int_res[2]){
     outliers_cuartiles_resistencia[[length(outliers_cuartiles_resistencia)+1]] <- 
         t(matrix(c(i, datos2[i,]$Resistencia), dimnames=list(c("Indice","Resistencia"))))
   }
@@ -204,7 +210,7 @@ outliers_cuartiles_resistencia
 \end{center}
 Como vemos el valor 12 es un outlier de la variable resistencia.
 
-\subsection{Densidad del hormigón}
+\subsubsection{Densidad del hormigón}
 Repetimos este mismo análisis para la densidad.
 
 Primero mostramos el diagrama de caja y bigotes para esta variable.
@@ -218,28 +224,26 @@ Calculamos el intervalo a partir del que consideramos que los datos son outliers
 <<outlier_bigotes_densidad_int>>=
 cuart1_den<-quantile(datos2$Densidad,0.25)
 cuart3_den<-quantile(datos2$Densidad,0.75)
-int=c(cuart1_den-max_range*(cuart3_den-cuart1_den), 
-      cuart3_den+max_range*(cuart3_den-cuart1_den))
-int
+int_dens=c(cuart1_den-max_range*(cuart3_den-cuart1_den), 
+           cuart3_den+max_range*(cuart3_den-cuart1_den))
+int_dens
 @
 
 Obtenemos lo datos que quedan fuera del intervalo.
 <<outlier_bigotes_densidad>>=
 outliers_cuartiles_densidad <- list()
 for(i in 1:length(datos2$Densidad)){
-  if(datos2$Densidad[i]<int[1]||datos2$Densidad[i]>int[2]){
+  if(datos2$Densidad[i]<int_dens[1]||datos2$Densidad[i]>int_dens[2]){
     outliers_cuartiles_densidad[[length(outliers_cuartiles_densidad)+1]] <- 
       t(matrix(c(i, datos2[i,]$Densidad), dimnames=list(c("Indice","Densidad"))))
   }
 }
 outliers_cuartiles_densidad
 @
-
 Esta vez hay dos valores outlier de densidad el 2 y el 12.
 
-
 \newpage
-\section{Outliers mediante la desviación típica}
+\subsection{Outliers mediante la desviación típica}
 Calcularemos los valores para cada que son considerados outliers por el método de la desviación tipica.
 Dichos valores serán aquellos que se alejen demasidado de la media de la variable analizada.
 
@@ -249,7 +253,7 @@ Metiante el teorema de tchebychev sabemos que para un valor de 2 al menos el 75\
 max_deviation = 2
 @
 
-\subsection{Densidad del hormigón}
+\subsubsection{Densidad del hormigón}
 Mostramos la frecuencia realativa de la densidad del hormigón con respecto a la media de esta magnitud en azul.
 En gris se muestra el intervalo a partir del cual los valores que queden fuera de él son considerados outliers.
 \begin{center}
@@ -279,7 +283,7 @@ for(i in 1:length(datos2$Densidad)) {
 outliers_desviacion
 @
 
-\subsection{Resistencia del hormigón}
+\subsubsection{Resistencia del hormigón}
 Mostramos la frecuencia realativa de la resistencia del hormigón con respecto a la media de esta magnitud en azul.
 En gris se muestra el intervalo a partir del cual los valores que queden fuera de él son considerados outliers.
 \begin{center}
@@ -309,7 +313,7 @@ outliers_desviacion
 @
 
 \newpage
-\section{Detección de datos anómalos sobre la regresión de la densidad en función de la resistencia}
+\subsection{Detección de datos anómalos sobre la regresión de la densidad en función de la resistencia}
 
 En este análisis detectamos los outliers utilizando la recta de regresión y el error estándar de los residuos.
 Comenzaremos por determinar el factor por el que multiplicar el error estándar para considerar que los datos son outliers.
@@ -319,14 +323,14 @@ sr_factor = 2
 
 Comenzamos el análisis calculando la recta de regresión de los datos.
 <<rectaregresion>>=
-dFr=lm(datos2$Densidad~datos2$Resistencia)
+dFr <- lm(datos2$Densidad~datos2$Resistencia)
 @
 
 Posteriormente, obtenemos los residuos calculados a partir de la recta de regresión y el error estándar.
 <<residuos>>=
-res=summary(dFr)$residuals
+res <- summary(dFr)$residuals
 res
-sr=sqrt(sum(res^2)/length(res))
+sr <- sqrt(sum(res^2)/length(res))
 sr
 @
 
@@ -351,24 +355,246 @@ for(i in 1:length(res)){
 outliers_regresion
 @
 
+\newpage
+\section{Anális de outliers en datos climáticos}
+
+Realizaremos un anális de outliers sobre un conjunto de datos en que que hay las siguientes variables.
+Mes en el que se capturaron los datos, cantidad de ozono, presión, velocidad del viento, humedad, visibilidad y temperatura de dos sensores distintos.
+
+A lo largo del análisis podemos ver que la muestra de datos carece de valores outlier que sean notables.
+No obstante aunque esta haya sido la conclusión finalmente obtenida debe ser necesario mencionar que es una conclusión válida.
+
+<<read_ozone_data>>=
+datos3 <- read.csv("ozone.csv")
+@
+
+\subsection{Outliers por cuartiles en cada mes}
+
+Deseamos ver si hay algún dato cuya humedad sea inusualmente alta o baja para la que debería de estar sucediendo cuando fue capturado.
+Para ello trateremos las medidas de la humedad clasificadas por meses.
+Entendemos que las medidas de un mismo mes debería de ser relativamente homogéneas.
+
+Elegimos el factor a partir del cual calcular el intervalo de valores válidos para el análisis por cuartiles.
+<<cuartiles_factor>>=
+cuartiles_factor = 1.5
+@
+
+Mostramos el diagrama de caja y bigotes de los datos de la humedad agrupados por mes.
+
+En él podemos realizar dos observaciones.
+Solo en algunos meses, los más próximos la verano, los datos tienen un rango de variación reducido.
+Por el contrario en otros meses, lo más próximos al invierno, se registran valores de humedad en un rango mayor.
+
+Será por tanto que solo en los meses con un rango reducido podremos obtener outliers.
+En estos meses ciertos rangos humedad son mucho más frecuentes que otros.
+Aquellos valores que se alejen de los intervalos de cuartiles serán outliers y tendrán especial relevancia pues informarán sobre anomalías en la humedad en los días en los que se produjero.
+Estos serán días inusualmente secos o inusualmente húmedos.
+
+\begin{center}
+<<datos_humedad_mes_cuart, fig=TRUE, echo=FALSE>>=
+boxplot(Humidity ~ Month, data=datos3, main="Niveles de humedad por mes", range=cuartiles_factor)
+@
+\end{center}
+
+Filtramos los datos originales indicando si sus niveles de humedad se salen del rango de curtiles de su mes.
 <<outliers>>=
-outliers_ozone <- list()
 vectoroutliers<- vector(mode="numeric", length=0)
-for(m in 1:12){
-  mc1=subset(datos3,datos3[,1]==m)
-  cuar1_mc1<-quantile(mc1$ozone_reading,0.25)
-  cuar3_mc1<-quantile(mc1$ozone_reading,0.75)
-  (int=c(cuar1_mc1-1.5*(cuar3_mc1-cuar1_mc1), cuar3_mc1+1.5*(cuar3_mc1-cuar1_mc1)))
-  for(i in 1:length(mc1$ozone_reading)){
-    if(mc1$ozone_reading[i]<int[1]||mc1$ozone_reading[i]>int[2]){
-      outliers_ozone[[length(outliers_ozone)+1]] <- t(matrix(c(mc1[i,]$ozone_reading,m), dimnames=list(c("ozone_reading","Mes"))))
-      vectoroutliers<-c(vectoroutliers, 0)    
-    }else{  
-      vectoroutliers<-c(vectoroutliers, 1)  
-    }
+for(mes in 1:12){
+  mes_data <- subset(datos3,datos3$Month==mes)
+  cuar1 <- quantile(mes_data$Humidity,0.25)
+  cuar3 <- quantile(mes_data$Humidity,0.75)
+  int <- c(cuar1-cuartiles_factor*(cuar3-cuar1), cuar3+cuartiles_factor*(cuar3-cuar1))
+  for(i in 1:length(mes_data$Humidity)){
+    vectoroutliers <- c(vectoroutliers, 
+      (mes_data$Humidity[i]<int[1])||(mes_data$Humidity[i]>int[2]))
   }
 }
-outliers_ozone
+datos_filtrados_cuartiles=cbind(vectoroutliers,datos3)
+datos_filtrados_cuartiles=subset(datos_filtrados_cuartiles,
+  datos_filtrados_cuartiles[,1]==0)
+datos_outliers_cuartiles=cbind(vectoroutliers,datos3)
+datos_outliers_cuartiles=subset(datos_outliers_cuartiles,
+  datos_outliers_cuartiles[,1]==1)
+length(datos_outliers_cuartiles)
 @
+
+Finalmente mostramos aquellos valores que han sido considerados outliers dibujados en rojo.
+\begin{center}
+<<datos_humedad_mes_filtrados, fig=TRUE, echo=FALSE>>=
+plot(Humidity ~ Month, data=datos_filtrados_cuartiles)
+points(Humidity ~ Month, data=datos_outliers_cuartiles, col="red")
+@
+\end{center}
+
+\newpage
+\subsection{Diferencia de temperatura en los sensores}
+
+A continuación calcularemos la regresión entre las medidas de temperatura capturadas con dos sensores distintos ubicados en localidades próximas.
+Las medidas de ambos deberían de ser muy parecidad pues las localidades no están suficiéntemente alejadas.
+
+Aquellos valores que se alejen demasiado de la recta de regresión podrán indicar error en la medida realizada por alguno de los sensores.
+Otra cosa que podrían revelar estos outliers son episidios de microclima que pudieran darse solo en una de las localidades.
+
+Elegimos el valor a partir del que queramos considerar outlier a los datos.
+<<regresion_factor>>=
+regresion_factor = 2.5
+@
+
+Mostramos la regresión entre las temperaturas de ambos sensores.
+\begin{center}
+<<temp_plot, fig=TRUE>>=
+dFr <- lm(datos3$Temperature_Sandburg~datos3$Temperature_ElMonte)
+res <- summary(dFr)$residuals
+sr <- sqrt(sum(res^2)/length(res))
+regPlot (datos3$Temperature_ElMonte, datos3$Temperature_Sandburg, dFr, 
+          sr*regresion_factor, xlabel="Temperatura ElMonte",
+                               ylabel="Temperature Sandburg")
+@
+\end{center}
+Como podemos ver ambas medidas están muy correladas.
+<<r_squared_raw>>=
+summary(dFr)$r.squared
+@
+
+Solo un valor es finalmente considerado outlier.
+Debido a que este valor es único y que tampoco aparece demasiado alejado del resto puede que realmente no lo sea.
+<<temp_filter>>=
+vectoroutliers<- vector(mode="numeric", length=0)
+for(i in 1:length(res)){
+    vectoroutliers <- c(vectoroutliers, abs(res[i])>regresion_factor*sr)
+}
+datos_filtrados_regresion <- cbind(vectoroutliers,datos3)
+datos_filtrados_regresion <- subset(datos_filtrados_regresion,
+  datos_filtrados_regresion[,1]==0)
+datos_outliers_regresion <- cbind(vectoroutliers,datos3)
+datos_outliers_regresion <- subset(datos_outliers_regresion,
+  datos_outliers_regresion[,1]==1)
+length(datos_outliers_regresion)
+@
+
+Mostramos ahora los outliers en rojo junto a los datos originales
+\begin{center}
+<<temp_filter, fig=TRUE>>=
+plot(datos_filtrados_regresion$Temperature_ElMonte,
+    datos_filtrados_regresion$Temperature_Sandburg,
+    xlab="Temperatura ElMonte",ylab="Temperature Sandburg")
+points(datos_outliers_regresion$Temperature_ElMonte, 
+    datos_outliers_regresion$Temperature_Sandburg, col="red")
+@
+\end{center}
+
+\newpage
+\section{Anális outliers en datos de incendios}
+Tenemos una muestra de datos de la humedad, temperatura, velocidad del viento, cantidad de lluvia y área quemada de distintos incendios.
+Sobre dicha muestra realizaremos un análisis de outliers utilizando las variables de la temperatura y la humedad con respecto al área quemada.
+
+Ya que queremos utilizar tres variables para el análisis muchos de los métodos estudiados no podrán ser usados.
+La mayoría como la desviación típica o los cuartiles son solo sobre una variable. La correlación por el contrarios es solo sobre dos.
+
+Utilizaremos por tanto las local features y la distancia de mahalanobis, dos métodos capaces de buscar outliers sobre n-dimensiones.
+Mostraremos los datos utilizando "scatterplot3d" capaz de crear gráficas tridimensionales.
+
+Primero deberemos cargar y normalizar la muestra de datos.
+\begin{center}
+<<forest_fires_data,fig=TRUE>>=
+data <- read.csv("forestfires.csv")
+data <- data[,c(9,10, 13)]
+data <- na.omit(data)
+normalize <- function(x){
+  return ((x-min(x))/(max(x)-min(x)))
+}
+data <- as.data.frame(lapply(data[,c(1,2,3)],normalize))
+scatterplot3d(data$temp, data$RH, data$area)
+@
+\end{center}
+
+\subsection{Outliers por Local Features}
+
+<<calculate>>=
+umbral <- 2.5
+data$score<-lof(data, k=3)
+data$outlier <- (data$score>umbral)
+@
+
+Mostramos los resultados.
+\begin{center}
+<<display, fig=TRUE>>=
+data$color <- ifelse(data$outlier, "red", "black")
+scatterplot3d(data$temp, data$RH, data$area, color = data$color)
+@
+\end{center}
+
+\begin{center}
+<<outliers_lof>>=
+subset(data[c(1,2,3,4)],data$outlier==1)
+@
+\end{center}
+
+\newpage
+\subsection{Outliers por distancia de Mahalanobis}
+
+
+<<mahalanobis>>=
+umbral <- 8
+data$mahalanobis <- mahalanobis(data[,1:3], colMeans(data[,1:3]), cov(data[,1:3]))
+data <- data[order(data$mahalanobis,decreasing = TRUE),]
+data$outlier <- (data$mahalanobis>umbral)
+@
+
+Mostramos los resultados.
+\begin{center}
+<<mahalanobis_plot, fig=TRUE>>=
+data$color <- ifelse(data$outlier, "red", "black")
+scatterplot3d(data$temp, data$RH, data$area,  color = data$color)
+@
+\end{center}
+
+\newpage
+\section{Clasificación supervisada con K-vecinos}
+Deseamos probar el algoritmo knn visto como un método para encontrar outliers esta vez aplicado a clasificación supervisada.
+Proporcionaremos un conjunto de datos de los que ya conocemos su clasificación y a partir de ellos crearemos un clasificador knn.
+La muestra utilizada se corresponden con medidas realizadas sobre distintos tipos de flores.
+Se miden los pétalos y los sépalos y se clasifican en 3 categorías: setosa, versicolor y virginica.
+
+Antes de utilizar los datos será necesario normalizarlos.
+<<knn_normalizar>>=
+data("iris")
+normalize <- function(x){
+  return ((x-min(x))/(max(x)-min(x)))
+}
+@
+
+Para validar el clasificador utilizaremos la mitad de los datos de los que disponemos como datos de "entrenamiento" siendo la otra mitad datos de "test".
+Para elegir la mitad de los datos desordenaremos previamente estos de modo que en cada conjunto pueda haber datos de todo tipo.
+<<knn_train_texst>>=
+rnum<- sample(rep(1:length(iris[,1])))
+iris<- iris[rnum,]
+iris.new<- as.data.frame(lapply(iris[,c(1,2,3,4)],normalize))
+
+train_limit <- floor(length(iris[,1])*0.5)
+iris.train <- iris.new[1:train_limit,]
+iris.train.target<- iris[1:train_limit,5]
+iris.test <- iris.new[(train_limit+1):length(iris[,1]),]
+iris.test.target <- iris[(train_limit+1):length(iris[,1]),5]
+@
+
+Creamos tres clasificadores disntintos teniendo en cuenta 1, 8 y 16 vecinos respectivamente.
+<<k_nn>>=
+modelknn1 <- knn(train=iris.train, test=iris.test, cl=iris.train.target, k=1)
+modelknn8 <- knn(train=iris.train, test=iris.test, cl=iris.train.target, k=8)
+modelknn16 <- knn(train=iris.train, test=iris.test, cl=iris.train.target, k=16)
+@
+
+Finalmente evaluamos la calidad de la clasificación obtenida creando matrices de confusión para cada uno de los clasificadores.
+En este caso lo resultados son muy similares en los tres, pero esto podría no ser así.
+Podemos ver que el clasificador acirta en la mayoría de los casos.
+Se puede ver también que el clasificador parece tener problemas para distinguir entre virginica y versicolor.
+Suelen aparecer errores cruzados entre esas dos clases, aunque ello depende de la elección aleatoria de los datos de test y entrenemiento.
+<<k_nn_confusion>>=
+table(iris.test.target, modelknn1)
+table(iris.test.target, modelknn8)
+table(iris.test.target, modelknn16)
+@
+
 
 \end{document}

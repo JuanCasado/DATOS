@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.10.8)  3 DEC 2019 17:12
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.10.8)  5 DEC 2019 20:26
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -345,88 +345,142 @@ Overfull \hbox (30.47675pt too wide) in paragraph at lines 7--7
 [1
 
 {/usr/local/texlive/2019/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-LaTeX Font Info:    Try loading font information for T1+aett on input line 26.
+(./entrega.toc
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 2.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 2.
+)
+\tf@toc=\write4
+\openout4 = `entrega.toc'.
 
-(/usr/local/texlive/2019/texmf-dist/tex/latex/ae/t1aett.fd
+ [2]
+LaTeX Font Info:    Try loading font information for T1+aett on input line 29.
+ (/usr/local/texlive/2019/texmf-dist/tex/latex/ae/t1aett.fd
 File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
 )
-<entrega-plot_datos1.pdf, id=11, 433.62pt x 433.62pt>
+<entrega-plot_datos1.pdf, id=16, 433.62pt x 433.62pt>
 File: entrega-plot_datos1.pdf Graphic file (type pdf)
 <use entrega-plot_datos1.pdf>
-Package pdftex.def Info: entrega-plot_datos1.pdf  used on input line 40.
+Package pdftex.def Info: entrega-plot_datos1.pdf  used on input line 43.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
- [2 <./entrega-plot_datos1.pdf>]
-<entrega-plot_datos2.pdf, id=25, 433.62pt x 433.62pt>
+[3 <./entrega-plot_datos1.pdf>]
+<entrega-plot_datos2.pdf, id=29, 433.62pt x 433.62pt>
 File: entrega-plot_datos2.pdf Graphic file (type pdf)
 <use entrega-plot_datos2.pdf>
-Package pdftex.def Info: entrega-plot_datos2.pdf  used on input line 63.
+Package pdftex.def Info: entrega-plot_datos2.pdf  used on input line 66.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
- [3 <./entrega-plot_datos2.pdf>]
-Overfull \hbox (5.10327pt too wide) in paragraph at lines 67--67
-[]\T1/aer/bx/n/14.4 K-vecinos so-bre la mues-tra pro-por-cionada para
- []
-
-<entrega-k_vecinos_plot.pdf, id=36, 433.62pt x 433.62pt>
+ [4 <./entrega-plot_datos2.pdf>]
+<entrega-k_vecinos_plot.pdf, id=40, 433.62pt x 433.62pt>
 File: entrega-k_vecinos_plot.pdf Graphic file (type pdf)
 <use entrega-k_vecinos_plot.pdf>
-Package pdftex.def Info: entrega-k_vecinos_plot.pdf  used on input line 99.
+Package pdftex.def Info: entrega-k_vecinos_plot.pdf  used on input line 102.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
-[4 <./entrega-k_vecinos_plot.pdf>] [5]
-<entrega-plot_caja_bigotes_resistencia.pdf, id=51, 433.62pt x 433.62pt>
+ [5 <./entrega-k_vecinos_plot.pdf>] [6]
+<entrega-plot_caja_bigotes_resistencia.pdf, id=55, 433.62pt x 433.62pt>
 File: entrega-plot_caja_bigotes_resistencia.pdf Graphic file (type pdf)
 <use entrega-plot_caja_bigotes_resistencia.pdf>
 Package pdftex.def Info: entrega-plot_caja_bigotes_resistencia.pdf  used on inp
-ut line 148.
+ut line 151.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
- [6 <./entrega-plot_caja_bigotes_resistencia.pdf>]
-<entrega-plot_caja_bigotes.pdf, id=61, 433.62pt x 433.62pt>
+ [7 <./entrega-plot_caja_bigotes_resistencia.pdf>]
+<entrega-plot_caja_bigotes.pdf, id=66, 433.62pt x 433.62pt>
 File: entrega-plot_caja_bigotes.pdf Graphic file (type pdf)
 <use entrega-plot_caja_bigotes.pdf>
-Package pdftex.def Info: entrega-plot_caja_bigotes.pdf  used on input line 193.
+Package pdftex.def Info: entrega-plot_caja_bigotes.pdf  used on input line 196.
 
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
- [7 <./entrega-plot_caja_bigotes.pdf>] [8]
-<entrega-desviacion_tipica_densidad_plot.pdf, id=75, 433.62pt x 433.62pt>
+
+[8 <./entrega-plot_caja_bigotes.pdf>] [9]
+<entrega-desviacion_tipica_densidad_plot.pdf, id=79, 433.62pt x 433.62pt>
 File: entrega-desviacion_tipica_densidad_plot.pdf Graphic file (type pdf)
 <use entrega-desviacion_tipica_densidad_plot.pdf>
 Package pdftex.def Info: entrega-desviacion_tipica_densidad_plot.pdf  used on i
-nput line 259.
+nput line 260.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
- [9 <./entrega-desviacion_tipica_densidad_plot.pdf>]
-<entrega-desviacion_tipica_resistencia_plot.pdf, id=84, 433.62pt x 433.62pt>
+ [10 <./entrega-desviacion_tipica_densidad_plot.pdf>]
+<entrega-desviacion_tipica_resistencia_plot.pdf, id=88, 433.62pt x 433.62pt>
 File: entrega-desviacion_tipica_resistencia_plot.pdf Graphic file (type pdf)
 <use entrega-desviacion_tipica_resistencia_plot.pdf>
 Package pdftex.def Info: entrega-desviacion_tipica_resistencia_plot.pdf  used o
-n input line 304.
+n input line 305.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
- [10 <./entrega-desviacion_tipica_resistencia_plot.pdf>] [11]
-<entrega-regresion_plot.pdf, id=96, 433.62pt x 433.62pt>
+ [11 <./entrega-desviacion_tipica_resistencia_plot.pdf>]
+[12]
+<entrega-regresion_plot.pdf, id=100, 433.62pt x 433.62pt>
 File: entrega-regresion_plot.pdf Graphic file (type pdf)
 <use entrega-regresion_plot.pdf>
-Package pdftex.def Info: entrega-regresion_plot.pdf  used on input line 380.
+Package pdftex.def Info: entrega-regresion_plot.pdf  used on input line 381.
 (pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
- [12] [13 <./entrega-regresion_plot.pdf>] (./entrega.aux) ) 
+ [13 <./entrega-regresion_plot.pdf>] [14]
+<entrega-datos_humedad_mes_cuart.pdf, id=114, 433.62pt x 433.62pt>
+File: entrega-datos_humedad_mes_cuart.pdf Graphic file (type pdf)
+<use entrega-datos_humedad_mes_cuart.pdf>
+Package pdftex.def Info: entrega-datos_humedad_mes_cuart.pdf  used on input lin
+e 443.
+(pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
+ [15]
+<entrega-datos_humedad_mes_filtrados.pdf, id=118, 433.62pt x 433.62pt>
+File: entrega-datos_humedad_mes_filtrados.pdf Graphic file (type pdf)
+<use entrega-datos_humedad_mes_filtrados.pdf>
+Package pdftex.def Info: entrega-datos_humedad_mes_filtrados.pdf  used on input
+ line 475.
+(pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
+ [16 <./entrega-datos_humedad_mes_cuart.pdf>] [17 <./entrega-datos_humedad_mes_
+filtrados.pdf>]
+<entrega-temp_plot.pdf, id=138, 433.62pt x 433.62pt>
+File: entrega-temp_plot.pdf Graphic file (type pdf)
+<use entrega-temp_plot.pdf>
+Package pdftex.def Info: entrega-temp_plot.pdf  used on input line 506.
+(pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
+ [18 <./entrega-temp_plot.pdf>]
+<entrega-temp_filter.pdf, id=148, 433.62pt x 433.62pt>
+File: entrega-temp_filter.pdf Graphic file (type pdf)
+<use entrega-temp_filter.pdf>
+Package pdftex.def Info: entrega-temp_filter.pdf  used on input line 550.
+(pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
+ [19 <./entrega-temp_filter.pdf>]
+<entrega-forest_fires_data.pdf, id=160, 433.62pt x 433.62pt>
+File: entrega-forest_fires_data.pdf Graphic file (type pdf)
+<use entrega-forest_fires_data.pdf>
+Package pdftex.def Info: entrega-forest_fires_data.pdf  used on input line 578.
+
+(pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
+ [20 <./entrega-forest_fires_data.pdf>]
+<entrega-display.pdf, id=170, 433.62pt x 433.62pt>
+File: entrega-display.pdf Graphic file (type pdf)
+<use entrega-display.pdf>
+Package pdftex.def Info: entrega-display.pdf  used on input line 599.
+(pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
+ [21 <./entrega-display.pdf>] [22]
+<entrega-mahalanobis_plot.pdf, id=183, 433.62pt x 433.62pt>
+File: entrega-mahalanobis_plot.pdf Graphic file (type pdf)
+<use entrega-mahalanobis_plot.pdf>
+Package pdftex.def Info: entrega-mahalanobis_plot.pdf  used on input line 650.
+(pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
+ [23 <./entrega-mahalanobis_plot.pdf>] [24] [25] (./entrega.aux) ) 
 Here is how much of TeX's memory you used:
- 2781 strings out of 492609
- 40603 string characters out of 6129048
- 95541 words of memory out of 5000000
- 6622 multiletter control sequences out of 15000+600000
- 30141 words of font info for 67 fonts, out of 8000000 for 9000
+ 2828 strings out of 492609
+ 41984 string characters out of 6129048
+ 98541 words of memory out of 5000000
+ 6654 multiletter control sequences out of 15000+600000
+ 32927 words of font info for 72 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,6n,25p,296b,333s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/local/texlive/
-2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2
-019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/local/texlive/201
-9/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2019/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2019/te
-xmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2019/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2019/texmf-d
-ist/fonts/type1/public/amsfonts/cm/cmsltt10.pfb></usr/local/texlive/2019/texmf-
-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on entrega.pdf (13 pages, 152462 bytes).
+</usr/local/t
+exlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/te
+xlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/tex
+live/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/local/texli
+ve/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive
+/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2
+019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/201
+9/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2019/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmsltt10.pfb></usr/local/texlive/2019/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on entrega.pdf (25 pages, 228385 bytes).
 PDF statistics:
- 137 PDF objects out of 1000 (max. 8388607)
- 97 compressed objects within 1 object stream
+ 230 PDF objects out of 1000 (max. 8388607)
+ 162 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
- 41 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 76 words of extra memory for PDF output out of 10000 (max. 10000000)
 
