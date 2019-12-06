@@ -10,7 +10,24 @@ Realizaremos análisis de outliers sobre las dos muestrar proporcionadas según 
 Para cada uno de los análisis realizados mostraremos los outliers obtenidos no solo de forma textual si no también con gráficos que nos ayuden a visualizar cada análisis.
 
 Posteriormente hemos buscado un dataset que contiene medidas realizadas sobre los niveles de ozono, de temperatura, de humedad y de velocidad del viento.
-Realizaremos el análisis de estos datos mediante regresión para lo cual primero realizaremos un análisis de outliers.
+Realizaremos varios análisis de outliyers sobre esta muestra.
+Primero consideraremos outliiers mediante cuartiles en la humedad agupada en meses.
+Posterioremte realizaremos el análisis de las temperaturas de ambos sensores por regresión para encontrar valores que no estén suficientemente correlados pues deberían de estarlos ya que ambos sensorrs están próximos y miden la misma magintud.
+Finalmente calcularemos la regresión entre la humedad y la visibilidad.
+Intentaremos mejorar la regresión obtenida tras eliminar outliyers po k-vecinos.
+
+En esta parte haremos especial incapié en que algunas técnicas de búsqueda de outlirs solo pueden aplicarse sobre una variable como es el caso de outliiers por cuartiles o desviacion tipica mientras que otras solo pueden aplicarse sobre dos como es el caso de la regresión.
+Es por ello que en la siguiente parte utilizaremos técnicas de búsqueda de outliers que puedan aplicarse sobre más variables como k-vecinos o la disntacia de mahalanobis.
+
+Tras esto realizaremos un anális de outliers sobre una muestra de datos de incendios en los que entre otras magnitudes tenemos la humedad, la temperatura y el área quemada.
+Utilizaremos en este anális las métricas de Local Features que consiste en un anális de k-vecinos implementado por el paquete "Rlof".
+También utlizaremos como métrica para detectar outliers la distancia de mahalanobis que tiene en cuenta la correlación entre las variables.
+
+En esta parte utilizaremos "scatterplot3d" para representar los datos en 3D ya que utilizamos tres variables.
+Podremos ver como la representación tridimensional de los datos no nos aporta demasiada preción para ver los resultados ya que de esta solo tenemos un proyección bidimensional.
+
+Finalmente utilizaremos k-vecinos para creae un classificador supervisado.
+Utilizaremos este clasificador para obtener matrices de confusión que nos indiquen lo bueno o malo que es comparando la clasificación obtenida con la esperada en datos de test.
 \end{abstract}
 
 \newpage
@@ -509,7 +526,13 @@ scatterplot3d(data$temp, data$RH, data$area)
 \end{center}
 
 \subsection{Outliers por Local Features}
+Buscaremos ahora outliers utilizando local features del paquete "Rlof".
+Esta técnica utilizar k-vecinos para encontrar outlier por densidad.
+Nos proporciona una puntución para cada dato de la muestra en función de la cual podremos determinar si dicho punto es o no outlier.
+Tendrán mayor puntución aquellos valores que estén muy alejados del resto, es decir, que tengan pocos vecinos a su alrededor y que estén lejos de ellos.
 
+Consideraremos que son outliers datos a una distancia mayor de 2.5 de su cuarto vecino más próximo.
+Consideraremos por tanto que tres puntos cercanos forman un cluster.
 <<calculate>>=
 umbral <- 2.5
 data$score<-lof(data, k=3)
@@ -524,6 +547,9 @@ scatterplot3d(data$temp, data$RH, data$area, color = data$color)
 @
 \end{center}
 
+Se consideran outliyer puntos con humedades y temperaturas muy bajas o altas y también puntos con áres quemadas muy elevadas.
+Podemos ver también que la representación tridimensional no es demasiado precisa ya que vemos una proyección bidimensional de esta.
+Solo con la representación tridimensional nos es difícil saber que puntos han sido considerados outliers.
 \begin{center}
 <<outliers_lof>>=
 subset(data[c(1,2,3,4)],data$outlier==1)
@@ -532,8 +558,12 @@ subset(data[c(1,2,3,4)],data$outlier==1)
 
 \newpage
 \subsection{Outliers por distancia de Mahalanobis}
+Buscaremos outlier utilizando la distancia de mahalanobis.
+Esta métrica tiene es una mejora sobre la distancia estadística o de Gauss en la que se tiene en cuenta la correlación de las variables.
+La ventaja de este método respecto del anterior es que no podemos obtener una detección de outliers peor por haber indicado un número de vecinos demasiado alto o bajo.
+Se utilizar para detectarlos la correlación que en algunos casos puede ser mejor.
 
-
+Consideraremos que son outliers datos con distancia de mahalanobis mayor que 8.
 <<mahalanobis>>=
 umbral <- 8
 data$mahalanobis <- mahalanobis(data[,1:3], colMeans(data[,1:3]), cov(data[,1:3]))
@@ -542,6 +572,7 @@ data$outlier <- (data$mahalanobis>umbral)
 @
 
 Mostramos los resultados.
+Podemos ver que mucho puntos coinciden con los calculados por k-vecinos.
 \begin{center}
 <<mahalanobis_plot, fig=TRUE>>=
 data$color <- ifelse(data$outlier, "red", "black")
@@ -551,7 +582,7 @@ scatterplot3d(data$temp, data$RH, data$area,  color = data$color)
 
 \newpage
 \section{Clasificación supervisada con K-vecinos}
-Deseamos probar el algoritmo knn visto como un método para encontrar outliers esta vez aplicado a clasificación supervisada.
+Deseamos probar el algoritmo k-vecinos visto como un método para encontrar outliers esta vez aplicado a clasificación supervisada.
 Proporcionaremos un conjunto de datos de los que ya conocemos su clasificación y a partir de ellos crearemos un clasificador knn.
 La muestra utilizada se corresponden con medidas realizadas sobre distintos tipos de flores.
 Se miden los pétalos y los sépalos y se clasifican en 3 categorías: setosa, versicolor y virginica.
@@ -596,5 +627,12 @@ table(iris.test.target, modelknn8)
 table(iris.test.target, modelknn16)
 @
 
+\newpage
+\section{Funciones utilizadas}
+Mostramos las funciones utilizadas para crear las gráficas de regresión mostrando los límites a partir de las que consideramos que un valor es outlier y la gráfica para considerar outliiers por desviación típica.
+<<show_funciones>>=
+regPlot
+plotFrecuencyData
+@
 
 \end{document}
