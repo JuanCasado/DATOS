@@ -354,6 +354,7 @@ sr
 A partir del error estándar y de la recta de regresión obtenida podremos mostrar los datos junto a su recta de regresión.
 Paralela a dicha recta mostramos otras dos que marcan la frontera a partir de la que los valores se considerarán outliers.
 En este caso solo se ve la recta paralela superior.
+
 \begin{center}
 <<regresion_plot, fig=TRUE, echo=FALSE>>=
 regPlot(datos2$Resistencia, datos2$Densidad, dFr,sr_factor*sr, "Resistencia", "Densidad")
@@ -362,6 +363,7 @@ regPlot(datos2$Resistencia, datos2$Densidad, dFr,sr_factor*sr, "Resistencia", "D
 
 Con el error estándar de los residuos, comparamos cada uno para comprobar si es mayor que el error estándar multiplicado por el factor establecido.
 Si se da el caso, podemos considerar ese punto como un outlier.
+
 <<residuooutlier>>=
 outliers_regresion = list()
 for(i in 1:length(res)){
@@ -385,6 +387,68 @@ No obstante aunque esta haya sido la conclusión finalmente obtenida debe ser ne
 datos3 <- read.csv("ozone.csv")
 @
 
+
+\subsection{Análisis de visibilidad en función de la humedad}
+En esta parte vamos a analizar los datos de visibilidad y humedad, pues pensamos que son dos datos que pueden estar relacionados. Comenzamos mostrando 
+la gráfica y en base a ella podremos interpretar y empezar a analizar.
+
+\begin{center}
+<<datvishum_plot, fig=TRUE,echo=FALSE>>=
+plot(datos3$Visibility, datos3$Humidity)
+@
+\end{center}
+
+Podemos observar que tienen una cierta correlación a simple vista, es decir, que a más humedad, menos visibilidad y viceversa. Para poder comprobar si esto es 
+realmente cierto, vamos a hacer un análisis de regresión.
+
+\begin{center}
+<<datvishumplotregres, fig=TRUE, echo=FALSE>>=
+dFr=lm(datos3$Visibility~datos3$Humidity)
+plot(datos3$Visibility, datos3$Humidity, xlab='Visibility', ylab='humidity')
+abline(dFr)
+@
+\end{center}
+
+Tras ver esta recta de regresión, sería lógico pensar que si eliminamos algunos outliers, nos quedará una recta que presentará una correlación negativa.
+ Procedemos a realizar un análisis de k-vecinos, exactamente del 3er vecino (si está a una distancia superior a 15 lo consideramos outlier) para identificar 
+ a estos outliers y eliminarlos, con el objetivo de descubrir si realmente las variables que estamos 
+ analizando tienen de verdad una buena correlación negativa, aunque se pueda ver perjudicada por outliers.
+
+<<temp_plot_analkvec>>=
+prueba = datos3[,c("Visibility","Humidity")]
+distancias <- as.matrix(dist(prueba))
+for(i in 1:length(distancias[,1])){
+distancias[,i] <- sort(distancias[,i])
+}
+distanciasordenadas <- distancias
+outliers_kvecinos = list()
+for(i in 1:length(distanciasordenadas[,1])){
+    if(distanciasordenadas[4,i]>15){
+        outliers_kvecinos[[length(outliers_kvecinos)+1]] <- prueba[i,]
+    }
+}
+length(outliers_kvecinos)
+@
+
+Hemos identificado 14 outliers, así que los eliminamos y volvemos a plotear la regresión de nuevo, y valoraremos si el algoritmo k-vecinos y la eliminación 
+de estos outliers identificados nos ha ayudado a mejorar nuestra comprensión sobre la relación entre estas dos variables o no.
+
+\begin{center}
+<<analisissinoutlierskvecinos, fig=TRUE, echo=FALSE>>=
+prueba2 = prueba[-c(3,17,23,26,34,44,50,52,61,64,124,176,190,194),]
+ dFr2=lm(prueba2$Visibility~prueba2$Humidity)
+plot(prueba2$Visibility, prueba2$Humidity, xlab='Visibility', ylab='humidity')
+abline(dFr2)
+@
+\end{center}
+
+Como podemos observar, tras eliminar los 14 outliers, no ha cambiado en nada prácticamente la regresión, lo cual nos indica que los datos que hemos 
+identificado como outliers en realidad no eran datos muy fuera de lo común. El análisis de k-vecinos no ha sido un fracaso, pues hemos sacado esta 
+conclusión, que puede ser muy valiosa para tener en cuenta la relación y los datos recogidos de estas dos variables.
+
+
+
+\newpage
 \subsection{Outliers por cuartiles en cada mes}
 
 Deseamos ver si hay algún dato cuya humedad sea inusualmente alta o baja para la que debería de estar sucediendo cuando fue capturado.
@@ -468,7 +532,7 @@ regPlot (datos3$Temperature_ElMonte, datos3$Temperature_Sandburg, dFr,
                                ylabel="Temperature Sandburg")
 @
 \end{center}
-Como podemos ver ambas medidas están muy correladas.
+Como podemos ver ambas medidas están muy correlacionadas.
 <<r_squared_raw>>=
 summary(dFr)$r.squared
 @
@@ -609,7 +673,7 @@ iris.test <- iris.new[(train_limit+1):length(iris[,1]),]
 iris.test.target <- iris[(train_limit+1):length(iris[,1]),5]
 @
 
-Creamos tres clasificadores disntintos teniendo en cuenta 1, 8 y 16 vecinos respectivamente.
+Creamos tres clasificadores distintos teniendo en cuenta 1, 8 y 16 vecinos respectivamente.
 <<k_nn>>=
 modelknn1 <- knn(train=iris.train, test=iris.test, cl=iris.train.target, k=1)
 modelknn8 <- knn(train=iris.train, test=iris.test, cl=iris.train.target, k=8)

@@ -394,12 +394,14 @@ Posteriormente, obtenemos los residuos calculados a partir de la recta de regres
 A partir del error estándar y de la recta de regresión obtenida podremos mostrar los datos junto a su recta de regresión.
 Paralela a dicha recta mostramos otras dos que marcan la frontera a partir de la que los valores se considerarán outliers.
 En este caso solo se ve la recta paralela superior.
+
 \begin{center}
 \includegraphics{entrega-regresion_plot}
 \end{center}
 
 Con el error estándar de los residuos, comparamos cada uno para comprobar si es mayor que el error estándar multiplicado por el factor establecido.
 Si se da el caso, podemos considerar ese punto como un outlier.
+
 \begin{Schunk}
 \begin{Sinput}
 > outliers_regresion = list()
@@ -432,6 +434,62 @@ No obstante aunque esta haya sido la conclusión finalmente obtenida debe ser ne
 \end{Sinput}
 \end{Schunk}
 
+
+\subsection{Análisis de visibilidad en función de la humedad}
+En esta parte vamos a analizar los datos de visibilidad y humedad, pues pensamos que son dos datos que pueden estar relacionados. Comenzamos mostrando 
+la gráfica y en base a ella podremos interpretar y empezar a analizar.
+
+\begin{center}
+\includegraphics{entrega-datvishum_plot}
+\end{center}
+
+Podemos observar que tienen una cierta correlación a simple vista, es decir, que a más humedad, menos visibilidad y viceversa. Para poder comprobar si esto es 
+realmente cierto, vamos a hacer un análisis de regresión.
+
+\begin{center}
+\includegraphics{entrega-datvishumplotregres}
+\end{center}
+
+Tras ver esta recta de regresión, sería lógico pensar que si eliminamos algunos outliers, nos quedará una recta que presentará una correlación negativa.
+ Procedemos a realizar un análisis de k-vecinos, exactamente del 3er vecino (si está a una distancia superior a 15 lo consideramos outlier) para identificar 
+ a estos outliers y eliminarlos, con el objetivo de descubrir si realmente las variables que estamos 
+ analizando tienen de verdad una buena correlación negativa, aunque se pueda ver perjudicada por outliers.
+
+\begin{Schunk}
+\begin{Sinput}
+> prueba = datos3[,c("Visibility","Humidity")]
+> distancias <- as.matrix(dist(prueba))
+> for(i in 1:length(distancias[,1])){
++ distancias[,i] <- sort(distancias[,i])
++ }
+> distanciasordenadas <- distancias
+> outliers_kvecinos = list()
+> for(i in 1:length(distanciasordenadas[,1])){
++     if(distanciasordenadas[4,i]>15){
++         outliers_kvecinos[[length(outliers_kvecinos)+1]] <- prueba[i,]
++     }
++ }
+> length(outliers_kvecinos)
+\end{Sinput}
+\begin{Soutput}
+[1] 14
+\end{Soutput}
+\end{Schunk}
+
+Hemos identificado 14 outliers, así que los eliminamos y volvemos a plotear la regresión de nuevo, y valoraremos si el algoritmo k-vecinos y la eliminación 
+de estos outliers identificados nos ha ayudado a mejorar nuestra comprensión sobre la relación entre estas dos variables o no.
+
+\begin{center}
+\includegraphics{entrega-analisissinoutlierskvecinos}
+\end{center}
+
+Como podemos observar, tras eliminar los 14 outliers, no ha cambiado en nada prácticamente la regresión, lo cual nos indica que los datos que hemos 
+identificado como outliers en realidad no eran datos muy fuera de lo común. El análisis de k-vecinos no ha sido un fracaso, pues hemos sacado esta 
+conclusión, que puede ser muy valiosa para tener en cuenta la relación y los datos recogidos de estas dos variables.
+
+
+
+\newpage
 \subsection{Outliers por cuartiles en cada mes}
 
 Deseamos ver si hay algún dato cuya humedad sea inusualmente alta o baja para la que debería de estar sucediendo cuando fue capturado.
@@ -522,7 +580,7 @@ Mostramos la regresión entre las temperaturas de ambos sensores.
 \end{Schunk}
 \includegraphics{entrega-temp_plot}
 \end{center}
-Como podemos ver ambas medidas están muy correladas.
+Como podemos ver ambas medidas están muy correlacionadas.
 \begin{Schunk}
 \begin{Sinput}
 > summary(dFr)$r.squared
@@ -713,7 +771,7 @@ Para elegir la mitad de los datos desordenaremos previamente estos de modo que e
 \end{Sinput}
 \end{Schunk}
 
-Creamos tres clasificadores disntintos teniendo en cuenta 1, 8 y 16 vecinos respectivamente.
+Creamos tres clasificadores distintos teniendo en cuenta 1, 8 y 16 vecinos respectivamente.
 \begin{Schunk}
 \begin{Sinput}
 > modelknn1 <- knn(train=iris.train, test=iris.test, cl=iris.train.target, k=1)
@@ -735,8 +793,8 @@ Suelen aparecer errores cruzados entre esas dos clases, aunque ello depende de l
                 modelknn1
 iris.test.target setosa versicolor virginica
       setosa         25          0         0
-      versicolor      0         24         2
-      virginica       0          2        22
+      versicolor      0         20         2
+      virginica       0          4        24
 \end{Soutput}
 \begin{Sinput}
 > table(iris.test.target, modelknn8)
@@ -745,8 +803,8 @@ iris.test.target setosa versicolor virginica
                 modelknn8
 iris.test.target setosa versicolor virginica
       setosa         25          0         0
-      versicolor      0         25         1
-      virginica       0          1        23
+      versicolor      0         21         1
+      virginica       0          1        27
 \end{Soutput}
 \begin{Sinput}
 > table(iris.test.target, modelknn16)
@@ -755,8 +813,8 @@ iris.test.target setosa versicolor virginica
                 modelknn16
 iris.test.target setosa versicolor virginica
       setosa         25          0         0
-      versicolor      0         26         0
-      virginica       0          3        21
+      versicolor      0         21         1
+      virginica       0          4        24
 \end{Soutput}
 \end{Schunk}
 
@@ -778,7 +836,7 @@ function (x, y, regresion, limit, xlabel="", ylabel="") {
   abline(regresion, "black", lty=1, lwd=3)
   abline(regDownLimit, "gray", lty=2, lwd=2)
 }
-<bytecode: 0x7fd09169b1b8>
+<bytecode: 0x0000022970635748>
 \end{Soutput}
 \begin{Sinput}
 > plotFrecuencyData
@@ -800,7 +858,7 @@ function(data, xlabel="") {
   legend ("topright", legend=c("media", "2*desviación típica"),
           fill=c("blue","gray"))
 }
-<bytecode: 0x7fd093eb38e8>
+<bytecode: 0x000002296f563c80>
 \end{Soutput}
 \end{Schunk}
 

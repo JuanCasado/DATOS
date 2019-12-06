@@ -1,18 +1,9 @@
-plot(data3$Visibility, data3$Humidity)
-
-dFr=lm(data3$Visibility~data3$Humidity)
-
-plot(data3$Visibility, data3$Humidity, xlab='Visibility', ylab='humidity')
-abline(dFr)
 
 
-prueba = data3[,c("Visibility","Humidity")]
-
-dFr=lm(prueba$Visibility~prueba$Humidity)
-
-plot(prueba$Visibility, prueba$Humidity, xlab='Visibility', ylab='humidity')
-abline(dFr)
-
+for(i in 1:length(distancias[,1])){
+  distancias[,i] <- sort(distancias[,i])
+}
+distanciasordenadas <- distancias
 
 outliers_kvecinos = list()
 for(i in 1:length(distanciasordenadas[,1])){
@@ -54,6 +45,38 @@ outliers_kvecinos = list()
 for(i in 1:length(distanciasordenadas[,1])){
     if(distanciasordenadas[7,i]>15){
         outliers_kvecinos[[length(outliers_kvecinos)+1]] <- prueba[i,]
+    }
+}
+outliers_kvecinos
+
+
+outliers_kvecinos<- vector(mode="numeric", length=0)
+for(i in 1:length(distanciasordenadas[,1])){
+    if(distanciasordenadas[4,i]>15){
+        outliers_kvecinos[[length(outliers_kvecinos)+1]] <- prueba[i,]
+    }
+}
+outliers_kvecinos
+datos_filtrados_kvecinos <- cbind(t(outliers_kvecinos),datos3)
+datos_filtrados_kvecinos <- subset(datos_filtrados_kvecinos, datos_filtrados_kvecinos[,1]==0)
+datos_outliers_kvecinos <- cbind(t(vectoroutliers),datos3)
+datos_outliers_kvecinos <- subset(datos_outliers_kvecinos, datos_outliers_kvecinos[,1]==1)
+length(datos_outliers_regresion)
+\begin{center}
+<<temp_filter, fig=TRUE>>=
+plot(datos_filtrados_regresion$Temperature_ElMonte,
+    datos_filtrados_regresion$Temperature_Sandburg,
+    xlab="Temperatura ElMonte",ylab="Temperature Sandburg")
+points(datos_outliers_regresion$Temperature_ElMonte, 
+    datos_outliers_regresion$Temperature_Sandburg, col="red")
+@
+\end{center}
+
+
+outliers_kvecinos = list()
+for(i in 1:length(distanciasordenadas[,1])){
+    if(distanciasordenadas[4,i]>15){
+        outliers_kvecinos[[length(outliers_kvecinos)+1]] <- datos3[i,]
     }
 }
 outliers_kvecinos
