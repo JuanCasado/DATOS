@@ -383,10 +383,13 @@ Mes en el que se capturaron los datos, cantidad de ozono, presión, velocidad de
 A lo largo del análisis podemos ver que la muestra de datos carece de valores outlier que sean notables.
 No obstante aunque esta haya sido la conclusión finalmente obtenida debe ser necesario mencionar que es una conclusión válida.
 
-<<read_ozone_data>>=
+<<>>=
 datos3 <- read.csv("ozone.csv")
+normalize <- function(x){
+  return ((x-min(x))/(max(x)-min(x)))
+}
+datos3_norm <-  as.data.frame(lapply(datos3[,c(7 ,13)],normalize))
 @
-
 
 \subsection{Análisis de visibilidad en función de la humedad}
 En esta parte vamos a analizar los datos de visibilidad y humedad, pues pensamos que son dos datos que pueden estar relacionados. Comenzamos mostrando 
@@ -394,7 +397,7 @@ la gráfica y en base a ella podremos interpretar y empezar a analizar.
 
 \begin{center}
 <<datvishum_plot, fig=TRUE,echo=FALSE>>=
-plot(datos3$Visibility, datos3$Humidity)
+plot(datos3_norm$Visibility, datos3_norm$Humidity)
 @
 \end{center}
 
@@ -403,31 +406,41 @@ realmente cierto, vamos a hacer un análisis de regresión.
 
 \begin{center}
 <<datvishumplotregres, fig=TRUE, echo=FALSE>>=
-dFr=lm(datos3$Visibility~datos3$Humidity)
-plot(datos3$Visibility, datos3$Humidity, xlab='Visibility', ylab='humidity')
-abline(dFr)
+regresion_factor = 2.5
+dFr=lm(datos3_norm$Visibility~datos3_norm$Humidity)
+res <- summary(dFr)$residuals
+sr <- sqrt(sum(res^2)/length(res))
+regPlot (datos3_norm$Visibility, datos3_norm$Humidity, dFr, 
+          sr*regresion_factor, xlabel="Visibilidad",
+                               ylabel="Humedad")
 @
 \end{center}
 
+Podemos ver que la correlación cuadrada entre ambas variables es baja.
+<<regresion_con_outliers>>=
+summary(dFr)$r.squared
+@
+
 Tras ver esta recta de regresión, sería lógico pensar que si eliminamos algunos outliers, nos quedará una recta que presentará una correlación negativa.
- Procedemos a realizar un análisis de k-vecinos, exactamente del 3er vecino (si está a una distancia superior a 15 lo consideramos outlier) para identificar 
+ Procedemos a realizar un análisis de k-vecinos, exactamente del séptimo vecino (si está a una distancia superior a 0.15 lo consideramos outlier) para identificar 
  a estos outliers y eliminarlos, con el objetivo de descubrir si realmente las variables que estamos 
  analizando tienen de verdad una buena correlación negativa, aunque se pueda ver perjudicada por outliers.
 
 <<temp_plot_analkvec>>=
-prueba = datos3[,c("Visibility","Humidity")]
+prueba = datos3_norm[,c("Visibility","Humidity")]
 distancias <- as.matrix(dist(prueba))
 for(i in 1:length(distancias[,1])){
 distancias[,i] <- sort(distancias[,i])
 }
 distanciasordenadas <- distancias
-outliers_kvecinos = list()
+vectoroutliers<- vector(mode="numeric", length=0)
 for(i in 1:length(distanciasordenadas[,1])){
-    if(distanciasordenadas[4,i]>15){
-        outliers_kvecinos[[length(outliers_kvecinos)+1]] <- prueba[i,]
-    }
+  vectoroutliers <- c(vectoroutliers, distanciasordenadas[8,i]>0.15)
 }
-length(outliers_kvecinos)
+datos_filtrados_knn <- cbind(vectoroutliers, datos3_norm)
+datos_filtrados_knn <- subset(datos_filtrados_knn,
+  datos_filtrados_knn[,1]==0)
+length(datos3_norm[,1])-length(datos_filtrados_knn[,1])
 @
 
 Hemos identificado 14 outliers, así que los eliminamos y volvemos a plotear la regresión de nuevo, y valoraremos si el algoritmo k-vecinos y la eliminación 
@@ -435,17 +448,23 @@ de estos outliers identificados nos ha ayudado a mejorar nuestra comprensión so
 
 \begin{center}
 <<analisissinoutlierskvecinos, fig=TRUE, echo=FALSE>>=
-prueba2 = prueba[-c(3,17,23,26,34,44,50,52,61,64,124,176,190,194),]
- dFr2=lm(prueba2$Visibility~prueba2$Humidity)
-plot(prueba2$Visibility, prueba2$Humidity, xlab='Visibility', ylab='humidity')
-abline(dFr2)
+dFr2=lm(datos_filtrados_knn$Visibility~datos_filtrados_knn$Humidity)
+res <- summary(dFr2)$residuals
+sr <- sqrt(sum(res^2)/length(res))
+regPlot (datos_filtrados_knn$Visibility, datos_filtrados_knn$Humidity, dFr2, 
+          sr*regresion_factor, xlabel="Visibilidad",
+                               ylabel="Humedad")
 @
 \end{center}
+
+La correlación cuadrada entre ambas variables aumenta aunque sigue siendo baja.
+<<regresion_con_outliers>>=
+summary(dFr2)$r.squared
+@
 
 Como podemos observar, tras eliminar los 14 outliers, no ha cambiado en nada prácticamente la regresión, lo cual nos indica que los datos que hemos 
 identificado como outliers en realidad no eran datos muy fuera de lo común. El análisis de k-vecinos no ha sido un fracaso, pues hemos sacado esta 
 conclusión, que puede ser muy valiosa para tener en cuenta la relación y los datos recogidos de estas dos variables.
-
 
 
 \newpage
