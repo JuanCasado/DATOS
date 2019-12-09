@@ -1,0 +1,22 @@
+\documentclass [a4paper] {article}
+\usepackage[utf8]{inputenc}
+\title{Ciencia de datos, práctica 6}
+\author{Juan Casado Ballesteros, Samuel García Gonzalez, Iván Anaya Martín}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+TODO
+\end{abstract}
+
+\newpage
+\tableofcontents
+
+<<functions, echo=False>>=
+
+@
+
+\newpage
+\section{Visualización}
+
+\end{document}
