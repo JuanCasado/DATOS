@@ -6,14 +6,20 @@
 \maketitle
 
 \begin{abstract}
-Nuestra tarea es realizar mejoras de visualización sobre gráficas de libre elección. nos vamos a centrar en gráficas con recta de regresión, puesto 
-que consideramos que es una gráfica muy utilizada y su análisis para una mejor visualización de la misma puede resultar muy interesante. 
-Hemos realizado diferentes análisis y extraido conclusiones de aspectos muy variados, desde el cambio de los ejes de representación de la gráfica o 
-simplificar la información representada hasta analizar las gráficas interactivas.
+Analizaremos las gráficas que permiten visualizar la regresión.
+En ellas deberemos mostrar los datos como una nube de puntos junto a la recta de regresión que los aproxima.
 
+Realizaremos una pequeña guía de estilo incluyendo consejos sobre como crear una buena gráfica en general y en concreto una de regresión.
+Para hacerlo nos hemos inspirado en el libro de Edward Tufte, Data Analysis for Politics and Policy donde habla en el capítulo 3 sobre las rectas de regresión.
+
+Utilizaremos algunas técnicas de las que él utiliza para mejorar la visualización de la regresión como la esca logarítmica.
+También expondremos algunos de sus más famosos ejemplos como apoyo a explicar la importancia de la visualización de la regresión.
+
+Finalmente concluiremos con ejemplos de rectas de regresión dibujadas por nosotros con las funciones de R sigueinedo los principios que nosotros mismos hemos propuesto.
+También realizaremos ejemplos de rectas de regresión con los paquetes "plotly" y "ggplot2".
+Estos paquetes tienen la capacidad de crear gráficas interactivas lo cual también comentaremos y ejemplificaremos mencionando sus ventajas frente a las gráficas estáticas.
 \end{abstract}
 
-\newpage
 \tableofcontents
 
 <<functions, echo=False>>=
@@ -33,39 +39,31 @@ regPlot <- function (x, y, regresion, limit, title="", xlabel="", ylabel="") {
 
 \newpage
 \section{Visualización de la regresión}
+La recta de ajuste entre dos variables es una herramienta muy importante en el análisis de datos y su visualización, aunque no por si sola,
+si la correlación entre las variables es baja esta puede no significar nada.
+Lo realmente relevante son la relación entre la recta y los datos. 
+La visualización es importante pues nos permite condensar la información y simplificarla para permitir entenderla de forma rápida.
+También es interesante porque podemos extraer conclusiones que a primera vista no hemos sido capaces de observar numéricamente. 
+Deben poder visualizarse ambos elementos, la recta y la nube de puntos de los datos de forma adecuada pues es la relación entre ambos la que nos interesa, deseamos ver lo bien o mal que la recta se adapte a nuestros datos.
 
-
-\section{Mejora de visualización en gráficas con recta de regresión}
-La recta de ajuste entre variables es una herramienta muy importante en el análisis de datos y su visualización, pero no lo más importante, puesto que 
-si la correlación es baja esta puede no significar nada, asi que lo realmente relevante son la relación entre la recta y los datos. 
-Estas nos ofrecen la oportunidad de condensar la información representada de manera muy simple y rápida de ver, facilitando así 
-el entendimiento de los datos que se están mostrando. También es interesante porque podemos extraer conclusiones que 
-a primera vista no hemos sido capaces de observar. 
-Deben poder visualizarse ambos elementos de forma adecuada pues es la relación entre ambos la que nos interesa, deseamos ver lo bien o mal que la recta se adapte a nuestros datos.
-
+\subsection{Ejemplos de regresión}
 En el análisis de regresión compareremos como dos variables de la siguiente muestra se relacionan entre ellas.
-Estos datos representan la relación existente entre la población de un país y el tamaño de su parlamento. Hemos escogido datos de 29 países en los
-que su sistema político se basa en la democracia liberal.
+Estos datos representan la relación existente entre la población de un país y el tamaño de su parlamento. 
+Hemos escogido datos de 29 países en los que su sistema político se basa en la democracia liberal.
 
-<<cargar_datosdemoc>>=
-data <- read.table('democracia.txt')
-data
-@
-
-Para asegurar la calidad en representaciones de regresiones lineales: Estos diagramas se usan para relaciones entre dos variables, 
-y nos permiten extraer mucha más información que sólo ver los datos, y de una manera muy accesible y rápida y facilitando la extracción de 
-conclusiones. Hay que tener en cuenta que una buena representación de datos debe ser limpia y que a la vez facilite la comprensión de la 
-mayor cantidad de información en el menor tiempo posible. Este objetivo lo queremos cumplir en todas las representaciones de este apartado.
-Pasamos a representar los datos antes mostrados:
+Hay que tener en cuenta que una buena representación de datos debe ser limpia y que a la vez facilite la comprensión de la mayor cantidad de información en el menor tiempo posible. 
+Este objetivo lo queremos cumplir en todas las representaciones de este apartado.
 
 \begin{center}
 <<plot_democracia, fig=TRUE, echo=FALSE>>=
+data <- read.table('democracia.txt')
 regresion <- lm(data$Asientos~data$Poblacion)
-plot(data$Poblacion, data$Asientos, xlab='Poblacion', ylab='Tamaño del parlamento (en escaños)')
+plot(data$Poblacion, data$Asientos, xlab='Poblacion (habitantes)', ylab='Tamaño del parlamento (en escaños)')
 abline(regresion)
 @
 \end{center}
 
+\subsection{Mejora de visualización en gráficas con recta de regresión}
 Es muy importante indicar las unidades de medida en las que representamos los datos, porque modificando estas (sin manipular los datos) 
 podemos conseguir una mejor o peor representación de los mismos. Una manera de mejorar esta gráfica es representando las variables de manera 
 logarítmica. La usamos con los siguientes propósitos, interpretados de las conclusiones de Edward Tufte en su libro Data Analysis for Politics and Policy: 
@@ -96,7 +94,7 @@ puesto que en la anterior gráfica se concentraban mucho en la parte inferior. E
 a primera vista es más clara y rápida. Este análisis nos demuestra que también se puede mejorar la visualización de 
 una gráfica usando otros métodos aparte de la mejora simplemente visual, como hemos hecho en este apartado modificando los ejes de representación.
 
-\subsection{La importancia de la visualización}
+\section{La importancia de la visualización}
 Como ejemplo ilustrativo de la importancia de la visualización ponemos el ya famoso ejemplo del libro de Edward Tufte, Data Analysis for Politics and Policy, Chapter 3: Two-Variable Linear Regression.
 En dicho ejemplo las rectas de regresión obtenidas son idénticas y se adaptan a ojos de la correlación de igual modo a los datos.
 Si no fuera por la visualización de ambos elementos en conjunto no podríamos conocer la gran disparidad entre cada una de las muestras.
@@ -170,7 +168,7 @@ regPlot (datos3$Temperature_ElMonte, datos3$Temperature_Sandburg, regresion3,
   summary(regresion3)$sigma, title="Temperaturas de dos sensores ºC",
   xlabel="SensorA ºC", ylabel="SensorB ºC")
 legend("topleft", legend=c("Regresión", "Regresion+-desviación típica"),
-      col=c("black", "blue"), lty=c(1,2), lwd=c(3,2))
+      col=c("black", "black"), lty=c(1,2), lwd=c(3,2))
 @
 \end{center}
 
@@ -189,8 +187,9 @@ No obstante esto también es uno de los problemas de esta librería.
 Por defecto las gráficas que obtendremos tendrán un fóndo grisáceo con una cuadrícula en blanco tal y como podemos ver en el ejemplo.
 Esto hace que la representaciín de los datos sea más difusa que la obtenida con las funciones propias de R que crean una visualización mucho más limpia.
 \begin{center}
-<<ggplot2_NO_se, fig=TRUE, echo=FALSE>>=
-ggplot(data = datos3, aes(x = datos3$Temperature_ElMonte, y = datos3$Temperature_Sandburg)) + 
+<<ggplot2_NO_se, fig=TRUE>>=
+ggplot(data = datos3, aes(x = datos3$Temperature_ElMonte, 
+                          y = datos3$Temperature_Sandburg)) + 
   geom_point(color='black') +
   geom_smooth(method = "lm", se = FALSE) + 
   labs(title = "Temperaturas de dos sensores ºC") +
