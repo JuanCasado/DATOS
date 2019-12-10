@@ -32,13 +32,65 @@ regPlot <- function (x, y, regresion, limit, title="", xlabel="", ylabel="") {
 
 
 \section{Análisis de gráficas de regresión}
-Analizaremos ahora conceptos y soluciones específicas para la visualización de rectass de regresión.
-Lo más importante en estos diagramas no es la recta generada, pues si la correlación es baja esta puede no significar nada, si no la relación entre la recta y los datos.
+La recta de ajuste entre variables es una herramienta muy importante en el análisis de datos y su visualización, pero no lo más importante, puesto que 
+si la correlación es baja esta puede no significar nada, asi que lo realmente relevante son la relación entre la recta y los datos. 
+Estas nos ofrecen la oportunidad de condensar la información representada de manera muy simple y rápida de ver, facilitando así 
+el entendimiento de los datos que se están mostrando. También es interesante porque podemos extraer conclusiones que 
+a primera vista no hemos sido capaces de observar. 
 Deben poder visualizarse ambos elementos de forma adecuada pues es la relación entre ambos la que nos interesa, deseamos ver lo bien o mal que la recta se adapte a nuestros datos.
 
-En el análisis de regresión compareremos como dos variables de nuestra muestra se relacionan entre ellas.
-Es recomendable por tanto, ya que este problema siempre estará en un dominio bidimensional, representarlo gráficamente.
-No siempre tenemos la oportunidad de visualizar de forma conveniente las relaciones entre nuestros datos, ya sea por la complejidad de la relación o por la anta dimensionalidad de las variables involocradas.
+En el análisis de regresión compareremos como dos variables de la siguiente muestra se relacionan entre ellas.
+Estos datos representan la relación existente entre la población de un país y el tamaño de su parlamento. Hemos escogido datos de 29 países en los
+que su sistema político se basa en la democracia liberal.
+
+<<cargar_datosdemoc>>=
+data <- read.table('democracia.txt')
+data
+@
+
+Para asegurar la calidad en representaciones de regresiones lineales: Estos diagramas se usan para relaciones entre dos variables, 
+y nos permiten extraer mucha más información que sólo ver los datos, y de una manera muy accesible y rápida y facilitando la extracción de 
+conclusiones. Hay que tener en cuenta que una buena representación de datos debe ser limpia y que a la vez facilite la comprensión de la 
+mayor cantidad de información en el menor tiempo posible. Este objetivo lo queremos cumplir en todas las representaciones de este apartado.
+Pasamos a representar los datos antes mostrados:
+
+\begin{center}
+<<plot_democracia, fig=TRUE, echo=FALSE>>=
+regresion <- lm(data$Asientos~data$Poblacion)
+plot(data$Poblacion, data$Asientos, xlab='Poblacion', ylab='Tamaño del parlamento (en escaños)')
+abline(regresion)
+@
+\end{center}
+
+Es muy importante indicar las unidades de medida en las que representamos los datos, porque modificando estas (sin manipular los datos) 
+podemos conseguir una mejor o peor representación de los mismos. Una manera de mejorar esta gráfica es representando las variables de manera 
+logarítmica. La usamos con los siguientes propósitos, interpretados de las conclusiones de Edward Tufte en su libro Data Analysis for Politics and Policy: 
+\begin{itemize}
+  \item Los coeficientes de regresión a veces son más útiles en una interpretación teórica.
+  \item Cuando una gráfica está mal distribuida a primera vista y sus datos están agrupados en diferentes clusters, junto con algún dato periférico, se pueden transformar usando en la representación el logaritmo de las observaciones consiguiendo de esta manera que los valores de los clusters se “extiendan” en la gráfica y los valores periféricos se “concentren” también, obteniendo una distribución mucho mejor.
+  \item Algunos supuestos teóricos que son fundamentales en el modelo de regresión y su significado en los resultados encajan mejor cuando se usa el logaritmo de las unidades de medida.
+\end{itemize}
+Estos aspectos que enuncia Tufte, nos benefician en la representación de la muestra que tenemos, puesto que según esas conclusiones (las cuales vamos a probar 
+que son ciertas), extraemos que la representación logarítmica de las variables da resultado a una distribución mucho más simétrica, 
+puesto que los valores muy grandes los “aplana” hacia la media, y los valores pequeños los “estira”. 
+Cabe destacar que transformar las variables usando logaritmos reduce la no-linealidad en la relación y reduce en gran medida el desorden 
+en las distribuciones, es decir, ayuda a clarificar la relación entre dos variables. Pasamos a probar estos fundamentos teóricos en la realidad, 
+representando la población en escala logarítmica: 
+
+\begin{center}
+<<plot_democracia_log, fig=TRUE, echo=FALSE>>=
+vec <- log10(data$Poblacion)
+regresion <- lm(data$Asientos~vec)
+plot(vec, data$Asientos, xlab='Poblacion (escala log10)', ylab='Tamaño del parlamento (en escaños)')
+abline(regresion)
+@
+\end{center}
+
+Como podemos ver, es mucho más clara no solo la relación entre las dos variables, pues en la anterior gráfica 
+podíamos apreciar que los datos estaban relacionados, sino también la distribución de puntos,  y con mucha diferencia,
+puesto que en la anterior gráfica se concentraban mucho en la parte inferior. En la nueva podemos ver que están mucho más repartidos y la comprensión 
+a primera vista es más clara y rápida. Este análisis nos demuestra que también se puede mejorar la visualización de 
+una gráfica usando otros métodos aparte de la mejora simplemente visual, como hemos hecho en este apartado modificando los ejes de representación.
 
 \subsection{La importancia de la visualización}
 Como ejemplo ilustrativo de la importancia de la visualización ponemos el ya famoso ejemplo del libro de Edward Tufte, Data Analysis for Politics and Policy, Chapter 3: Two-Variable Linear Regression.
