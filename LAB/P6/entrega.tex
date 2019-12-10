@@ -7,6 +7,10 @@
 \maketitle
 
 \begin{abstract}
+Nuestra tarea es realizar mejoras de visualización sobre gráficas de libre elección. nos vamos a centrar en gráficas con recta de regresión, puesto 
+que consideramos que es una gráfica muy utilizada y su análisis para una mejor visualización de la misma puede resultar muy interesante. 
+Hemos realizado diferentes análisis y extraido conclusiones de aspectos muy variados, desde el cambio de los ejes de representación de la gráfica o 
+simplificar la información representada hasta analizar las gráficas interactivas.
 
 \end{abstract}
 
@@ -18,7 +22,7 @@
 \section{Visualización de la regresión}
 
 
-\section{Análisis de gráficas de regresión}
+\section{Mejora de visualización en gráficas con recta de regresión}
 La recta de ajuste entre variables es una herramienta muy importante en el análisis de datos y su visualización, pero no lo más importante, puesto que 
 si la correlación es baja esta puede no significar nada, asi que lo realmente relevante son la relación entre la recta y los datos. 
 Estas nos ofrecen la oportunidad de condensar la información representada de manera muy simple y rápida de ver, facilitando así 
@@ -182,7 +186,7 @@ function (x, y, regresion, limit, title="", xlabel="", ylabel="") {
   abline(regresion, "black", lty=1, lwd=3)
   abline(regDownLimit, "gray", lty=2, lwd=2)
 }
-<bytecode: 0x000001f9c0876a38>
+<bytecode: 0x000001f9c42e5990>
 \end{Soutput}
 \end{Schunk}
 Mediante plot visualizamos la nube de puntos y con abline dibujamos líneas rectas sobre la última gráfica creada.
@@ -215,7 +219,7 @@ Debemos por tanto tener cuidado y no abusar de ellos.
 \includegraphics{entrega-ggplot2_se}
 \end{center}
 
-\subsubsection{Representaciones interavtivas}
+\subsubsection{Representaciones interactivas}
 Una de las ventajas que tenmos con estas librerías es que podemos crear gráficas interactivas.
 Estas gráficas crean un archivo .html que podemos visualizar de forma interactiva en el navegador.
 Las gráficas interactivas nos permiten realizar representaciones más complejas de los datos así como representar más datos a la vez.
