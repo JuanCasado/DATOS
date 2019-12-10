@@ -2,36 +2,22 @@
 \usepackage[utf8]{inputenc}
 \title{Ciencia de datos, práctica 6}
 \author{Juan Casado Ballesteros, Samuel García Gonzalez, Iván Anaya Martín}
+\usepackage{Sweave}
 \begin{document}
 \maketitle
 
 \begin{abstract}
-
+TODO
 \end{abstract}
 
 \newpage
 \tableofcontents
 
-<<functions, echo=False>>=
-library("plotly")
-library("ggplot2")
-regPlot <- function (x, y, regresion, limit, title="", xlabel="", ylabel="") {
-  plot(x, y, xlab=xlabel, ylab=ylabel, main=title)
-  regUpLimit <- regresion
-  regUpLimit$coefficients[1] = regUpLimit$coefficients[1] + limit
-  regDownLimit <- regresion
-  regDownLimit$coefficients[1] = regDownLimit$coefficients[1] - limit
-  abline(regUpLimit, "gray", lty=2, lwd=2)
-  abline(regresion, "black", lty=1, lwd=3)
-  abline(regDownLimit, "gray", lty=2, lwd=2)
-}
-@
 
 \newpage
+\section{Conceptos gnerales sobre visualización}
+
 \section{Visualización de la regresión}
-
-
-\section{Análisis de gráficas de regresión}
 Analizaremos ahora conceptos y soluciones específicas para la visualización de rectass de regresión.
 Lo más importante en estos diagramas no es la recta generada, pues si la correlación es baja esta puede no significar nada, si no la relación entre la recta y los datos.
 Deben poder visualizarse ambos elementos de forma adecuada pues es la relación entre ambos la que nos interesa, deseamos ver lo bien o mal que la recta se adapte a nuestros datos.
@@ -46,26 +32,23 @@ En dicho ejemplo las rectas de regresión obtenidas son idénticas y se adaptan 
 Si no fuera por la visualización de ambos elementos en conjunto no podríamos conocer la gran disparidad entre cada una de las muestras.
 
 Si representáremos los datos solos sería difícil imaginar que tuvieran la misma regresión y si visualizáramos las regresiones solo sería difícil imaginar que podrían estar representando a datos tan dispares.
-<<summary_datos_correlacion4, echo=FALSE>>=
-datos4 <- read.table("datos4.txt")
-regresion41 <- lm(y1~x1, data=datos4)
-regresion42 <- lm(y2~x2, data=datos4)
-regresion43 <- lm(y3~x3, data=datos4)
-regresion44 <- lm(y4~x4, data=datos4)
-paste("1: Correlacion cuadrada:", format(summary(regresion41)$r.squared, nsmall = 2), "a:", format(summary(regresion41)$coefficients[1], nsmall = 2), "b:", format(summary(regresion41)$coefficients[2], nsmall = 2))
-paste("2: Correlacion cuadrada:", format(summary(regresion42)$r.squared, nsmall = 2), "a:", format(summary(regresion42)$coefficients[1], nsmall = 2), "b:", format(summary(regresion42)$coefficients[2], nsmall = 2))
-paste("3: Correlacion cuadrada:", format(summary(regresion43)$r.squared, nsmall = 2), "a:", format(summary(regresion43)$coefficients[1], nsmall = 2), "b:", format(summary(regresion43)$coefficients[2], nsmall = 2))
-paste("4: Correlacion cuadrada:", format(summary(regresion44)$r.squared, nsmall = 2), "a:", format(summary(regresion44)$coefficients[1], nsmall = 2), "b:", format(summary(regresion44)$coefficients[2], nsmall = 2))
-@
+\begin{Schunk}
+\begin{Soutput}
+[1] "1: Correlacion cuadrada: 0.6665425 a: 3.000091 b: 0.5000909"
+\end{Soutput}
+\begin{Soutput}
+[1] "2: Correlacion cuadrada: 0.666242 a: 3.000909 b: 0.50"
+\end{Soutput}
+\begin{Soutput}
+[1] "3: Correlacion cuadrada: 0.666324 a: 3.002455 b: 0.4997273"
+\end{Soutput}
+\begin{Soutput}
+[1] "4: Correlacion cuadrada: 0.6667073 a: 3.001727 b: 0.4999091"
+\end{Soutput}
+\end{Schunk}
 
 \begin{center}
-<<plot_regresion4, fig=TRUE, echo=FALSE>>=
-par(mfrow=c(2,2))
-regPlot (datos4$x1, datos4$y1, regresion41, 0, xlabel="x", ylabel="y", title="1")
-regPlot (datos4$x2, datos4$y2, regresion42, 0, xlabel="x", ylabel="y", title="2")
-regPlot (datos4$x3, datos4$y3, regresion43, 0, xlabel="x", ylabel="y", title="3")
-regPlot (datos4$x4, datos4$y4, regresion44, 0, xlabel="x", ylabel="y", title="4")
-@
+\includegraphics{entrega-plot_regresion4}
 \end{center}
 
 \subsection{Cantidad de información mostrada}
@@ -80,49 +63,50 @@ No obstante antes de hacerlo debemos tener en cuenta las siguientes consideracio
 \end{itemize}
 
 
-<<summary_datos_correlacion4, echo=FALSE>>=
-datos3 <- read.csv("ozone.csv")
-regresion3 <- lm(datos3$Temperature_Sandburg~datos3$Temperature_ElMonte)
-paste("Correlacion cuadrada de Temperaturas:", summary(regresion3)$r.squared)
-@
+\begin{Schunk}
+\begin{Soutput}
+[1] "Correlacion cuadrada de Temperaturas: 0.835327071582904"
+\end{Soutput}
+\end{Schunk}
 
 En este caso mostramos exclusivamente los datos jusnto a su recta de regresión.
 Obtenemos una representación muy clara y sencilla que nos muestra directamente la información que queríamos.
 La gráfica tiene un título y en cada eje mostramos la variable representada y las unidades de esta.
 \begin{center}
-<<temp_plot, fig=TRUE, echo=FALSE>>=
-regPlot (datos3$Temperature_ElMonte, datos3$Temperature_Sandburg, regresion3, 
-  0, title="Temperaturas de dos sensores ºC",
-  xlabel="SensorA ºC", ylabel="SensorB ºC")
-@
+\includegraphics{entrega-temp_plot}
 \end{center}
 Podemos aumentar la complejidad de la representación añadiendo dos líneas paralelas a la recta de regresión que nos indiquen la desviación típica de esta.
 Este elemento adicional nos proporciona información adicional sobre la regresión que dependiendo del contexto puede ser necesaria si a partir de los datos y de la recta es difícil juzgar la calidad de esta.
 No obstante podemos ver como solo con haber añadido un elemento tan simple la representación se siente mucho más densa.
 \begin{center}
-<<temp_reg_plot, fig=TRUE, echo=FALSE>>=
-regPlot (datos3$Temperature_ElMonte, datos3$Temperature_Sandburg, regresion3, 
-  summary(regresion3)$sigma, title="Temperaturas de dos sensores ºC",
-  xlabel="SensorA ºC", ylabel="SensorB ºC")
-@
+\includegraphics{entrega-temp_reg_plot}
 \end{center}
 
 Como hemos indicado para este caso sería recomendable añadir una leyenda que nos indicara qué datos se estan representando de modo que la visualización obtenida sea más clara.
 \begin{center}
-<<temp_plot_legend, fig=TRUE, echo=FALSE>>=
-regPlot (datos3$Temperature_ElMonte, datos3$Temperature_Sandburg, regresion3, 
-  summary(regresion3)$sigma, title="Temperaturas de dos sensores ºC",
-  xlabel="SensorA ºC", ylabel="SensorB ºC")
-legend("topleft", legend=c("Regresión", "Regresion+-desviación típica"),
-      col=c("black", "blue"), lty=c(1,2), lwd=c(3,2))
-@
+\includegraphics{entrega-temp_plot_legend}
 \end{center}
 
 \subsection{Paquetes de visualización}
 Para realizar las gráficas anteriores hemos utilizado la siguiente función que utiliza las funciones propias de R.
-<<regPlot>>=
-regPlot
-@
+\begin{Schunk}
+\begin{Sinput}
+> regPlot
+\end{Sinput}
+\begin{Soutput}
+function (x, y, regresion, limit, title="", xlabel="", ylabel="") {
+  plot(x, y, xlab=xlabel, ylab=ylabel, main=title)
+  regUpLimit <- regresion
+  regUpLimit$coefficients[1] = regUpLimit$coefficients[1] + limit
+  regDownLimit <- regresion
+  regDownLimit$coefficients[1] = regDownLimit$coefficients[1] - limit
+  abline(regUpLimit, "gray", lty=2, lwd=2)
+  abline(regresion, "black", lty=1, lwd=3)
+  abline(regDownLimit, "gray", lty=2, lwd=2)
+}
+<bytecode: 0x7fa7563d2740>
+\end{Soutput}
+\end{Schunk}
 Mediante plot visualizamos la nube de puntos y con abline dibujamos líneas rectas sobre la última gráfica creada.
 
 Existen una gran cantidad de paquetes que se pueden utilizar para visualizar datos.
@@ -133,27 +117,24 @@ No obstante esto también es uno de los problemas de esta librería.
 Por defecto las gráficas que obtendremos tendrán un fóndo grisáceo con una cuadrícula en blanco tal y como podemos ver en el ejemplo.
 Esto hace que la representaciín de los datos sea más difusa que la obtenida con las funciones propias de R que crean una visualización mucho más limpia.
 \begin{center}
-<<ggplot2_NO_se, fig=TRUE, echo=FALSE>>=
-ggplot(data = datos3, aes(x = datos3$Temperature_ElMonte, y = datos3$Temperature_Sandburg)) + 
-  geom_point(color='black') +
-  geom_smooth(method = "lm", se = FALSE) + 
-  labs(title = "Temperaturas de dos sensores ºC") +
-  xlab("sensorA ºC") + ylab("sensorB ºC")
-@
+\includegraphics{entrega-ggplot2_NO_se}
 \end{center}
 
 Estas librería permite además añadir gran variedad de elementos de forma sencilla a las gráficas.
 Dichos elementos se ven siempre muy vistosos y bonitos pero pueden no tener gran significado para nuestro caso concreto.
 Debemos por tanto tener cuidado y no abusar de ellos.
 \begin{center}
-<<ggplot2_se, fig=TRUE>>=
-ggplot(data = datos3, aes(x = datos3$Temperature_ElMonte, 
-                          y = datos3$Temperature_Sandburg)) + 
-  geom_point(color='black')+
-  geom_smooth(method="lm")+ 
-  labs(title = "Temperaturas de dos sensores ºC") +
-  xlab("sensorA ºC") + ylab("sensorB ºC")
-@
+\begin{Schunk}
+\begin{Sinput}
+> ggplot(data = datos3, aes(x = datos3$Temperature_ElMonte, 
++                           y = datos3$Temperature_Sandburg)) + 
++   geom_point(color='black')+
++   geom_smooth(method="lm")+ 
++   labs(title = "Temperaturas de dos sensores ºC") +
++   xlab("sensorA ºC") + ylab("sensorB ºC")
+\end{Sinput}
+\end{Schunk}
+\includegraphics{entrega-ggplot2_se}
 \end{center}
 
 \subsubsection{Representaciones interavtivas}
@@ -170,16 +151,18 @@ Mostramos uan gráfica creada con "ggplot2" que se ha convertido en una gráfica
 En este caso mostramos una gráfica interactiva creada con "plotly" la cual utiliza "ggplot2" por debajo para crear sus gráficas.
 Esta librería tiene también una sintaxis sencilla y permite crear grácisas muy configurables.
 Como ventaja frente a "ggplot2" debemos comentar que los estilos que se aplican por defecto a las gráficas son mucho más limpios y claros.
-<<plotly, eval=FALSE>>=
-datos3 %>%
-  plot_ly(x = ~Temperature_ElMonte, y = ~Temperature_Sandburg) %>%
-  add_markers (x = ~Temperature_ElMonte, y = ~Temperature_Sandburg, 
-    name="temperaturas ºC") %>%
-  add_lines(x = ~Temperature_ElMonte, y = fitted(regresion3), name="regresion")%>%
-  layout(title = "Temperaturas de dos sensores ºC",
-    xaxis = list(title = "sensorA ºC"),
-    yaxis = list(title = "sensorB ºC"))
-@
+\begin{Schunk}
+\begin{Sinput}
+> datos3 %>%
++   plot_ly(x = ~Temperature_ElMonte, y = ~Temperature_Sandburg) %>%
++   add_markers (x = ~Temperature_ElMonte, y = ~Temperature_Sandburg, 
++     name="temperaturas ºC") %>%
++   add_lines(x = ~Temperature_ElMonte, y = fitted(regresion3), name="regresion")%>%
++   layout(title = "Temperaturas de dos sensores ºC",
++     xaxis = list(title = "sensorA ºC"),
++     yaxis = list(title = "sensorB ºC"))
+\end{Sinput}
+\end{Schunk}
 
 \begin{center}
   \includegraphics{interactive2.png}
